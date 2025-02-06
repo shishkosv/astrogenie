@@ -15,6 +15,9 @@ import ForgotPassword from '../components/auth/ForgotPassword';
 import Profile from '../components/profile/Profile';
 import Settings from '../components/profile/Settings';
 import Favorites from '../components/profile/Favorites';
+import Cart from '../components/cart/Cart';
+import Checkout from '../components/cart/Checkout';
+import Subscription from '../components/cart/Subscription';
 
 export type RootStackParamList = {
   Landing: undefined;
@@ -31,6 +34,9 @@ export type RootStackParamList = {
   Profile: undefined;
   Settings: undefined;
   Favorites: undefined;
+  Cart: undefined;
+  Checkout: undefined;
+  Subscription: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -168,6 +174,36 @@ const AppNavigator = () => {
         <Stack.Screen 
           name="Favorites" 
           component={Favorites}
+          options={{
+            headerStyle: {
+              backgroundColor: '#4a0e4e',
+            },
+            headerTintColor: '#fff',
+          }}
+        />
+        <Stack.Screen 
+          name="Cart" 
+          component={Cart}
+          options={{
+            headerStyle: {
+              backgroundColor: '#4a0e4e',
+            },
+            headerTintColor: '#fff',
+          }}
+        />
+        <Stack.Screen 
+          name="Checkout" 
+          component={Checkout}
+          options={{
+            headerStyle: {
+              backgroundColor: '#4a0e4e',
+            },
+            headerTintColor: '#fff',
+          }}
+        />
+        <Stack.Screen 
+          name="Subscription" 
+          component={Subscription}
           options={{
             headerStyle: {
               backgroundColor: '#4a0e4e',

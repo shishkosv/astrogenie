@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export default StyleSheet.create({
+export const tarotReadingsStyles = StyleSheet.create({
   container: {
     flexGrow: 1,
     padding: 20,

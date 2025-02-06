@@ -19,12 +19,12 @@ const Home = () => {
   const { translations } = useLanguage();
   const { isAuthenticated } = useAuth();
 
-  const handleNavigation = (route: keyof RootStackParamList) => {
+  const handleFeatureClick = (route: keyof RootStackParamList) => {
     if (!isAuthenticated) {
-      navigation.navigate('Registration');
-    } else {
-      navigation.navigate(route);
+      navigation.navigate('Login');
+      return;
     }
+    navigation.navigate(route);
   };
 
   return (
@@ -67,7 +67,7 @@ const Home = () => {
               </Text>
               <TouchableOpacity 
                 style={styles.button} 
-                onPress={() => handleNavigation('DailyHoroscopes')}
+                onPress={() => handleFeatureClick('DailyHoroscopes')}
               >
                 <Text style={styles.buttonText}>{translations.tryItNow}</Text>
               </TouchableOpacity>
@@ -79,7 +79,7 @@ const Home = () => {
               </Text>
               <TouchableOpacity 
                 style={styles.button} 
-                onPress={() => handleNavigation('Compatibility')}
+                onPress={() => handleFeatureClick('Compatibility')}
               >
                 <Text style={styles.buttonText}>{translations.tryItNow}</Text>
               </TouchableOpacity>
@@ -91,7 +91,7 @@ const Home = () => {
               </Text>
               <TouchableOpacity 
                 style={styles.button} 
-                onPress={() => handleNavigation('TarotReadings')}
+                onPress={() => handleFeatureClick('TarotReadings')}
               >
                 <Text style={styles.buttonText}>{translations.tryItNow}</Text>
               </TouchableOpacity>

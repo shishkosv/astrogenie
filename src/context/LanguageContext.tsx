@@ -53,6 +53,12 @@ const translations = {
     deleteAccount: 'Delete Account',
     deleteAccountConfirm: 'Are you sure you want to delete your account? This action cannot be undone.',
     noFavorites: 'No favorites yet',
+    subscriptionPlans: 'Subscription Plans',
+    choosePlan: 'Choose the plan that fits your needs',
+    subscribe: 'Subscribe Now',
+    premiumFeature: 'Premium Feature',
+    upgradeForFullAccess: 'Upgrade to Premium to access detailed compatibility analysis and personalized insights.',
+    upgradeToPremium: 'Upgrade to Premium',
   },
   es: {
     welcome: 'Bienvenido a AstroConnect',
@@ -98,6 +104,12 @@ const translations = {
     deleteAccount: 'Eliminar Cuenta',
     deleteAccountConfirm: '¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer.',
     noFavorites: 'Aún no hay favoritos',
+    subscriptionPlans: 'Planes de Suscripción',
+    choosePlan: 'Elige el plan que se adapte a tus necesidades',
+    subscribe: 'Suscribirse Ahora',
+    premiumFeature: 'Función Premium',
+    upgradeForFullAccess: 'Actualiza a Premium para acceder a análisis de compatibilidad detallados y perspectivas personalizadas.',
+    upgradeToPremium: 'Actualizar a Premium',
   },
 };
 

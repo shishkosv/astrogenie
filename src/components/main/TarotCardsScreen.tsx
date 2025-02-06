@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { useAstrology } from '../../context/AstrologyContext';
 import { useLocalization } from '../../context/LocalizationContext';
-import styles from './styles/TarotCardsScreenStyles';
+import { tarotReadingsStyles as styles } from './styles/TarotCardsScreenStyles';
 
 const TarotCardsScreen: React.FC = () => {
   const [cards, setCards] = useState<string[]>([]);
