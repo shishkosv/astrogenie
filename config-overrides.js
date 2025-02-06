@@ -1,5 +1,5 @@
 const path = require('path');
-const { override, addWebpackAlias, babelInclude, disableEsLint } = require('customize-cra');
+const { override, addWebpackAlias, babelInclude, disableEsLint, addPostcssPlugins } = require('customize-cra');
 const webpack = require('webpack');
 
 module.exports = override(
@@ -78,5 +78,15 @@ module.exports = override(
     });
 
     return config;
-  }
+  },
+  addPostcssPlugins([
+    require('tailwindcss'),
+    require('autoprefixer'),
+    require('postcss-preset-env')({
+      stage: 1,
+      features: {
+        'nesting-rules': true
+      }
+    })
+  ])
 );

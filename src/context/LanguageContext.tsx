@@ -10,6 +10,9 @@ interface LanguageContextType {
 
 const translations = {
   en: {
+    getStarted: 'Get Started',
+    signIn: 'Sign In',
+    signUp: 'Sign Up',
     welcome: 'Welcome to AstroConnect',
     subtitle: 'Your personal astrological companion',
     downloadAndroid: 'Download for Android',
@@ -28,7 +31,6 @@ const translations = {
     registration: 'Registration',
     createAccount: 'Create your account to access all features',
     login: 'Login',
-    signUp: 'Sign Up',
     password: 'Password',
     name: 'Name',
     forgotPassword: 'Forgot Password?',
@@ -63,6 +65,9 @@ const translations = {
     termsAndPolicies: "Terms & Policies",
   },
   es: {
+    getStarted: 'Empezar',
+    signIn: 'Iniciar Sesión',
+    signUp: 'Registrarse',
     welcome: 'Bienvenido a AstroConnect',
     subtitle: 'Tu compañero astrológico personal',
     downloadAndroid: 'Descargar para Android',
@@ -81,7 +86,6 @@ const translations = {
     registration: 'Registro',
     createAccount: 'Crea tu cuenta para acceder a todas las funciones',
     login: 'Iniciar Sesión',
-    signUp: 'Registrarse',
     password: 'Contraseña',
     name: 'Nombre',
     forgotPassword: '¿Olvidaste tu contraseña?',
