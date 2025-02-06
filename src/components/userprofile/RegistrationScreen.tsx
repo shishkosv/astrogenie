@@ -2,12 +2,12 @@ import type React from "react"
 import { useState } from "react"
 import { Text, TextInput, TouchableOpacity, ScrollView } from "react-native"
 import DateTimePicker from "@react-native-community/datetimepicker"
-import { Picker } from "@react-native-picker/picker"
+// import { Picker } from "@react-native-picker/picker"
 import { useAuth } from "../../context/AuthContext"
 import { useLocalization } from "../../context/LocalizationContext"
 import styles from "./styles/RegistrationScreenStyles"
 
-const RegistrationScreen: React.FC = ({ navigation }) => {
+const RegistrationScreen: React.FC = () => {
   const [fullName, setFullName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -20,8 +20,8 @@ const RegistrationScreen: React.FC = ({ navigation }) => {
 
   const handleRegister = async () => {
     try {
-      await register(email, password, { fullName, dateOfBirth, gender })
-      navigation.navigate("Dashboard")
+      await register(email, password, { dateOfBirth, gender })
+      //navigation.navigate("Dashboard")
     } catch (error) {
       console.error("Registration failed:", error)
     }
@@ -53,26 +53,26 @@ const RegistrationScreen: React.FC = ({ navigation }) => {
           value={dateOfBirth}
           mode="date"
           display="default"
-          onChange={(event, selectedDate) => {
-            setShowDatePicker(false)
-            if (selectedDate) {
-              setDateOfBirth(selectedDate)
-            }
-          }}
+          // onChange={(event, selectedDate) => {
+          //   setShowDatePicker(false)
+          //   if (selectedDate) {
+          //     setDateOfBirth(selectedDate)
+          //   }
+          // }}
         />
       )}
-      <Picker selectedValue={gender} style={styles.input} onValueChange={(itemValue) => setGender(itemValue)}>
+      {/* <Picker selectedValue={gender} style={styles.input} onValueChange={(itemValue) => setGender(itemValue)}>
         <Picker.Item label={t("selectGender")} value="" />
         <Picker.Item label={t("male")} value="male" />
         <Picker.Item label={t("female")} value="female" />
         <Picker.Item label={t("other")} value="other" />
-      </Picker>
+      </Picker> */}
       <TouchableOpacity style={styles.button} onPress={handleRegister}>
         <Text style={styles.buttonText}>{t("signUp")}</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+      {/* <TouchableOpacity onPress={() => navigation.navigate("Login")}>
         <Text style={styles.link}>{t("alreadyHaveAccount")}</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </ScrollView>
   )
 }

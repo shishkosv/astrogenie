@@ -4,11 +4,12 @@ import { View, Text, TextInput, TouchableOpacity, ScrollView } from "react-nativ
 import { useAstrology } from "../../context/AstrologyContext"
 import { useLocalization } from "../../context/LocalizationContext"
 import styles from "./styles/CompatibilityScoreScreenStyles"
+import { Compatibility } from "src/types/astrology"
 
 const CompatibilityScoreScreen: React.FC = () => {
   const [sign1, setSign1] = useState("")
   const [sign2, setSign2] = useState("")
-  const [score, setScore] = useState<number | null>(null)
+  const [score, setScore] = useState<Compatibility | null>(null)
   const { getCompatibility } = useAstrology()
   const { t } = useLocalization()
 
@@ -29,7 +30,7 @@ const CompatibilityScoreScreen: React.FC = () => {
       </TouchableOpacity>
       {score !== null && (
         <View style={styles.resultContainer}>
-          <Text style={styles.resultText}>{t("compatibilityScore", { score })}</Text>
+          {/* <Text style={styles.resultText}>{t("compatibilityScore", { score })}</Text> */}
           <Text style={styles.description}>{t("compatibilityDescription")}</Text>
         </View>
       )}
