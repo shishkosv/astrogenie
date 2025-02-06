@@ -5,8 +5,8 @@ import type { StackNavigationProp } from '@react-navigation/stack';
 import type { RootStackParamList } from '../../navigation/AppNavigator';
 import { useLanguage } from '../../context/LanguageContext';
 import Layout from '../layout/Layout';
-import { subscriptionStyles as styles } from './styles/SubscriptionStyles';
 import { Button } from '../shared/Button';
+import { subscriptionStyles as styles } from './styles/SubscriptionStyles';
 
 type NavigationProp = StackNavigationProp<RootStackParamList>;
 
@@ -26,6 +26,21 @@ interface Plan {
 }
 
 const plans: Plan[] = [
+  {
+    id: 'free',
+    name: 'Free Trial',
+    price: 0,
+    period: 'month',
+    description: 'Start your journey with basic features',
+    features: [
+      { id: '1', text: 'Basic Daily Horoscopes', included: true },
+      { id: '2', text: 'Limited Compatibility Check', included: true },
+      { id: '3', text: '3 Tarot Readings per month', included: true },
+      { id: '4', text: 'Advanced Predictions', included: false },
+      { id: '5', text: 'Personal Consultations', included: false },
+      { id: '6', text: 'Premium Reports', included: false },
+    ],
+  },
   {
     id: 'basic',
     name: 'Basic',
@@ -56,31 +71,19 @@ const plans: Plan[] = [
       { id: '6', text: 'Premium Reports', included: false },
     ],
   },
-  {
-    id: 'premium',
-    name: 'Premium',
-    price: 29.99,
-    period: 'month',
-    description: 'Complete astrological guidance experience',
-    features: [
-      { id: '1', text: 'Daily Horoscopes', included: true },
-      { id: '2', text: 'Advanced Compatibility Check', included: true },
-      { id: '3', text: 'Unlimited Tarot Readings', included: true },
-      { id: '4', text: 'Advanced Predictions', included: true },
-      { id: '5', text: 'Personal Consultations', included: true },
-      { id: '6', text: 'Premium Reports', included: true },
-    ],
-  },
 ];
 
 const Subscription = () => {
   const navigation = useNavigation<NavigationProp>();
   const { translations } = useLanguage();
-  const [selectedPlan, setSelectedPlan] = useState<string>('advanced');
+  const [selectedPlan, setSelectedPlan] = useState<string>('free');
 
   const handleSubscribe = (planId: string) => {
-    // Implement subscription logic
-    navigation.navigate('Checkout');
+    if (planId === 'free') {
+      navigation.navigate('Registration');
+    } else {
+      navigation.navigate('Checkout');
+    }
   };
 
   const renderFeature = (feature: PlanFeature) => (
@@ -123,11 +126,11 @@ const Subscription = () => {
               </View>
 
               <Button
-                variant="default"
+                variant={plan.id === 'free' ? 'secondary' : 'default'}
                 size="sm"
                 onPress={() => handleSubscribe(plan.id)}
               >
-                {translations.subscribe}
+                {plan.id === 'free' ? translations.getStarted : translations.subscribe}
               </Button>
             </TouchableOpacity>
           ))}

@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { layoutStyles as styles } from '../../styles/layoutStyles';
 import Header from './Header';
 import Footer from './Footer';
+import ChatBot from '../chat/ChatBot';
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -16,6 +17,7 @@ const Layout = ({ children }: LayoutProps) => {
         {children}
       </View>
       <Footer />
+      <ChatBot />
     </View>
   );
 };
