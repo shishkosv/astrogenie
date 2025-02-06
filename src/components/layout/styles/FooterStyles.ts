@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 export const footerStyles = StyleSheet.create({
   footer: {
-    backgroundColor: '#4a0e4e',
+    backgroundColor: '#CFA2FB',
     padding: 40,
   },
   content: {
@@ -21,17 +21,17 @@ export const footerStyles = StyleSheet.create({
     minWidth: 250,
   },
   title: {
-    color: '#ffffff',
+    color: '#FFFFFF',
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 20,
   },
   link: {
-    color: '#ffffff',
+    color: '#FFFFFF',
     marginBottom: 10,
   },
   copyright: {
-    color: '#ffffff',
+    color: '#FFFFFF',
     textAlign: 'center',
     marginTop: 40,
     opacity: 0.8,

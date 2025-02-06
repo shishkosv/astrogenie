@@ -6,7 +6,7 @@ export const headerStyles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#CFA2FB',
     borderBottomWidth: 1,
     borderBottomColor: '#eaeaea',
     position: 'relative',
@@ -22,7 +22,7 @@ export const headerStyles = StyleSheet.create({
     gap: 20,
   },
   navItem: {
-    color: '#333',
+    color: '#FFFFFF',
     fontSize: 16,
     fontWeight: '500',
   },

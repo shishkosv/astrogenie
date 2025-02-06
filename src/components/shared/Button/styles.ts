@@ -12,7 +12,7 @@ export const buttonStyles = StyleSheet.create({
     backgroundColor: '#8444A4',
   },
   secondary: {
-    backgroundColor: 'hsl(var(--primary))',
+    backgroundColor: '#A1FB8E',
   },
   outline: {
     backgroundColor: 'transparent',
@@ -48,7 +48,7 @@ export const buttonStyles = StyleSheet.create({
     color: '#FFFFFF',
   },
   secondaryText: {
-    color: 'hsl(var(--primary-foreground))',
+    color: '#000000',
   },
   outlineText: {
     color: '#8444A4',

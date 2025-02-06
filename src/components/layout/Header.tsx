@@ -30,13 +30,13 @@ const Header = () => {
           <Text style={styles.navItem}>{translations.home}</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => handleNavigation('Features')}>
-          <Text style={styles.navItem}>{translations.features}</Text>
+          <Text style={styles.navItem}>{translations.getStarted}</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleNavigation('About')}>
-          <Text style={styles.navItem}>{translations.about}</Text>
+        <TouchableOpacity onPress={() => handleNavigation('Login')}>
+          <Text style={styles.navItem}>{translations.login}</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleNavigation('Contact')}>
-          <Text style={styles.navItem}>{translations.contact}</Text>
+        <TouchableOpacity onPress={() => handleNavigation('Subscription')}>
+          <Text style={styles.navItem}>{translations.subscribe}</Text>
         </TouchableOpacity>
         <LanguageSwitcher />
         {isAuthenticated && <AccountMenu />}

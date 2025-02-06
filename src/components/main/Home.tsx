@@ -59,46 +59,53 @@ const Home = () => {
         </View>
 
         <View style={styles.features}>
-          <Text style={styles.sectionTitle}>{translations.features}</Text>
           <View style={styles.featureList}>
             <View style={styles.featureItem}>
               <Text style={styles.featureTitle}>{translations.dailyHoroscopes}</Text>
               <Text style={styles.featureDescription}>
                 {translations.horoscopesDesc}
               </Text>
-              <Button 
-                variant="default"
-                size="sm"
-                onPress={() => handleFeatureClick('DailyHoroscopes')}
-              >
-                {translations.tryItNow}
-              </Button>
+              <View style={styles.buttonContainer}>
+                <Button 
+                  variant="default"
+                  size="sm"
+                  onPress={() => handleFeatureClick('DailyHoroscopes')}
+                >
+                  {translations.tryItNow}
+                </Button>
+              </View>
             </View>
+
             <View style={styles.featureItem}>
               <Text style={styles.featureTitle}>{translations.compatibility}</Text>
               <Text style={styles.featureDescription}>
                 {translations.compatibilityDesc}
               </Text>
-              <Button 
-                variant="default"
-                size="sm"
-                onPress={() => handleFeatureClick('Compatibility')}
-              >
-                {translations.tryItNow}
-              </Button>
+              <View style={styles.buttonContainer}>
+                <Button 
+                  variant="secondary"
+                  size="sm"
+                  onPress={() => handleFeatureClick('Compatibility')}
+                >
+                  {translations.tryItNow}
+                </Button>
+              </View>
             </View>
+
             <View style={styles.featureItem}>
               <Text style={styles.featureTitle}>{translations.tarotReadings}</Text>
               <Text style={styles.featureDescription}>
                 {translations.tarotDesc}
               </Text>
-              <Button 
-                variant="default"
-                size="sm"
-                onPress={() => handleFeatureClick('TarotReadings')}
-              >
-                {translations.tryItNow}
-              </Button>
+              <View style={styles.buttonContainer}>
+                <Button 
+                  variant="default"
+                  size="sm"
+                  onPress={() => handleFeatureClick('TarotReadings')}
+                >
+                  {translations.tryItNow}
+                </Button>
+              </View>
             </View>
           </View>
         </View>
