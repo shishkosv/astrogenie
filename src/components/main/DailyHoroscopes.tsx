@@ -3,8 +3,8 @@ import { View, ScrollView } from 'react-native';
 import Layout from '../layout/Layout';
 import { horoscopeStyles as styles } from './styles/HoroscopeStyles';
 import TodayMatch from './TodayMatch';
-import SignTraits from '../traits/SignTraits';
-import DailyForecast from '../horoscope/DailyForecast';
+import SignTraits from './horoscope/SignTraits';
+import DailyForecast from './horoscope/DailyForecast';
 
 const DailyHoroscopes = () => {
   return (

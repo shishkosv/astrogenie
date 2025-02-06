@@ -10,12 +10,14 @@ interface LanguageContextType {
 
 const translations = {
   en: {
+    birthChart: 'Birth Chart',
     getStarted: 'Get Started',
     signIn: 'Sign In',
     signUp: 'Sign Up',
     welcome: 'Welcome to AstroConnect',
     subtitle: 'Your personal astrological companion',
     downloadAndroid: 'Download for Android',
+
     downloadIOS: 'Download for iOS',
     features: 'Features',
     dailyHoroscopes: 'Daily Horoscopes',
@@ -65,6 +67,7 @@ const translations = {
     termsAndPolicies: "Terms & Policies",
   },
   es: {
+    birthChart: 'Birth Chart',
     getStarted: 'Empezar',
     signIn: 'Iniciar Sesión',
     signUp: 'Registrarse',

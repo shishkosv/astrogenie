@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import Layout from '../../layout/Layout';
 import { traitsStyles as styles } from './styles/SignTraitsStyles';
 import Icon from '../../icons/Icon';
 
@@ -57,56 +58,56 @@ const SignTraits = () => {
   };
 
   return (
-    <View>
-      {/* Traits Card */}
-      <View style={styles.card}>
-        <View style={styles.cardHeader}>
-          <Icon 
-            name={traitTabs.find(tab => tab.id === activeTab)?.icon || 'user'} 
-            size={24} 
-            color="#CFA2FB" 
-          />
-          <Text style={styles.cardTitle}>
-            {traitTabs.find(tab => tab.id === activeTab)?.label}
+      <ScrollView style={styles.container}>
+        {/* Traits Card */}
+        <View style={styles.card}>
+          <View style={styles.cardHeader}>
+            <Icon 
+              name={traitTabs.find(tab => tab.id === activeTab)?.icon || 'user'} 
+              size={24} 
+              color="#CFA2FB" 
+            />
+            <Text style={styles.cardTitle}>
+              {traitTabs.find(tab => tab.id === activeTab)?.label}
+            </Text>
+          </View>
+          <Text style={styles.cardContent}>
+            {getRandomContent(activeTab)}
           </Text>
         </View>
-        <Text style={styles.cardContent}>
-          {getRandomContent(activeTab)}
-        </Text>
-      </View>
 
-      {/* Tabs */}
-      <ScrollView 
-        horizontal 
-        showsHorizontalScrollIndicator={false}
-        style={styles.tabsContainer}
-      >
-        <View style={styles.tabsWrapper}>
-          {traitTabs.map((tab) => (
-            <TouchableOpacity
-              key={tab.id}
-              style={[
-                styles.tab,
-                activeTab === tab.id && styles.activeTab
-              ]}
-              onPress={() => setActiveTab(tab.id)}
-            >
-              <Icon 
-                name={tab.icon} 
-                size={20} 
-                color={activeTab === tab.id ? '#CFA2FB' : '#666'} 
-              />
-              <Text style={[
-                styles.tabLabel,
-                activeTab === tab.id && styles.activeTabLabel
-              ]}>
-                {tab.label}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+        {/* Tabs */}
+        <ScrollView 
+          horizontal 
+          showsHorizontalScrollIndicator={false}
+          style={styles.tabsContainer}
+        >
+          <View style={styles.tabsWrapper}>
+            {traitTabs.map((tab) => (
+              <TouchableOpacity
+                key={tab.id}
+                style={[
+                  styles.tab,
+                  activeTab === tab.id && styles.activeTab
+                ]}
+                onPress={() => setActiveTab(tab.id)}
+              >
+                <Icon 
+                  name={tab.icon} 
+                  size={20} 
+                  color={activeTab === tab.id ? '#CFA2FB' : '#666'} 
+                />
+                <Text style={[
+                  styles.tabLabel,
+                  activeTab === tab.id && styles.activeTabLabel
+                ]}>
+                  {tab.label}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </ScrollView>
       </ScrollView>
-    </View>
   );
 };
 

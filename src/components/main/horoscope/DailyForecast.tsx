@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { forecastStyles as styles } from './styles/ForecastStyles';
-import Icon from '../icons/Icon';
+import Icon from '../../icons/Icon';
 
 type TabType = 'sun' | 'love' | 'career' | 'money' | 'health' | 'chinese' | 
                'tarot' | 'numerology' | 'planets' | 'celebrities' | 'psychic';
