@@ -1,6 +1,7 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, LinkingOptions } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { Platform } from 'react-native';
 import WebLanding from '../components/landing/WebLanding';
 import Home from '../components/main/Home';
 import TarotReadings from '../components/main/tarot/TarotReadings';
@@ -58,9 +59,49 @@ export type RootStackParamList = {
 
 const Stack = createStackNavigator<RootStackParamList>();
 
+// Define linking configuration
+const linking: LinkingOptions<RootStackParamList> = {
+  prefixes: ['astroconnect://', 'https://astroconnect.com'],
+  config: {
+    screens: {
+      Landing: '',
+      Home: 'home',
+      TarotReadings: 'tarot',
+      Features: 'features',
+      About: 'about',
+      Contact: 'contact',
+      DailyHoroscopes: 'horoscopes',
+      Compatibility: 'compatibility',
+      Registration: 'register',
+      Login: 'login',
+      ForgotPassword: 'forgot-password',
+      Profile: 'profile',
+      Settings: 'settings',
+      Favorites: 'favorites',
+      Cart: 'cart',
+      Checkout: 'checkout',
+      Subscription: 'subscription',
+      BirthChart: 'birth-chart',
+      SignLists: 'signs',
+      SignTraits: 'traits',
+      TarotReadingDetail: {
+        path: 'tarot/:id',
+        parse: {
+          id: (id: string) => id,
+        },
+      },
+    },
+  },
+  // Enable browser history on web platform
+  enabled: Platform.OS === 'web',
+};
+
 const AppNavigator = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer 
+      linking={linking}
+      fallback={<Text>Loading...</Text>}
+    >
       <Stack.Navigator
         initialRouteName="Landing"
         screenOptions={{

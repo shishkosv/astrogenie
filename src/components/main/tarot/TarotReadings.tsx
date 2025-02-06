@@ -120,7 +120,10 @@ const TarotReadings = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleReadingPress = (reading: typeof tarotReadings[0]) => {
-    navigation.navigate('TarotReadingDetail', { reading });
+    navigation.navigate('TarotReadingDetail', { 
+      reading,
+      id: reading.id
+    });
   };
 
   return (

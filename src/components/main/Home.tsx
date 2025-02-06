@@ -10,6 +10,7 @@ import { useAuth } from '../../context/AuthContext';
 import { Button } from '../shared/Button';
 import SignLists from './horoscope/SignLists';
 import TarotReadings from './tarot/TarotReadings';
+import { useWebNavigation } from '../../hooks/useWebNavigation';
 
 // Import images
 import androidBadge from '../../assets/images/download_ android.png';
@@ -18,7 +19,7 @@ import iosBadge from '../../assets/images/download_ios.png';
 type NavigationProp = StackNavigationProp<RootStackParamList, 'Landing'>;
 
 const Home = () => {
-  const navigation = useNavigation<NavigationProp>();
+  const navigation = useWebNavigation();
   const { translations } = useLanguage();
   const { isAuthenticated } = useAuth();
 
