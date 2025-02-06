@@ -1,5 +1,5 @@
 import type React from 'react';
-import { Platform } from 'react-native';
+import { Platform, useEffect } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { AuthProvider } from './context/AuthContext';
@@ -12,10 +12,15 @@ import CompatibilityScoreScreen from './components/main/CompatibilityScoreScreen
 import FriendshipScoreScreen from './components/main/FriendshipScoreScreen';
 import TarotCardsScreen from './components/main/TarotCardsScreen';
 import PersonalizedForecastScreen from './components/main/PersonalizedForecastScreen';
+import { firebaseService } from './services/firebase';
 
 const Stack = createStackNavigator();
 
 const App: React.FC = () => {
+  useEffect(() => {
+    firebaseService.initialize();
+  }, []);
+
   return (
     <AuthProvider>
       <LocalizationProvider>
