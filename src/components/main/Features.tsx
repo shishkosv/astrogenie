@@ -8,6 +8,7 @@ import type { RootStackParamList } from '../../navigation/AppNavigator';
 import { useLanguage } from '../../context/LanguageContext';
 import { useAuth } from '../../context/AuthContext';
 import { featureStyles as styles } from './styles/FeatureStyles';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 type NavigationProp = StackNavigationProp<RootStackParamList>;
 
@@ -61,6 +62,17 @@ const Features = () => {
         "Past-Present-Future insights",
         "Celtic Cross spreads"
       ]
+    },
+    {
+      title: "Birth Chart Analysis",
+      description: "Discover the unique planetary positions at your birth moment and understand their profound influence on your life path. Our detailed natal chart analysis reveals your cosmic blueprint, helping you understand your strengths, challenges, and life purpose.",
+      route: 'BirthChart',
+      highlights: [
+        "Detailed planetary positions",
+        "House placements analysis",
+        "Aspect interpretations",
+        "Personal strengths & challenges"
+      ]
     }
   ];
 
@@ -111,6 +123,21 @@ const Features = () => {
           isWideScreen && styles.cardsContainerWeb
         ]}>
           {features.map((feature, index) => renderFeatureCard(feature, index))}
+        </View>
+
+        <View style={styles.featureCard}>
+          <Ionicons name="analytics" size={32} color="#CFA2FB" />
+          <Text style={styles.featureTitle}>Birth Chart Analysis</Text>
+          <Text style={styles.featureDescription}>
+            Discover the unique planetary positions at your birth moment and understand their influence on your life path.
+          </Text>
+          <Button
+            variant="secondary"
+            size="sm"
+            onPress={() => navigation.navigate('BirthChart')}
+          >
+            View Birth Chart
+          </Button>
         </View>
       </ScrollView>
     </Layout>

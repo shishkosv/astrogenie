@@ -18,6 +18,10 @@ import Favorites from '../components/profile/Favorites';
 import Cart from '../components/cart/Cart';
 import Checkout from '../components/cart/Checkout';
 import Subscription from '../components/cart/Subscription';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import BirthChart from '../components/main/BirthChart';
+import SignLists from '../components/zodiac/SignLists';
+import TarotReadingDetail from '../components/main/TarotReadingDetail';
 
 export type RootStackParamList = {
   Landing: undefined;
@@ -37,6 +41,17 @@ export type RootStackParamList = {
   Cart: undefined;
   Checkout: undefined;
   Subscription: undefined;
+  BirthChart: undefined;
+  SignLists: undefined;
+  TarotReadingDetail: {
+    reading: {
+      id: string;
+      title: string;
+      subtitle: string;
+      price: number;
+      yearlyPrice?: number;
+    };
+  };
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -67,6 +82,9 @@ const AppNavigator = () => {
         <Stack.Screen name="Cart" component={Cart} />
         <Stack.Screen name="Checkout" component={Checkout} />
         <Stack.Screen name="Subscription" component={Subscription} />
+        <Stack.Screen name="BirthChart" component={BirthChart} />
+        <Stack.Screen name="SignLists" component={SignLists} />
+        <Stack.Screen name="TarotReadingDetail" component={TarotReadingDetail} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -95,4 +95,18 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 'auto',
   },
+  zodiacSection: {
+    marginBottom: 40,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    padding: 24,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
 }); 

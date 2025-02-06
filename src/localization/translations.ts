@@ -6,6 +6,7 @@ interface Translations {
 
 const translations: Translations = {
   en: {
+    birthChart: 'Birth Chart Analysis',
     login: 'Login',
     emailAddress: 'Email Address',
     password: 'Password',
@@ -40,6 +41,7 @@ const translations: Translations = {
     refreshForecast: 'Refresh Forecast',
   },
   es: {
+    birthChart: 'Birth Chart Analysis',
     login: 'Iniciar sesión',
     emailAddress: 'Correo electrónico',
     password: 'Contraseña',
