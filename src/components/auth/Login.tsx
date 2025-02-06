@@ -7,6 +7,7 @@ import Layout from '../layout/Layout';
 import { useLanguage } from '../../context/LanguageContext';
 import { useAuth } from '../../context/AuthContext';
 import { authStyles } from './styles';
+import { Button } from '../shared/Button';
 
 type NavigationProp = StackNavigationProp<RootStackParamList>;
 
@@ -49,9 +50,13 @@ const Login = () => {
             secureTextEntry
           />
           {error ? <Text style={authStyles.errorText}>{error}</Text> : null}
-          <TouchableOpacity style={authStyles.button} onPress={handleLogin}>
-            <Text style={authStyles.buttonText}>{translations.login}</Text>
-          </TouchableOpacity>
+          <Button 
+            variant="default"
+            size="sm"
+            onPress={handleLogin}
+          >
+            {translations.login}
+          </Button>
           <TouchableOpacity 
             style={authStyles.linkButton}
             onPress={() => navigation.navigate('Registration')}

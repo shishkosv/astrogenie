@@ -6,6 +6,7 @@ import type { RootStackParamList } from '../../navigation/AppNavigator';
 import { useLanguage } from '../../context/LanguageContext';
 import Layout from '../layout/Layout';
 import { subscriptionStyles as styles } from './styles/SubscriptionStyles';
+import { Button } from '../shared/Button';
 
 type NavigationProp = StackNavigationProp<RootStackParamList>;
 
@@ -121,17 +122,13 @@ const Subscription = () => {
                 {plan.features.map(renderFeature)}
               </View>
 
-              <TouchableOpacity
-                style={[
-                  styles.subscribeButton,
-                  selectedPlan === plan.id && styles.selectedButton
-                ]}
+              <Button
+                variant="default"
+                size="sm"
                 onPress={() => handleSubscribe(plan.id)}
               >
-                <Text style={styles.subscribeButtonText}>
-                  {translations.subscribe}
-                </Text>
-              </TouchableOpacity>
+                {translations.subscribe}
+              </Button>
             </TouchableOpacity>
           ))}
         </View>

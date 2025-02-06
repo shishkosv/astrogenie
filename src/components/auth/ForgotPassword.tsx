@@ -7,6 +7,7 @@ import Layout from '../layout/Layout';
 import { useLanguage } from '../../context/LanguageContext';
 import { useAuth } from '../../context/AuthContext';
 import { authStyles } from './styles';
+import { Button } from '../shared/Button';
 
 type NavigationProp = StackNavigationProp<RootStackParamList>;
 
@@ -44,9 +45,13 @@ const ForgotPassword = () => {
           />
           {message ? <Text style={authStyles.successText}>{message}</Text> : null}
           {error ? <Text style={authStyles.errorText}>{error}</Text> : null}
-          <TouchableOpacity style={authStyles.button} onPress={handleResetPassword}>
-            <Text style={authStyles.buttonText}>{translations.resetPassword}</Text>
-          </TouchableOpacity>
+          <Button 
+            variant="default"
+            size="sm"
+            onPress={handleResetPassword}
+          >
+            {translations.resetPassword}
+          </Button>
           <TouchableOpacity 
             style={authStyles.linkButton}
             onPress={() => navigation.navigate('Login')}

@@ -6,6 +6,7 @@ import type { RootStackParamList } from '../../navigation/AppNavigator';
 import { useLanguage } from '../../context/LanguageContext';
 import CartItem from './CartItem';
 import { cartStyles as styles } from './styles/CartStyles';
+import { Button } from '../shared/Button';
 
 type NavigationProp = StackNavigationProp<RootStackParamList>;
 
@@ -41,14 +42,13 @@ const Cart = () => {
             <Text style={styles.total}>
               {translations.total}: $99.99
             </Text>
-            <TouchableOpacity 
-              style={styles.checkoutButton}
+            <Button 
+              variant="default"
+              size="sm"
               onPress={handleCheckout}
             >
-              <Text style={styles.checkoutButtonText}>
-                {translations.checkout}
-              </Text>
-            </TouchableOpacity>
+              {translations.checkout}
+            </Button>
           </View>
         </>
       )}

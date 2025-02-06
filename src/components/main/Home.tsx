@@ -7,6 +7,7 @@ import Layout from '../layout/Layout';
 import { styles } from './styles';
 import { useLanguage } from '../../context/LanguageContext';
 import { useAuth } from '../../context/AuthContext';
+import { Button } from '../shared/Button';
 
 // Import images
 import androidBadge from '../../assets/images/download_ android.png';
@@ -65,36 +66,39 @@ const Home = () => {
               <Text style={styles.featureDescription}>
                 {translations.horoscopesDesc}
               </Text>
-              <TouchableOpacity 
-                style={styles.button} 
+              <Button 
+                variant="default"
+                size="sm"
                 onPress={() => handleFeatureClick('DailyHoroscopes')}
               >
-                <Text style={styles.buttonText}>{translations.tryItNow}</Text>
-              </TouchableOpacity>
+                {translations.tryItNow}
+              </Button>
             </View>
             <View style={styles.featureItem}>
               <Text style={styles.featureTitle}>{translations.compatibility}</Text>
               <Text style={styles.featureDescription}>
                 {translations.compatibilityDesc}
               </Text>
-              <TouchableOpacity 
-                style={styles.button} 
+              <Button 
+                variant="default"
+                size="sm"
                 onPress={() => handleFeatureClick('Compatibility')}
               >
-                <Text style={styles.buttonText}>{translations.tryItNow}</Text>
-              </TouchableOpacity>
+                {translations.tryItNow}
+              </Button>
             </View>
             <View style={styles.featureItem}>
               <Text style={styles.featureTitle}>{translations.tarotReadings}</Text>
               <Text style={styles.featureDescription}>
                 {translations.tarotDesc}
               </Text>
-              <TouchableOpacity 
-                style={styles.button} 
+              <Button 
+                variant="default"
+                size="sm"
                 onPress={() => handleFeatureClick('TarotReadings')}
               >
-                <Text style={styles.buttonText}>{translations.tryItNow}</Text>
-              </TouchableOpacity>
+                {translations.tryItNow}
+              </Button>
             </View>
           </View>
         </View>

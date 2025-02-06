@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-nativ
 import { useLanguage } from '../../context/LanguageContext';
 import Layout from '../layout/Layout';
 import { checkoutStyles as styles } from './styles/CheckoutStyles';
+import { Button } from '../shared/Button';
 
 const Checkout = () => {
   const { translations } = useLanguage();
@@ -88,14 +89,13 @@ const Checkout = () => {
           </View>
         </View>
 
-        <TouchableOpacity 
-          style={styles.submitButton}
+        <Button 
+          variant="default"
+          size="sm"
           onPress={handleSubmit}
         >
-          <Text style={styles.submitButtonText}>
-            {translations.placeOrder}
-          </Text>
-        </TouchableOpacity>
+          {translations.placeOrder}
+        </Button>
       </ScrollView>
     </Layout>
   );
