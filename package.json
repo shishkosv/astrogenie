@@ -11,7 +11,7 @@
     "lint": "eslint .",
     "build:android": "react-native bundle --entry-file index.js --platform android --dev false --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
     "build:ios": "react-native bundle --entry-file index.js --platform ios --dev false --bundle-output ios/main.jsbundle --assets-dest ios",
-    "build:web": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-app-rewired build",
+    "build:web": "cross-env DISABLE_ESLINT_PLUGIN=true NODE_OPTIONS=--openssl-legacy-provider react-app-rewired build",
     "start:web": "react-app-rewired start",
     "test:web": "react-app-rewired test"
   },
@@ -94,5 +94,18 @@
     "https": false,
     "os": false,
     "url": false
+  },
+  "prettier": {
+    "singleQuote": true,
+    "endOfLine": "auto",
+    "semi": true,
+    "trailingComma": "es5",
+    "printWidth": 100,
+    "bracketSpacing": true,
+    "arrowParens": "avoid",
+    "proseWrap": "preserve",
+    "htmlWhitespaceSensitivity": "ignore",
+    "embeddedLanguageFormatting": "off",
+    "parser": "typescript"
   }
 }

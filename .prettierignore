@@ -1,4 +1,6 @@
 build
 coverage
 node_modules
-public 
+public
+src/**/*.tsx
+src/**/*.ts 

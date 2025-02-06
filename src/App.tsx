@@ -1,27 +1,15 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { AstrologyProvider } from './context/AstrologyContext';
-import { LocalizationProvider } from './context/LocalizationContext';
-import { RegistrationScreen } from './screens/RegistrationScreen';
+import { View, Platform } from 'react-native';
+import AppNavigator from './navigation/AppNavigator';
+import MobileLanding from './components/landing/MobileLanding';
+import { LanguageProvider } from './context/LanguageContext';
 
-const Stack = createStackNavigator();
-
-function App(): JSX.Element {
-  return (
-    <SafeAreaProvider>
-      <NavigationContainer>
-        <LocalizationProvider>
-          <AstrologyProvider>
-            <Stack.Navigator>
-              <Stack.Screen name="Registration" component={RegistrationScreen} />
-            </Stack.Navigator>
-          </AstrologyProvider>
-        </LocalizationProvider>
-      </NavigationContainer>
-    </SafeAreaProvider>
-  );
-}
+const App = () => (
+  <LanguageProvider>
+    <View style={{ flex: 1 }}>
+      {Platform.OS === 'web' ? <AppNavigator /> : <MobileLanding />}
+    </View>
+  </LanguageProvider>
+);
 
 export default App;

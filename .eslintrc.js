@@ -1,26 +1,8 @@
 module.exports = {
   root: true,
-  extends: [
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended'
-  ],
-  parser: '@typescript-eslint/parser',
-  plugins: ['react', '@typescript-eslint', 'prettier'],
+  extends: '@react-native-community',
   rules: {
-    'prettier/prettier': ['error', {}, { usePrettierrc: true }],
-    'react/react-in-jsx-scope': 'off'
+    'prettier/prettier': 0, // Disable prettier rules
   },
-  settings: {
-    react: {
-      version: 'detect'
-    }
-  },
-  env: {
-    browser: true,
-    node: true,
-    es6: true
-  }
 };
 

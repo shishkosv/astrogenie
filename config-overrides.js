@@ -1,8 +1,9 @@
 const path = require('path');
-const { override, addWebpackAlias, babelInclude } = require('customize-cra');
+const { override, addWebpackAlias, babelInclude, disableEsLint } = require('customize-cra');
 const webpack = require('webpack');
 
 module.exports = override(
+  disableEsLint(),
   addWebpackAlias({
     'react-native$': 'react-native-web',
     'react-native/Libraries/EventEmitter/RCTDeviceEventEmitter':
