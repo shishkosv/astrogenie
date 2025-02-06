@@ -8,7 +8,8 @@ import { styles } from './styles';
 import { useLanguage } from '../../context/LanguageContext';
 import { useAuth } from '../../context/AuthContext';
 import { Button } from '../shared/Button';
-import SignLists from '../zodiac/SignLists';
+import SignLists from './horoscope/SignLists';
+import TarotReadings from './tarot/TarotReadings';
 
 // Import images
 import androidBadge from '../../assets/images/download_ android.png';

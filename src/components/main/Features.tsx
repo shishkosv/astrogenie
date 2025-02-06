@@ -9,6 +9,9 @@ import { useLanguage } from '../../context/LanguageContext';
 import { useAuth } from '../../context/AuthContext';
 import { featureStyles as styles } from './styles/FeatureStyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import TarotReadings from './tarot/TarotReadings';
+import SignLists from './horoscope/SignLists';
+import SignTraits from './horoscope/SignTraits';
 
 type NavigationProp = StackNavigationProp<RootStackParamList>;
 

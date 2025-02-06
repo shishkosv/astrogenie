@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import WebLanding from '../components/landing/WebLanding';
 import Home from '../components/main/Home';
-import TarotReadings from '../components/main/TarotReadings';
+import TarotReadings from '../components/main/tarot/TarotReadings';
 import Features from '../components/main/Features';
 import About from '../components/main/About';
 import Contact from '../components/main/Contact';
@@ -20,8 +20,9 @@ import Checkout from '../components/cart/Checkout';
 import Subscription from '../components/cart/Subscription';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import BirthChart from '../components/main/BirthChart';
-import SignLists from '../components/zodiac/SignLists';
-import TarotReadingDetail from '../components/main/TarotReadingDetail';
+import SignLists from '../components/main/horoscope/SignLists';
+import SignTraits from '../components/main/horoscope/SignTraits';
+import TarotReadingDetail from '../components/main/tarot/TarotReadingDetail';
 
 export type RootStackParamList = {
   Landing: undefined;
@@ -43,6 +44,7 @@ export type RootStackParamList = {
   Subscription: undefined;
   BirthChart: undefined;
   SignLists: undefined;
+  SignTraits: undefined;
   TarotReadingDetail: {
     reading: {
       id: string;
@@ -84,6 +86,7 @@ const AppNavigator = () => {
         <Stack.Screen name="Subscription" component={Subscription} />
         <Stack.Screen name="BirthChart" component={BirthChart} />
         <Stack.Screen name="SignLists" component={SignLists} />
+        <Stack.Screen name="SignTraits" component={SignTraits} />
         <Stack.Screen name="TarotReadingDetail" component={TarotReadingDetail} />
       </Stack.Navigator>
     </NavigationContainer>

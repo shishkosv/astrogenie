@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, ScrollView } from 'react-native';
-import Layout from '../layout/Layout';
-import { Button } from '../shared/Button';
+import Layout from '../../layout/Layout';
+import { Button } from '../../shared/Button';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
-import type { RootStackParamList } from '../../navigation/AppNavigator';
+import type { RootStackParamList } from '../../../navigation/AppNavigator';
 import { tarotStyles as styles } from './styles/TarotStyles';
 
 type NavigationProp = StackNavigationProp<RootStackParamList>;
