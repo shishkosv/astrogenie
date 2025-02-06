@@ -6,6 +6,7 @@ import type { RootStackParamList } from '../../navigation/AppNavigator';
 import Layout from '../layout/Layout';
 import { styles } from './styles';
 import { useLanguage } from '../../context/LanguageContext';
+import { useAuth } from '../../context/AuthContext';
 
 // Import images
 import androidBadge from '../../assets/images/download_ android.png';
@@ -16,17 +17,14 @@ type NavigationProp = StackNavigationProp<RootStackParamList, 'Landing'>;
 const Home = () => {
   const navigation = useNavigation<NavigationProp>();
   const { translations } = useLanguage();
+  const { isAuthenticated } = useAuth();
 
-  const handleTarotNavigation = () => {
-    navigation.navigate('TarotReadings');
-  };
-
-  const handleHoroscopeNavigation = () => {
-    navigation.navigate('DailyHoroscopes');
-  };
-
-  const handleCompatibilityNavigation = () => {
-    navigation.navigate('Compatibility');
+  const handleNavigation = (route: keyof RootStackParamList) => {
+    if (!isAuthenticated) {
+      navigation.navigate('Registration');
+    } else {
+      navigation.navigate(route);
+    }
   };
 
   return (
@@ -60,39 +58,42 @@ const Home = () => {
         </View>
 
         <View style={styles.features}>
-          <Text style={styles.sectionTitle}>Features</Text>
+          <Text style={styles.sectionTitle}>{translations.features}</Text>
           <View style={styles.featureList}>
             <View style={styles.featureItem}>
-              <Text style={styles.featureTitle}>Daily Horoscopes</Text>
+              <Text style={styles.featureTitle}>{translations.dailyHoroscopes}</Text>
               <Text style={styles.featureDescription}>
-                Get personalized daily horoscopes based on your zodiac sign.
+                {translations.horoscopesDesc}
               </Text>
               <TouchableOpacity 
                 style={styles.button} 
-                onPress={handleHoroscopeNavigation}
+                onPress={() => handleNavigation('DailyHoroscopes')}
               >
-                <Text style={styles.buttonText}>Try it Now</Text>
+                <Text style={styles.buttonText}>{translations.tryItNow}</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.featureItem}>
-              <Text style={styles.featureTitle}>Compatibility Check</Text>
+              <Text style={styles.featureTitle}>{translations.compatibility}</Text>
               <Text style={styles.featureDescription}>
-                Check your compatibility with friends and potential partners.
+                {translations.compatibilityDesc}
               </Text>
               <TouchableOpacity 
                 style={styles.button} 
-                onPress={handleCompatibilityNavigation}
+                onPress={() => handleNavigation('Compatibility')}
               >
-                <Text style={styles.buttonText}>Try it Now</Text>
+                <Text style={styles.buttonText}>{translations.tryItNow}</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.featureItem}>
-              <Text style={styles.featureTitle}>Tarot Readings</Text>
+              <Text style={styles.featureTitle}>{translations.tarotReadings}</Text>
               <Text style={styles.featureDescription}>
-                Receive insightful tarot card readings at your fingertips.
+                {translations.tarotDesc}
               </Text>
-              <TouchableOpacity style={styles.button} onPress={handleTarotNavigation}>
-                <Text style={styles.buttonText}>Try Tarot Reading</Text>
+              <TouchableOpacity 
+                style={styles.button} 
+                onPress={() => handleNavigation('TarotReadings')}
+              >
+                <Text style={styles.buttonText}>{translations.tryItNow}</Text>
               </TouchableOpacity>
             </View>
           </View>

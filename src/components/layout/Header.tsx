@@ -5,12 +5,15 @@ import type { StackNavigationProp } from '@react-navigation/stack';
 import type { RootStackParamList } from '../../navigation/AppNavigator';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useLanguage } from '../../context/LanguageContext';
+import { useAuth } from '../../context/AuthContext';
+import AccountMenu from './AccountMenu';
 
 type NavigationProp = StackNavigationProp<RootStackParamList>;
 
 const Header = () => {
   const navigation = useNavigation<NavigationProp>();
   const { translations } = useLanguage();
+  const { isAuthenticated } = useAuth();
 
   const handleNavigation = (route: keyof RootStackParamList) => {
     navigation.navigate(route);
@@ -35,6 +38,7 @@ const Header = () => {
           <Text style={styles.navItem}>{translations.contact}</Text>
         </TouchableOpacity>
         <LanguageSwitcher />
+        {isAuthenticated && <AccountMenu />}
       </View>
     </View>
   );
