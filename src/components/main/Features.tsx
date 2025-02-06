@@ -127,21 +127,6 @@ const Features = () => {
         ]}>
           {features.map((feature, index) => renderFeatureCard(feature, index))}
         </View>
-
-        <View style={styles.featureCard}>
-          <Ionicons name="analytics" size={32} color="#CFA2FB" />
-          <Text style={styles.featureTitle}>Birth Chart Analysis</Text>
-          <Text style={styles.featureDescription}>
-            Discover the unique planetary positions at your birth moment and understand their influence on your life path.
-          </Text>
-          <Button
-            variant="secondary"
-            size="sm"
-            onPress={() => navigation.navigate('BirthChart')}
-          >
-            View Birth Chart
-          </Button>
-        </View>
       </ScrollView>
     </Layout>
   );

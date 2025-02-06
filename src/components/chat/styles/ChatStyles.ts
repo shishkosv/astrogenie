@@ -26,7 +26,7 @@ export const chatStyles = StyleSheet.create({
     width: 56,
     height: 56,
     borderRadius: 28,
-    backgroundColor: '#CFA2FB',
+    backgroundColor: '#82A615',
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
@@ -39,7 +39,7 @@ export const chatStyles = StyleSheet.create({
     elevation: 4,
   },
   header: {
-    backgroundColor: '#CFA2FB',
+    backgroundColor: '#82A615',
     padding: 16,
     flexDirection: 'row',
     alignItems: 'center',
