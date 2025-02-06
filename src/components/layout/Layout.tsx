@@ -21,10 +21,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
+    position: 'relative',
   },
   content: {
     flex: 1,
     width: '100%',
+    position: 'relative',
+    zIndex: 1,
   },
 });
 

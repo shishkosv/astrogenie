@@ -59,6 +59,8 @@ const translations = {
     premiumFeature: 'Premium Feature',
     upgradeForFullAccess: 'Upgrade to Premium to access detailed compatibility analysis and personalized insights.',
     upgradeToPremium: 'Upgrade to Premium',
+    subscription: "Subscription",
+    termsAndPolicies: "Terms & Policies",
   },
   es: {
     welcome: 'Bienvenido a AstroConnect',
@@ -110,6 +112,8 @@ const translations = {
     premiumFeature: 'Función Premium',
     upgradeForFullAccess: 'Actualiza a Premium para acceder a análisis de compatibilidad detallados y perspectivas personalizadas.',
     upgradeToPremium: 'Actualizar a Premium',
+    subscription: "Suscripción",
+    termsAndPolicies: "Términos y Políticas",
   },
 };
 

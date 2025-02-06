@@ -3,12 +3,17 @@ import { StyleSheet } from 'react-native';
 export const accountMenuStyles = StyleSheet.create({
   container: {
     position: 'relative',
+    zIndex: 9999,
   },
-  menuButton: {
-    color: '#333',
-    fontSize: 16,
-    fontWeight: '500',
-    padding: 8,
+  avatarContainer: {
+    padding: 4,
+  },
+  avatar: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    borderWidth: 2,
+    borderColor: '#e5e7eb',
   },
   dropdown: {
     position: 'absolute',
@@ -17,7 +22,7 @@ export const accountMenuStyles = StyleSheet.create({
     backgroundColor: '#ffffff',
     borderRadius: 8,
     padding: 8,
-    minWidth: 200,
+    width: 280,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -26,22 +31,6 @@ export const accountMenuStyles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    zIndex: 1000,
-  },
-  menuItem: {
-    padding: 12,
-    borderRadius: 4,
-  },
-  menuText: {
-    color: '#333',
-    fontSize: 14,
-  },
-  logoutText: {
-    color: '#dc3545',
-  },
-  divider: {
-    height: 1,
-    backgroundColor: '#eaeaea',
-    marginVertical: 8,
+    zIndex: 9999,
   },
 }); 

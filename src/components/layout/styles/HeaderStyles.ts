@@ -9,6 +9,8 @@ export const headerStyles = StyleSheet.create({
     backgroundColor: '#ffffff',
     borderBottomWidth: 1,
     borderBottomColor: '#eaeaea',
+    position: 'relative',
+    zIndex: 1000,
   },
   logo: {
     width: 40,

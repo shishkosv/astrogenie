@@ -1,74 +1,44 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import type { StackNavigationProp } from '@react-navigation/stack';
-import type { RootStackParamList } from '../../navigation/AppNavigator';
+import { View, TouchableOpacity, Image } from 'react-native';
 import { useAuth } from '../../context/AuthContext';
-import { useLanguage } from '../../context/LanguageContext';
+import ProfileExtended from '../profile/ProfileExtended';
 import { accountMenuStyles as styles } from './styles/AccountMenuStyles';
-
-type NavigationProp = StackNavigationProp<RootStackParamList>;
 
 const AccountMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const navigation = useNavigation<NavigationProp>();
-  const { logout } = useAuth();
-  const { translations } = useLanguage();
+  const { user } = useAuth();
 
   const handleMenuToggle = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleLogout = () => {
-    logout();
-    navigation.navigate('Landing');
-    setIsOpen(false);
-  };
-
-  const handleNavigate = (route: keyof RootStackParamList) => {
-    navigation.navigate(route);
+  const handleClose = () => {
     setIsOpen(false);
   };
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={handleMenuToggle}>
-        <Text style={styles.menuButton}>{translations.account}</Text>
+      <TouchableOpacity 
+        onPress={handleMenuToggle}
+        style={styles.avatarContainer}
+      >
+        <Image
+          source={{ 
+            uri: "https://ferf1mheo22r9ira.public.blob.vercel-storage.com/avatar-01-n0x8HFv8EUetf9z6ht0wScJKoTHqf8.png" 
+          }}
+          style={styles.avatar}
+        />
       </TouchableOpacity>
       
       {isOpen && (
         <View style={styles.dropdown}>
-          <TouchableOpacity 
-            style={styles.menuItem}
-            onPress={() => handleNavigate('Profile')}
-          >
-            <Text style={styles.menuText}>{translations.profile}</Text>
-          </TouchableOpacity>
-          
-          <TouchableOpacity 
-            style={styles.menuItem}
-            onPress={() => handleNavigate('Settings')}
-          >
-            <Text style={styles.menuText}>{translations.settings}</Text>
-          </TouchableOpacity>
-          
-          <TouchableOpacity 
-            style={styles.menuItem}
-            onPress={() => handleNavigate('Favorites')}
-          >
-            <Text style={styles.menuText}>{translations.favorites}</Text>
-          </TouchableOpacity>
-          
-          <View style={styles.divider} />
-          
-          <TouchableOpacity 
-            style={styles.menuItem}
-            onPress={handleLogout}
-          >
-            <Text style={[styles.menuText, styles.logoutText]}>
-              {translations.logout}
-            </Text>
-          </TouchableOpacity>
+          <ProfileExtended 
+            name={user?.name}
+            role="User"
+            avatar="https://ferf1mheo22r9ira.public.blob.vercel-storage.com/avatar-01-n0x8HFv8EUetf9z6ht0wScJKoTHqf8.png"
+            subscription="Free Trial"
+            onClose={handleClose}
+          />
         </View>
       )}
     </View>

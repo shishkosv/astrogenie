@@ -13,7 +13,8 @@ module.exports = override(
       'react-native-web/dist/vendor/react-native/NativeEventEmitter',
     '@react-native': 'react-native-web',
     'react-native/Libraries/Components/View/ViewStylePropTypes': 'react-native-web/dist/exports/View/ViewStylePropTypes',
-    'react-native/Libraries/EventEmitter/NativeEventEmitter': 'react-native-web/dist/vendor/react-native/NativeEventEmitter'
+    'react-native/Libraries/EventEmitter/NativeEventEmitter': 'react-native-web/dist/vendor/react-native/NativeEventEmitter',
+    '@expo/vector-icons': 'react-native-vector-icons',
   }),
   babelInclude([
     path.resolve(__dirname, 'src'),
@@ -58,6 +59,23 @@ module.exports = override(
         Buffer: ['buffer', 'Buffer']
       })
     ];
+
+    return config;
+  },
+  (config) => {
+    // Add rule for font files
+    config.module.rules.push({
+      test: /\.(ttf|eot|svg)$/,
+      use: [
+        {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+          },
+        },
+      ],
+      include: path.resolve(__dirname, 'node_modules/react-native-vector-icons'),
+    });
 
     return config;
   }
