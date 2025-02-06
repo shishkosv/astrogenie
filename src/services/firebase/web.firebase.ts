@@ -1,11 +1,11 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword, signOut, User, Auth } from 'firebase/auth';
 import { FirebaseService } from './types';
 
 export class WebFirebaseService implements FirebaseService {
-  private auth: any;
+  private auth: Auth;
 
-  async initialize() {
+  async initialize(): Promise<void> {
     const firebaseConfig = {
       // Your web Firebase config
     };
@@ -13,15 +13,16 @@ export class WebFirebaseService implements FirebaseService {
     this.auth = getAuth(app);
   }
 
-  async signIn(email: string, password: string) {
-    return signInWithEmailAndPassword(this.auth, email, password);
+  async signIn(email: string, password: string): Promise<User> {
+    const result = await signInWithEmailAndPassword(this.auth, email, password);
+    return result.user;
   }
 
-  async signOut() {
+  async signOut(): Promise<void> {
     return signOut(this.auth);
   }
 
-  getCurrentUser() {
+  getCurrentUser(): User | null {
     return this.auth.currentUser;
   }
-} 
+}

@@ -11,4 +11,4 @@ export const createFirebaseService = (): FirebaseService => {
 };
 
 // Export a singleton instance
-export const firebaseService = createFirebaseService(); 
+export const firebaseService = createFirebaseService();

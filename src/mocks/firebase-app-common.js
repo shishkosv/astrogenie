@@ -1,9 +1,17 @@
 module.exports = {
   DEFAULT_APP_NAME: '[DEFAULT]',
-  getApp: () => ({}),
+  getApp: () => ({
+    name: '[DEFAULT]',
+    options: {},
+  }),
   getApps: () => [],
-  initializeApp: () => ({}),
+  initializeApp: () => ({
+    name: '[DEFAULT]',
+    options: {},
+  }),
   // Add other common methods you might need
   isValidAppName: () => true,
-  registerVersion: () => {},
-}; 
+  registerVersion: (name, version, variant) => {
+    return { name, version, variant };
+  },
+};

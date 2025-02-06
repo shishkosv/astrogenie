@@ -12,7 +12,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = firebase.auth().onAuthStateChanged((firebaseUser) => {
+    const unsubscribe = firebase.auth().onAuthStateChanged(firebaseUser => {
       if (firebaseUser) {
         setUser({
           id: firebaseUser.uid,

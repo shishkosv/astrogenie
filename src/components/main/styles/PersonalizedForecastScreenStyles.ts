@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native"
+import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   container: {
@@ -7,7 +7,7 @@ export default StyleSheet.create({
   },
   header: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 10,
   },
   subHeader: {
@@ -15,7 +15,7 @@ export default StyleSheet.create({
     marginBottom: 20,
   },
   forecastContainer: {
-    backgroundColor: "#f0f0f0",
+    backgroundColor: '#f0f0f0',
     padding: 15,
     borderRadius: 10,
     marginBottom: 20,
@@ -25,17 +25,16 @@ export default StyleSheet.create({
     lineHeight: 24,
   },
   button: {
-    width: "100%",
+    width: '100%',
     height: 40,
-    backgroundColor: "blue",
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: 'blue',
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 5,
   },
   buttonText: {
-    color: "white",
+    color: 'white',
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
-})
-
+});

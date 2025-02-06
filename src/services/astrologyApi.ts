@@ -60,7 +60,7 @@ export const getHoroscope = async (
   sign: string,
   day: 'today' | 'tomorrow' | 'yesterday' = 'today'
 ): Promise<Horoscope> => {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     setTimeout(() => {
       const horoscope = horoscopes[sign] || {
         sign,
@@ -85,7 +85,7 @@ export const getCompatibilityScore = async (
   sign1: string,
   sign2: string
 ): Promise<Compatibility> => {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     setTimeout(() => {
       const key = `${sign1}-${sign2}`;
       const reversedKey = `${sign2}-${sign1}`;
@@ -102,7 +102,7 @@ export const getCompatibilityScore = async (
 };
 
 export const getTarotReading = async (): Promise<TarotCard[]> => {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     setTimeout(() => {
       const reading = tarotCards.sort(() => 0.5 - Math.random()).slice(0, 3);
       resolve(reading);

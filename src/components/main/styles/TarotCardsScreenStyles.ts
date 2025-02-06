@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native"
+import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   container: {
@@ -7,43 +7,42 @@ export default StyleSheet.create({
   },
   header: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 20,
   },
   button: {
-    width: "100%",
+    width: '100%',
     height: 40,
-    backgroundColor: "blue",
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: 'blue',
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 5,
     marginBottom: 20,
   },
   buttonText: {
-    color: "white",
+    color: 'white',
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   cardsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    flexWrap: "wrap",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
   },
   cardItem: {
-    width: "30%",
+    width: '30%',
     aspectRatio: 0.6,
     marginBottom: 20,
-    alignItems: "center",
+    alignItems: 'center',
   },
   cardImage: {
-    width: "100%",
-    height: "80%",
-    resizeMode: "cover",
+    width: '100%',
+    height: '80%',
+    resizeMode: 'cover',
     borderRadius: 10,
   },
   cardName: {
     marginTop: 5,
-    textAlign: "center",
+    textAlign: 'center',
   },
-})
-
+});

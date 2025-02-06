@@ -1,9 +1,17 @@
 // Basic mock implementation
 const auth = () => ({
-  signInWithEmailAndPassword: async (email, password) => ({}),
-  signOut: async () => {},
-  currentUser: null
+  signInWithEmailAndPassword: async (email, password) => ({
+    user: {
+      email,
+      uid: 'mock-uid',
+    },
+  }),
+  signOut: async () => {
+    // Mock implementation that returns a resolved promise
+    return Promise.resolve();
+  },
+  currentUser: null,
 });
 
 auth.default = auth;
-module.exports = auth; 
+module.exports = auth;

@@ -17,4 +17,4 @@ export class MobileFirebaseService implements FirebaseService {
   getCurrentUser() {
     return auth().currentUser;
   }
-} 
+}

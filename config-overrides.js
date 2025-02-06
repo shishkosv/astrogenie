@@ -20,6 +20,11 @@ module.exports = override(
     path.resolve(__dirname, 'node_modules/@react-native-firebase/app'),
   ]),
   (config, env) => {
+    // Disable fork-ts-checker-webpack-plugin
+    config.plugins = config.plugins.filter(plugin => 
+      plugin.constructor.name !== 'ForkTsCheckerWebpackPlugin'
+    );
+
     config.resolve = {
       ...config.resolve,
       extensions: ['.web.js', '.js', '.ts', '.tsx'],

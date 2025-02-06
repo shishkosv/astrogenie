@@ -5,4 +5,4 @@ export interface FirebaseService {
   // Add other methods you need
   getCurrentUser(): any;
   // ... other common methods
-} 
+}

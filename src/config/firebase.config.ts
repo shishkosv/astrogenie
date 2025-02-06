@@ -7,9 +7,9 @@ export const getFirebaseConfig = () => {
       // ... other web config
     };
   }
-  
+
   return {
     // Mobile config if needed
     // Note: Usually not needed as google-services.json/GoogleService-Info.plist handles this
   };
-}; 
+};
