@@ -3,6 +3,7 @@ const auth = () => ({
   signInWithEmailAndPassword: async (email, password) => ({
     user: {
       email,
+      password,
       uid: 'mock-uid',
     },
   }),

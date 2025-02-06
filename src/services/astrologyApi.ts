@@ -1,4 +1,4 @@
-import type { Horoscope, Compatibility, TarotCard } from '../types/astrology';
+import type { Horoscope, Compatibility, TarotCard } from '../types';
 
 // Mock data
 const horoscopes: Record<string, Horoscope> = {
@@ -54,58 +54,50 @@ const tarotCards: TarotCard[] = [
   // ... add more cards
 ];
 
-const API_BASE_URL = 'https://aztro.sameerkumar.website';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:3000';
 
-export const getHoroscope = async (
-  sign: string,
-  day: 'today' | 'tomorrow' | 'yesterday' = 'today'
-): Promise<Horoscope> => {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      const horoscope = horoscopes[sign] || {
-        sign,
-        date: new Date().toISOString().split('T')[0],
-        description: 'No horoscope available for this sign.',
-      };
-      resolve({
-        ...horoscope,
-        date: new Date(
-          new Date().setDate(
-            new Date().getDate() + (day === 'tomorrow' ? 1 : day === 'yesterday' ? -1 : 0)
-          )
-        )
-          .toISOString()
-          .split('T')[0],
-      });
-    }, 500);
-  });
+export const fetchHoroscope = async (sign: string): Promise<Horoscope> => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/horoscope/${sign}`);
+    if (!response.ok) throw new Error('Failed to fetch horoscope');
+    const data: Horoscope = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching horoscope:', error);
+    throw error;
+  }
 };
 
-export const getCompatibilityScore = async (
-  sign1: string,
-  sign2: string
-): Promise<Compatibility> => {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      const key = `${sign1}-${sign2}`;
-      const reversedKey = `${sign2}-${sign1}`;
-      const compatibility = compatibilityScores[key] ||
-        compatibilityScores[reversedKey] || {
-          sign1,
-          sign2,
-          score: Math.floor(Math.random() * 100),
-          description: `The compatibility between ${sign1} and ${sign2} is unique and complex. Explore their individual traits to understand their potential connection.`,
-        };
-      resolve(compatibility);
-    }, 500);
-  });
+export const getCompatibilityScore = async (sign1: string, sign2: string): Promise<number> => {
+  try {
+    const compatibility = await fetchCompatibility(sign1, sign2);
+    return compatibility.score;
+  } catch (error) {
+    console.error('Error getting compatibility score:', error);
+    throw error;
+  }
 };
 
-export const getTarotReading = async (): Promise<TarotCard[]> => {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      const reading = tarotCards.sort(() => 0.5 - Math.random()).slice(0, 3);
-      resolve(reading);
-    }, 500);
-  });
+export const fetchCompatibility = async (sign1: string, sign2: string): Promise<Compatibility> => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/compatibility/${sign1}/${sign2}`);
+    if (!response.ok) throw new Error('Failed to fetch compatibility');
+    const data: Compatibility = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching compatibility:', error);
+    throw error;
+  }
+};
+
+export const fetchTarotCard = async (): Promise<TarotCard> => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/tarot/daily`);
+    if (!response.ok) throw new Error('Failed to fetch tarot card');
+    const data: TarotCard = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching tarot card:', error);
+    throw error;
+  }
 };
