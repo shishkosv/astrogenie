@@ -1,52 +1,76 @@
-import React from 'react';
-import { TouchableOpacity, Text, View, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { useLanguage } from '../../context/LanguageContext';
+import { FLAGS } from '../../constants/images';
+import { languageSwitcherStyles as styles } from './styles/LanguageSwitcherStyles';
 
 const LanguageSwitcher = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const { language, setLanguage } = useLanguage();
+
+  const handleLanguageChange = (newLang: 'en' | 'es') => {
+    setLanguage(newLang);
+    setIsOpen(false);
+  };
 
   return (
     <View style={styles.container}>
       <TouchableOpacity 
-        style={[styles.button, language === 'en' && styles.activeButton]} 
-        onPress={() => setLanguage('en')}
+        style={styles.button} 
+        onPress={() => setIsOpen(!isOpen)}
       >
-        <Text style={[styles.text, language === 'en' && styles.activeText]}>EN</Text>
+        <Image 
+          source={FLAGS[language]} 
+          style={styles.flagIcon}
+        />
+        <Text style={styles.selectedText}>
+          {language.toUpperCase()}
+        </Text>
       </TouchableOpacity>
-      <TouchableOpacity 
-        style={[styles.button, language === 'es' && styles.activeButton]}
-        onPress={() => setLanguage('es')}
-      >
-        <Text style={[styles.text, language === 'es' && styles.activeText]}>ES</Text>
-      </TouchableOpacity>
+
+      {isOpen && (
+        <View style={styles.dropdown}>
+          <TouchableOpacity 
+            style={[
+              styles.languageOption,
+              language === 'en' && styles.activeOption
+            ]}
+            onPress={() => handleLanguageChange('en')}
+          >
+            <Image 
+              source={FLAGS.en} 
+              style={styles.flagIcon}
+            />
+            <Text style={[
+              styles.optionText,
+              language === 'en' && styles.activeText
+            ]}>
+              English
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={[
+              styles.languageOption,
+              language === 'es' && styles.activeOption
+            ]}
+            onPress={() => handleLanguageChange('es')}
+          >
+            <Image 
+              source={FLAGS.es} 
+              style={styles.flagIcon}
+            />
+            <Text style={[
+              styles.optionText,
+              language === 'es' && styles.activeText
+            ]}>
+              Español
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    gap: 10,
-  },
-  button: {
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: '#333',
-  },
-  activeButton: {
-    backgroundColor: '#4a0e4e',
-    borderColor: '#4a0e4e',
-  },
-  text: {
-    color: '#333',
-    fontSize: 14,
-    fontWeight: '500',
-  },
-  activeText: {
-    color: '#ffffff',
-  },
-});
 
 export default LanguageSwitcher; 

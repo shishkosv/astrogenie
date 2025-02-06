@@ -1,5 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
+import type { RootStackParamList } from '../../navigation/AppNavigator';
+import { useLanguage } from '../../context/LanguageContext';
+import { footerStyles as styles } from './styles/FooterStyles';
 
 const Footer = () => {
   return (
@@ -8,19 +13,5 @@ const Footer = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  footer: {
-    padding: 20,
-    backgroundColor: '#ffffff',
-    borderTopWidth: 1,
-    borderTopColor: '#eaeaea',
-    alignItems: 'center',
-  },
-  footerText: {
-    color: '#666',
-    fontSize: 14,
-  },
-});
 
 export default Footer; 
