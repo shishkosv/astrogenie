@@ -1,48 +1,78 @@
-import React, { useState } from 'react';
-import { View, TouchableOpacity, Image } from 'react-native';
+import React from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../../context/AuthContext';
-import ProfileExtended from '../profile/ProfileExtended';
-import { accountMenuStyles as styles } from './styles/AccountMenuStyles';
+import { useUser } from '../../context/UserContext';
+import Icon from '../icons/Icon';
 
-const AccountMenu = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const { user } = useAuth();
+export const AccountMenu = () => {
+  const navigation = useNavigation();
+  const { isAuthenticated, logout } = useAuth();
+  const { userData } = useUser();
 
-  const handleMenuToggle = () => {
-    setIsOpen(!isOpen);
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigation.navigate('Home');
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
   };
 
-  const handleClose = () => {
-    setIsOpen(false);
-  };
+  if (!isAuthenticated) {
+    return (
+      <View style={styles.container}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate('Login')}
+        >
+          <Icon name="user" size={20} color="#666" />
+          <Text style={styles.buttonText}>Login</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity 
-        onPress={handleMenuToggle}
-        style={styles.avatarContainer}
-      >
-        <Image
-          source={{ 
-            uri: "https://ferf1mheo22r9ira.public.blob.vercel-storage.com/avatar-01-n0x8HFv8EUetf9z6ht0wScJKoTHqf8.png" 
-          }}
-          style={styles.avatar}
-        />
+      <View style={styles.userInfo}>
+        <Icon name="user" size={20} color="#666" />
+        <Text style={styles.userName}>{userData?.name || 'User'}</Text>
+      </View>
+      <TouchableOpacity style={styles.button} onPress={handleLogout}>
+        <Icon name="log-out" size={20} color="#666" />
+        <Text style={styles.buttonText}>Logout</Text>
       </TouchableOpacity>
-      
-      {isOpen && (
-        <View style={styles.dropdown}>
-          <ProfileExtended 
-            name={user?.name}
-            role="User"
-            avatar="https://ferf1mheo22r9ira.public.blob.vercel-storage.com/avatar-01-n0x8HFv8EUetf9z6ht0wScJKoTHqf8.png"
-            subscription="Free Trial"
-            onClose={handleClose}
-          />
-        </View>
-      )}
     </View>
   );
 };
 
-export default AccountMenu; 
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 16,
+  },
+  userInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  userName: {
+    fontSize: 16,
+    color: '#333',
+    fontWeight: '500',
+  },
+  button: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    padding: 8,
+    borderRadius: 8,
+    backgroundColor: '#f8f9fa',
+  },
+  buttonText: {
+    fontSize: 14,
+    color: '#666',
+  },
+}); 

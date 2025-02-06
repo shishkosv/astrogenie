@@ -1,51 +1,61 @@
-import type React from 'react';
-import { TextInput, StyleSheet, View, Text } from 'react-native';
+import React from 'react';
+import { View, Text, TextInput, StyleSheet, TextInputProps } from 'react-native';
 
-interface InputProps {
-  value: string;
-  onChangeText: (text: string) => void;
-  placeholder?: string;
-  secureTextEntry?: boolean;
+interface InputProps extends TextInputProps {
   label?: string;
+  error?: string;
 }
 
-const Input: React.FC<InputProps> = ({
-  value,
-  onChangeText,
-  placeholder,
-  secureTextEntry = false,
-  label,
+export const Input: React.FC<InputProps> = ({ 
+  label, 
+  error, 
+  style,
+  ...props 
 }) => {
   return (
-    <View style={styles.container}>
-      {label && <Text style={styles.label}>{label}</Text>}
-      <TextInput
-        style={styles.input}
-        value={value}
-        onChangeText={onChangeText}
-        placeholder={placeholder}
-        secureTextEntry={secureTextEntry}
-      />
+    <View style={styles.inputField}>
+      {label && (
+        <Text style={styles.label}>{label}</Text>
+      )}
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={[styles.input, style]}
+          placeholderTextColor="#666"
+          {...props}
+        />
+      </View>
+      {error && (
+        <Text style={styles.errorText}>{error}</Text>
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  inputField: {
     marginBottom: 16,
   },
   label: {
-    fontSize: 16,
-    marginBottom: 8,
+    fontSize: 14,
+    fontWeight: '500',
     color: '#333',
+    marginBottom: 8,
+  },
+  inputContainer: {
+    backgroundColor: '#f8f9fa',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    padding: 12,
+    height: 40,
+    paddingHorizontal: 16,
     fontSize: 16,
+    color: '#333',
+  },
+  errorText: {
+    color: '#dc2626',
+    fontSize: 12,
+    marginTop: 4,
   },
 });
-
-export default Input;

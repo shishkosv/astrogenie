@@ -7,6 +7,7 @@ import Layout from '../layout/Layout';
 import { useLanguage } from '../../context/LanguageContext';
 import { useAuth } from '../../context/AuthContext';
 import { Button } from '../shared/Button';
+import { Input } from '../shared/Input';
 import { loginStyles as styles } from './styles/LoginStyles';
 import Icon from '../icons/Icon';
 
@@ -16,18 +17,16 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState('');
-  
+  const { login, loading, error } = useAuth();
   const navigation = useNavigation<NavigationProp>();
   const { translations } = useLanguage();
-  const { login } = useAuth();
 
   const handleLogin = async () => {
     try {
       await login(email, password);
       navigation.navigate('Home');
     } catch (err) {
-      setError('Invalid email or password');
+      // Error is handled in AuthContext
     }
   };
 
@@ -39,61 +38,36 @@ const Login = () => {
           <View style={styles.column}>
             <View style={styles.formWrapper}>
               <View style={styles.formContent}>
-                <View style={styles.inputField}>
-                  <View style={styles.fieldRow}>
-                    <Text style={styles.label}>Email address</Text>
-                    <View style={styles.inputContainer}>
-                      <View style={styles.inputWrapper}>
-                        <TextInput
-                          style={styles.input}
-                          placeholder="name@example.com"
-                          value={email}
-                          onChangeText={setEmail}
-                          autoCapitalize="none"
-                          keyboardType="email-address"
-                        />
-                      </View>
-                      <View style={styles.separator} />
-                    </View>
-                  </View>
-                </View>
-
-                <View style={styles.inputField}>
-                  <View style={styles.fieldRow}>
-                    <Text style={styles.label}>Password</Text>
-                    <View style={styles.inputContainer}>
-                      <View style={styles.inputWrapper}>
-                        <TextInput
-                          style={styles.input}
-                          placeholder="Password"
-                          value={password}
-                          onChangeText={setPassword}
-                          secureTextEntry={!showPassword}
-                        />
-                        <TouchableOpacity 
-                          style={styles.eyeButton}
-                          onPress={() => setShowPassword(!showPassword)}
-                        >
-                          <Icon 
-                            name={showPassword ? "eye-off" : "eye"} 
-                            size={22} 
-                            color="#666"
-                          />
-                        </TouchableOpacity>
-                      </View>
-                      <View style={styles.separator} />
-                    </View>
-                  </View>
-                </View>
-
-                {error ? <Text style={styles.errorText}>{error}</Text> : null}
+                {error && <Text style={styles.error}>{error}</Text>}
                 
-                <Button 
-                  variant="default"
-                  size="md"
+                <Input
+                  placeholder="Email"
+                  value={email}
+                  onChangeText={setEmail}
+                  autoCapitalize="none"
+                  keyboardType="email-address"
+                />
+                
+                <Input
+                  placeholder="Password"
+                  value={password}
+                  onChangeText={setPassword}
+                  secureTextEntry
+                />
+                
+                <Button
+                  variant="primary"
                   onPress={handleLogin}
+                  loading={loading}
                 >
                   {translations.login}
+                </Button>
+                
+                <Button
+                  variant="text"
+                  onPress={() => navigation.navigate('ForgotPassword')}
+                >
+                  {translations.forgotPassword}
                 </Button>
               </View>
             </View>
@@ -123,6 +97,13 @@ const Login = () => {
             </View>
           </View>
         </View>
+        
+        <Button
+          variant="text"
+          onPress={() => navigation.navigate('Registration')}
+        >
+          {translations.signUp}
+        </Button>
       </View>
     </Layout>
   );

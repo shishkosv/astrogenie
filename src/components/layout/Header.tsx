@@ -6,7 +6,7 @@ import type { RootStackParamList } from '../../navigation/AppNavigator';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useLanguage } from '../../context/LanguageContext';
 import { useAuth } from '../../context/AuthContext';
-import AccountMenu from './AccountMenu';
+import { AccountMenu } from './AccountMenu';
 import { headerStyles as styles } from './styles/HeaderStyles';
 
 type NavigationProp = StackNavigationProp<RootStackParamList>;

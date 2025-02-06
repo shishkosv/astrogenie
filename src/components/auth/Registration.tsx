@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, Image, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { RootStackParamList } from '../../navigation/AppNavigator';
@@ -11,6 +11,9 @@ import { Button } from '../shared/Button';
 import { registrationStyles as styles } from './styles/RegistrationStyles';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from '../icons/Icon';
+import { Input } from '../shared/Input';
+import { Dropdown } from '../shared/Dropdown';
+import { DatePicker } from '../shared/DatePicker';
 
 type NavigationProp = StackNavigationProp<RootStackParamList>;
 
@@ -31,7 +34,7 @@ const Registration = () => {
   const [password, setPassword] = useState('');
   const [country, setCountry] = useState('');
   const [city, setCity] = useState('');
-  const [birthDate, setBirthDate] = useState(new Date());
+  const [dateOfBirth, setDateOfBirth] = useState(new Date());
   const [birthHour, setBirthHour] = useState(0);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
@@ -47,7 +50,7 @@ const Registration = () => {
 
   const navigation = useNavigation<NavigationProp>();
   const { translations } = useLanguage();
-  const { signup } = useAuth();
+  const { register, loading, error: authError } = useAuth();
 
   const validateForm = () => {
     const newErrors: typeof errors = {};
@@ -84,12 +87,12 @@ const Registration = () => {
     }
 
     // Birth date validation
-    if (!birthDate) {
+    if (!dateOfBirth) {
       newErrors.birthDate = 'Date of birth is required';
       isValid = false;
     } else {
       const today = new Date();
-      const age = today.getFullYear() - birthDate.getFullYear();
+      const age = today.getFullYear() - dateOfBirth.getFullYear();
       if (age < 13) {
         newErrors.birthDate = 'You must be at least 13 years old';
         isValid = false;
@@ -100,16 +103,34 @@ const Registration = () => {
     return isValid;
   };
 
-  const handleSignup = async () => {
+  const handleDateChange = (event: any, selectedDate?: Date) => {
+    setShowDatePicker(Platform.OS === 'ios');
+    if (selectedDate) {
+      setDateOfBirth(selectedDate);
+    }
+  };
+
+  const handleRegister = async () => {
     if (!validateForm()) {
       return;
     }
 
     try {
-      await signup(email, password, name);
+      await register(email, password, {
+        name,
+        email,
+        country,
+        city,
+        dateOfBirth: dateOfBirth.toISOString(),
+        birthHour,
+        createdAt: new Date().toISOString(),
+      });
       navigation.navigate('Home');
-    } catch (err) {
-      setError('Registration failed. Please try again.');
+    } catch (err: any) {
+      // Log the actual error for debugging
+      console.error('Registration error:', err);
+      // Show more specific error message
+      setError(err.message || 'Registration failed. Please try again.');
     }
   };
 
@@ -128,6 +149,42 @@ const Registration = () => {
       month: 'long',
       day: 'numeric'
     });
+  };
+
+  const renderDatePicker = () => {
+    if (Platform.OS === 'web') {
+      return (
+        <Input
+          label="Date of Birth"
+          type="date"
+          value={dateOfBirth.toISOString().split('T')[0]}
+          onChange={(e) => setDateOfBirth(new Date(e.target.value))}
+          style={styles.dateInput}
+        />
+      );
+    }
+
+    return (
+      <>
+        <Button
+          variant="outline"
+          onPress={() => setShowDatePicker(true)}
+        >
+          {formatDate(dateOfBirth)}
+        </Button>
+        
+        {showDatePicker && (
+          <DateTimePicker
+            value={dateOfBirth}
+            mode="date"
+            display="default"
+            onChange={handleDateChange}
+            maximumDate={new Date()}
+            minimumDate={new Date(1900, 0, 1)}
+          />
+        )}
+      </>
+    );
   };
 
   return (
@@ -171,35 +228,14 @@ const Registration = () => {
               </View>
 
               {/* Country Dropdown */}
-              <View style={styles.inputField}>
-                <Text style={styles.label}>Country of Birth *</Text>
-                <TouchableOpacity
-                  style={[styles.dropdown, errors.country && styles.inputError]}
-                  onPress={() => setShowCountryDropdown(!showCountryDropdown)}
-                >
-                  <Text style={styles.dropdownText}>
-                    {country || 'Select country'}
-                  </Text>
-                  <Icon name={showCountryDropdown ? 'chevron-up' : 'chevron-down'} size={20} color="#666" />
-                </TouchableOpacity>
-                {errors.country && <Text style={styles.errorText}>{errors.country}</Text>}
-                {showCountryDropdown && (
-                  <View style={styles.dropdownList}>
-                    {countries.map((item) => (
-                      <TouchableOpacity
-                        key={item}
-                        style={styles.dropdownItem}
-                        onPress={() => {
-                          setCountry(item);
-                          setShowCountryDropdown(false);
-                        }}
-                      >
-                        <Text style={styles.dropdownItemText}>{item}</Text>
-                      </TouchableOpacity>
-                    ))}
-                  </View>
-                )}
-              </View>
+              <Dropdown
+                label="Country of Birth *"
+                value={country}
+                options={countries}
+                onChange={setCountry}
+                placeholder="Select country"
+                error={errors.country}
+              />
 
               {/* City Input */}
               <View style={styles.inputField}>
@@ -219,60 +255,27 @@ const Registration = () => {
               {/* Date of Birth Picker */}
               <View style={styles.inputField}>
                 <Text style={styles.label}>Date of Birth *</Text>
-                <TouchableOpacity
-                  style={[styles.datePickerButton, errors.birthDate && styles.inputError]}
-                  onPress={() => setShowDatePicker(true)}
-                >
-                  <Text style={styles.datePickerText}>
-                    {formatDate(birthDate)}
-                  </Text>
-                  <Icon name="calendar" size={20} color="#666" />
-                </TouchableOpacity>
-                {errors.birthDate && <Text style={styles.errorText}>{errors.birthDate}</Text>}
-                {showDatePicker && (
-                  <DateTimePicker
-                    value={birthDate}
-                    mode="date"
-                    display="default"
-                    onChange={(event, selectedDate) => {
-                      setShowDatePicker(false);
-                      if (selectedDate) {
-                        setBirthDate(selectedDate);
-                      }
-                    }}
-                  />
-                )}
+                <DatePicker
+                  label="Date of Birth *"
+                  value={dateOfBirth}
+                  onChange={setDateOfBirth}
+                  error={errors.birthDate}
+                  minimumDate={new Date(1900, 0, 1)}
+                  maximumDate={new Date()}
+                />
               </View>
 
               {/* Hour of Birth Dropdown */}
-              <View style={styles.inputField}>
-                <Text style={styles.label}>Hour of Birth</Text>
-                <TouchableOpacity
-                  style={styles.dropdown}
-                  onPress={() => setShowHourDropdown(!showHourDropdown)}
-                >
-                  <Text style={styles.dropdownText}>
-                    {hours[birthHour].label}
-                  </Text>
-                  <Icon name={showHourDropdown ? 'chevron-up' : 'chevron-down'} size={20} color="#666" />
-                </TouchableOpacity>
-                {showHourDropdown && (
-                  <View style={styles.dropdownList}>
-                    {hours.map((hour) => (
-                      <TouchableOpacity
-                        key={hour.value}
-                        style={styles.dropdownItem}
-                        onPress={() => {
-                          setBirthHour(hour.value);
-                          setShowHourDropdown(false);
-                        }}
-                      >
-                        <Text style={styles.dropdownItemText}>{hour.label}</Text>
-                      </TouchableOpacity>
-                    ))}
-                  </View>
-                )}
-              </View>
+              <Dropdown
+                label="Hour of Birth"
+                value={hours[birthHour].label}
+                options={hours.map(h => h.label)}
+                onChange={(value) => {
+                  const hour = hours.findIndex(h => h.label === value);
+                  setBirthHour(hour);
+                }}
+                placeholder="Select hour"
+              />
             </View>
 
             {/* Right Column - Social Registration */}
@@ -312,7 +315,8 @@ const Registration = () => {
             <Button
               variant="secondary"
               size="lg"
-              onPress={handleSignup}
+              onPress={handleRegister}
+              loading={loading}
             >
               Register
             </Button>

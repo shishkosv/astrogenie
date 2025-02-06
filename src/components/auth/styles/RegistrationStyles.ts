@@ -6,7 +6,8 @@ const windowWidth = Dimensions.get('window').width;
 export const registrationStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa',
+    padding: 20,
+    backgroundColor: '#fff',
   },
   formWrapper: {
     maxWidth: 1000,
@@ -43,7 +44,13 @@ export const registrationStyles = StyleSheet.create({
     fontWeight: '600',
     color: '#333',
     marginBottom: 24,
-    textAlign: 'center',
+  },
+  error: {
+    color: '#dc2626',
+    marginBottom: 16,
+  },
+  datePickerContainer: {
+    marginBottom: 16,
   },
   inputField: {
     marginBottom: 20,
@@ -175,5 +182,13 @@ export const registrationStyles = StyleSheet.create({
     color: '#111827',
     fontSize: 14,
     fontWeight: '500',
+  },
+  dateInput: {
+    height: 40,
+    paddingHorizontal: 16,
+    backgroundColor: '#f8f9fa',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
   },
 }); 
