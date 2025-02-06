@@ -32,9 +32,11 @@ const Header = () => {
         <TouchableOpacity onPress={() => handleNavigation('Features')}>
           <Text style={styles.navItem}>{translations.getStarted}</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleNavigation('Login')}>
-          <Text style={styles.navItem}>{translations.login}</Text>
-        </TouchableOpacity>
+        {!isAuthenticated && (
+          <TouchableOpacity onPress={() => handleNavigation('Login')}>
+            <Text style={styles.navItem}>{translations.login}</Text>
+          </TouchableOpacity>
+        )}
         <TouchableOpacity onPress={() => handleNavigation('Subscription')}>
           <Text style={styles.navItem}>{translations.subscribe}</Text>
         </TouchableOpacity>

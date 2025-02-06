@@ -44,173 +44,29 @@ const Stack = createStackNavigator<RootStackParamList>();
 const AppNavigator = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Landing">
-        <Stack.Screen 
-          name="Landing" 
-          component={WebLanding} 
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen 
-          name="Home" 
-          component={Home}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen 
-          name="TarotReadings" 
-          component={TarotReadings}
-          options={{
-            title: 'Tarot Readings',
-            headerStyle: {
-              backgroundColor: '#4a0e4e',
-            },
-            headerTintColor: '#fff',
-          }}
-        />
-        <Stack.Screen 
-          name="Features" 
-          component={Features}
-          options={{
-            headerStyle: {
-              backgroundColor: '#4a0e4e',
-            },
-            headerTintColor: '#fff',
-          }}
-        />
-        <Stack.Screen 
-          name="About" 
-          component={About}
-          options={{
-            headerStyle: {
-              backgroundColor: '#4a0e4e',
-            },
-            headerTintColor: '#fff',
-          }}
-        />
-        <Stack.Screen 
-          name="Contact" 
-          component={Contact}
-          options={{
-            headerStyle: {
-              backgroundColor: '#4a0e4e',
-            },
-            headerTintColor: '#fff',
-          }}
-        />
-        <Stack.Screen 
-          name="DailyHoroscopes" 
-          component={DailyHoroscopes}
-          options={{
-            title: 'Daily Horoscopes',
-            headerStyle: {
-              backgroundColor: '#4a0e4e',
-            },
-            headerTintColor: '#fff',
-          }}
-        />
-        <Stack.Screen 
-          name="Compatibility" 
-          component={Compatibility}
-          options={{
-            title: 'Compatibility Check',
-            headerStyle: {
-              backgroundColor: '#4a0e4e',
-            },
-            headerTintColor: '#fff',
-          }}
-        />
-        <Stack.Screen 
-          name="Registration" 
-          component={Registration}
-          options={{
-            title: 'Registration',
-            headerStyle: {
-              backgroundColor: '#4a0e4e',
-            },
-            headerTintColor: '#fff',
-          }}
-        />
-        <Stack.Screen 
-          name="Login" 
-          component={Login}
-          options={{
-            title: 'Login',
-            headerStyle: {
-              backgroundColor: '#4a0e4e',
-            },
-            headerTintColor: '#fff',
-          }}
-        />
-        <Stack.Screen 
-          name="ForgotPassword" 
-          component={ForgotPassword}
-          options={{
-            title: 'Reset Password',
-            headerStyle: {
-              backgroundColor: '#4a0e4e',
-            },
-            headerTintColor: '#fff',
-          }}
-        />
-        <Stack.Screen 
-          name="Profile" 
-          component={Profile}
-          options={{
-            headerStyle: {
-              backgroundColor: '#4a0e4e',
-            },
-            headerTintColor: '#fff',
-          }}
-        />
-        <Stack.Screen 
-          name="Settings" 
-          component={Settings}
-          options={{
-            headerStyle: {
-              backgroundColor: '#4a0e4e',
-            },
-            headerTintColor: '#fff',
-          }}
-        />
-        <Stack.Screen 
-          name="Favorites" 
-          component={Favorites}
-          options={{
-            headerStyle: {
-              backgroundColor: '#4a0e4e',
-            },
-            headerTintColor: '#fff',
-          }}
-        />
-        <Stack.Screen 
-          name="Cart" 
-          component={Cart}
-          options={{
-            headerStyle: {
-              backgroundColor: '#4a0e4e',
-            },
-            headerTintColor: '#fff',
-          }}
-        />
-        <Stack.Screen 
-          name="Checkout" 
-          component={Checkout}
-          options={{
-            headerStyle: {
-              backgroundColor: '#4a0e4e',
-            },
-            headerTintColor: '#fff',
-          }}
-        />
-        <Stack.Screen 
-          name="Subscription" 
-          component={Subscription}
-          options={{
-            headerStyle: {
-              backgroundColor: '#4a0e4e',
-            },
-            headerTintColor: '#fff',
-          }}
-        />
+      <Stack.Navigator
+        initialRouteName="Landing"
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <Stack.Screen name="Landing" component={WebLanding} />
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="TarotReadings" component={TarotReadings} />
+        <Stack.Screen name="Features" component={Features} />
+        <Stack.Screen name="About" component={About} />
+        <Stack.Screen name="Contact" component={Contact} />
+        <Stack.Screen name="DailyHoroscopes" component={DailyHoroscopes} />
+        <Stack.Screen name="Compatibility" component={Compatibility} />
+        <Stack.Screen name="Registration" component={Registration} />
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+        <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="Settings" component={Settings} />
+        <Stack.Screen name="Favorites" component={Favorites} />
+        <Stack.Screen name="Cart" component={Cart} />
+        <Stack.Screen name="Checkout" component={Checkout} />
+        <Stack.Screen name="Subscription" component={Subscription} />
       </Stack.Navigator>
     </NavigationContainer>
   );

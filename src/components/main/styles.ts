@@ -7,18 +7,18 @@ export const styles = StyleSheet.create({
   },
   hero: {
     padding: 40,
-    backgroundColor: '#CFA2FB',
+    backgroundColor: '#f8f9fa',
     alignItems: 'center',
   },
   heroTitle: {
     fontSize: 48,
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: '#4a0e4e',
     marginBottom: 20,
   },
   heroSubtitle: {
     fontSize: 24,
-    color: '#FFFFFF',
+    color: '#666',
     marginBottom: 40,
   },
   downloadButtons: {
