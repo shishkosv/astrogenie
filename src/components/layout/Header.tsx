@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { RootStackParamList } from '../../navigation/AppNavigator';
 import LanguageSwitcher from './LanguageSwitcher';
+import SignSwitcher from './SignSwitcher';
 import { useLanguage } from '../../context/LanguageContext';
 import { useAuth } from '../../context/AuthContext';
 import { AccountMenu } from './AccountMenu';
@@ -40,6 +41,7 @@ const Header = () => {
         <TouchableOpacity onPress={() => handleNavigation('Subscription')}>
           <Text style={styles.navItem}>{translations.subscribe}</Text>
         </TouchableOpacity>
+        <SignSwitcher />
         <LanguageSwitcher />
         {isAuthenticated && <AccountMenu />}
       </View>

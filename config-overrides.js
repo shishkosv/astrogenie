@@ -63,20 +63,7 @@ module.exports = override(
     return config;
   },
   (config) => {
-    // Add rule for font files
-    config.module.rules.push({
-      test: /\.(ttf|eot|svg)$/,
-      use: [
-        {
-          loader: 'file-loader',
-          options: {
-            name: '[name].[ext]',
-          },
-        },
-      ],
-      include: path.resolve(__dirname, 'node_modules/react-native-vector-icons'),
-    });
-
+    // Remove font handling since we're using CDN
     return config;
   },
   addPostcssPlugins([
