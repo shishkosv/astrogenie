@@ -24,12 +24,10 @@ const Header = () => {
   return (
     <View style={styles.header}>
       <TouchableOpacity onPress={() => handleNavigation('Landing')}>
-        <Image source={{ uri: '/placeholder.svg?height=40&width=40' }} style={styles.logo} />
+        {/* <Image source={{ uri: '/placeholder.svg?height=40&width=40' }} style={styles.logo} />  */}
+        <Text style={styles.navItem}>{translations.home}</Text>
       </TouchableOpacity>
       <View style={styles.nav}>
-        <TouchableOpacity onPress={() => handleNavigation('Landing')}>
-          <Text style={styles.navItem}>{translations.home}</Text>
-        </TouchableOpacity>
         <TouchableOpacity onPress={() => handleNavigation('Features')}>
           <Text style={styles.navItem}>{translations.getStarted}</Text>
         </TouchableOpacity>
