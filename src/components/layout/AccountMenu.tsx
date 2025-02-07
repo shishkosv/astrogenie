@@ -3,6 +3,7 @@ import { View, TouchableOpacity, Image } from 'react-native';
 import { useUser } from '../../context/UserContext';
 import ProfileExtended from '../profile/ProfileExtended';
 import { accountMenuStyles as styles } from './styles/AccountMenuStyles';
+import { zodiacSigns } from '@/services/zodiacSigns';
 
 const AccountMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
