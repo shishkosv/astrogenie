@@ -13,9 +13,6 @@ import Compatibility from '../components/main/Compatibility';
 import Registration from '../components/auth/Registration';
 import Login from '../components/auth/Login';
 import ForgotPassword from '../components/auth/ForgotPassword';
-import Profile from '../components/profile/Profile';
-import Settings from '../components/profile/Settings';
-import Favorites from '../components/profile/Favorites';
 import Cart from '../components/cart/Cart';
 import Checkout from '../components/cart/Checkout';
 import Subscription from '../components/cart/Subscription';
@@ -37,7 +34,6 @@ export type RootStackParamList = {
   Registration: undefined;
   Login: undefined;
   ForgotPassword: undefined;
-  Profile: undefined;
   Settings: undefined;
   Favorites: undefined;
   Cart: undefined;
@@ -75,7 +71,6 @@ const linking: LinkingOptions<RootStackParamList> = {
       Registration: 'register',
       Login: 'login',
       ForgotPassword: 'forgot-password',
-      Profile: 'profile',
       Settings: 'settings',
       Favorites: 'favorites',
       Cart: 'cart',
@@ -119,9 +114,6 @@ const AppNavigator = () => {
         <Stack.Screen name="Registration" component={Registration} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-        <Stack.Screen name="Profile" component={Profile} />
-        <Stack.Screen name="Settings" component={Settings} />
-        <Stack.Screen name="Favorites" component={Favorites} />
         <Stack.Screen name="Cart" component={Cart} />
         <Stack.Screen name="Checkout" component={Checkout} />
         <Stack.Screen name="Subscription" component={Subscription} />
