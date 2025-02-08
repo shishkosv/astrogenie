@@ -2,12 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { zodiacSignService } from '../services/zodiacSignService';
 import { zodiacSigns } from '../services/zodiacSigns';
 import type { ZodiacSignInfo } from '../types/ZodiacSignInfo';
-
-export type ZodiacSign = {
-  name: string;
-  dateRange: string;
-  period: string;
-};
+import type { ZodiacSign } from '../types/ZodiacSign';
 
 type ZodiacContextType = {
   selectedSign: ZodiacSign | null;
