@@ -1,6 +1,6 @@
 import type React from "react"
 import { View, Text, TouchableOpacity, Image } from "react-native"
-import { styles } from "./MobileLandingStyles"
+import { landingStyles as styles } from './styles/LandingStyles'
 
 const MobileLanding: React.FC = () => {
   return (

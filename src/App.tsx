@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { View, Platform } from 'react-native';
 import AppNavigator from './navigation/AppNavigator';
-import MobileLanding from './components/landing/MobileLanding';
+import MobileLanding from './components/landing/MobileLandingScreen';
 import { LanguageProvider } from './context/LanguageContext';
 import { AuthProvider } from './context/AuthContext';
 import { ZodiacProvider } from './context/ZodiacContext';
