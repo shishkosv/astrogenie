@@ -1,28 +1,54 @@
-import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import React, { useState } from 'react';
 import Layout from '../layout/Layout';
+import BirthChartForm from './horoscope/BirthChart';
+import type { WesternChartResponse } from '../../types/responses/WesternChartResponse';
+import { ErrorBoundary } from '../shared/ErrorBoundary';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { birthChartStyles as styles } from './styles/BirthChartStyles';
 
 const BirthChart = () => {
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = (data: WesternChartResponse) => {
+    console.log('Birth chart calculated:', data);
+    // Handle the response data
+  };
+
+  const handleError = (error: Error) => {
+    console.error('Birth chart calculation failed:', error);
+    // Handle the error
+  };
+
   return (
     <Layout>
-      <ScrollView style={styles.container}>
-        <View style={styles.content}>
-          <Text style={styles.title}>Birth Chart Analysis</Text>
-          <Text style={styles.subtitle}>
-            Discover the unique planetary positions at the time of your birth
-          </Text>
-          
-          {/* Add birth chart content here */}
-          <View style={styles.chartSection}>
-            <Text style={styles.sectionTitle}>Your Natal Chart</Text>
-            <Text style={styles.description}>
-              A birth chart, also known as a natal chart, is a map of the sky at the exact moment you were born. 
-              It reveals the precise positions of the sun, moon, planets, and other astrological aspects at the time of your birth.
+      <ErrorBoundary
+        fallback={({ error, resetError }) => (
+          <View style={styles.errorContainer}>
+            <Text style={styles.errorText}>
+              Something went wrong: {error.message}
             </Text>
+            <TouchableOpacity 
+              style={styles.resetButton}
+              onPress={resetError}
+            >
+              <Text style={styles.resetButtonText}>Try Again</Text>
+            </TouchableOpacity>
           </View>
-        </View>
-      </ScrollView>
+        )}
+      >
+        <BirthChartForm
+          initialData={{
+            year: new Date().getFullYear(),
+            month: new Date().getMonth() + 1,
+            day: new Date().getDate(),
+          }}
+          onSubmit={handleSubmit}
+          onError={handleError}
+          onLoadingChange={setLoading}
+          isLoading={loading}
+          defaultHouseSystem="placidus"
+        />
+      </ErrorBoundary>
     </Layout>
   );
 };

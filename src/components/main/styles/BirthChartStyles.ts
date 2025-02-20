@@ -3,47 +3,98 @@ import { StyleSheet } from 'react-native';
 export const birthChartStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa',
+    padding: 16,
+    backgroundColor: '#fff',
   },
-  content: {
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: 20,
   },
-  title: {
-    fontSize: 32,
-    fontWeight: '700',
-    color: '#333',
-    marginBottom: 8,
-    textAlign: 'center',
-  },
-  subtitle: {
-    fontSize: 18,
+  loadingText: {
+    marginTop: 10,
+    fontSize: 16,
     color: '#666',
-    marginBottom: 32,
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  errorText: {
+    fontSize: 16,
+    color: '#FF6B6B',
     textAlign: 'center',
-  },
-  chartSection: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    padding: 24,
-    marginBottom: 24,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: '#333',
     marginBottom: 16,
   },
-  description: {
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  emptyText: {
     fontSize: 16,
-    lineHeight: 24,
-    color: '#4B5563',
+    color: '#666',
+    textAlign: 'center',
+  },
+  section: {
+    marginBottom: 24,
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: '600',
+    marginBottom: 16,
+    color: '#333',
+  },
+  planetRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0',
+  },
+  planetName: {
+    marginLeft: 12,
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#333',
+    width: 100,
+  },
+  planetInfo: {
+    flex: 1,
+    fontSize: 16,
+    color: '#666',
+  },
+  houseRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0',
+  },
+  houseNumber: {
+    width: 100,
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#333',
+  },
+  houseInfo: {
+    flex: 1,
+    fontSize: 16,
+    color: '#666',
+  },
+  resetButton: {
+    backgroundColor: '#CFA2FB',
+    padding: 12,
+    borderRadius: 8,
+    marginTop: 16,
+  },
+  resetButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
   },
 }); 

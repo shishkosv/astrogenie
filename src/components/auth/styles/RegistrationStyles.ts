@@ -191,4 +191,7 @@ export const registrationStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E5E7EB',
   },
+  spacer: {
+    height: 12,
+  },
 }); 

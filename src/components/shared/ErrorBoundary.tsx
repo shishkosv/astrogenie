@@ -1,8 +1,12 @@
-import React, { Component, ErrorInfo } from 'react';
+import React, { Component, ReactNode } from 'react';
 import { View, Text, Modal, StyleSheet, TouchableOpacity } from 'react-native';
 
 interface Props {
-  children: React.ReactNode;
+  children: ReactNode;
+  fallback: React.FC<{
+    error: Error;
+    resetError: () => void;
+  }>;
 }
 
 interface State {
@@ -12,46 +16,29 @@ interface State {
 }
 
 export class ErrorBoundary extends Component<Props, State> {
-  public state: State = {
-    hasError: false,
-    error: null,
-    errorInfo: '',
-  };
-
-  public static getDerivedStateFromError(error: Error): State {
-    return { hasError: true, error, errorInfo: error.message };
+  constructor(props: Props) {
+    super(props);
+    this.state = { hasError: false, error: null, errorInfo: '' };
   }
 
-  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('Uncaught error:', error, errorInfo);
+  static getDerivedStateFromError(error: Error): State {
+    return { hasError: true, error };
   }
 
-  private handleClose = () => {
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error('Error caught by boundary:', error, errorInfo);
+  }
+
+  resetError = () => {
     this.setState({ hasError: false, error: null, errorInfo: '' });
   };
 
   public render() {
-    if (this.state.hasError) {
-      return (
-        <Modal
-          transparent
-          visible={this.state.hasError}
-          onRequestClose={this.handleClose}
-        >
-          <View style={styles.modalOverlay}>
-            <View style={styles.modalContent}>
-              <Text style={styles.title}>An Error Occurred</Text>
-              <Text style={styles.message}>{this.state.errorInfo}</Text>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={this.handleClose}
-              >
-                <Text style={styles.buttonText}>Close</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
-      );
+    if (this.state.hasError && this.state.error) {
+      return this.props.fallback({
+        error: this.state.error,
+        resetError: this.resetError,
+      });
     }
 
     return this.props.children;

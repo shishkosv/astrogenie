@@ -9,11 +9,11 @@ import { useAuth } from '../../context/AuthContext';
 import { authStyles } from './styles';
 import { Button } from '../shared/Button';
 import { registrationStyles as styles } from './styles/RegistrationStyles';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import { DateTimePicker } from '../shared/DateTimePicker';
 import Icon from '../icons/Icon';
-import { Input } from '../shared/Input';
 import { Dropdown } from '../shared/Dropdown';
-import { DatePicker } from '../shared/DatePicker';
+import { AutocompleteCityInput } from '../shared/AutocompleteCityInput';
+import { CountrySelector } from '../shared/CountrySelector';
 
 type NavigationProp = StackNavigationProp<RootStackParamList>;
 
@@ -35,7 +35,6 @@ const Registration = () => {
   const [country, setCountry] = useState('');
   const [city, setCity] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState(new Date());
-  const [birthHour, setBirthHour] = useState(0);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
   const [showHourDropdown, setShowHourDropdown] = useState(false);
@@ -103,11 +102,16 @@ const Registration = () => {
     return isValid;
   };
 
-  const handleDateChange = (event: any, selectedDate?: Date) => {
-    setShowDatePicker(Platform.OS === 'ios');
-    if (selectedDate) {
-      setDateOfBirth(selectedDate);
-    }
+  const handleDateChange = (selectedDate: Date) => {
+    setShowDatePicker(false);
+    setDateOfBirth(selectedDate);
+    setErrors(prev => ({ ...prev, birthDate: undefined }));
+  };
+
+  const handleLocationSelect = (selectedCity: string, selectedCountry: string) => {
+    setCity(selectedCity);
+    setCountry(selectedCountry);
+    setErrors(prev => ({ ...prev, city: undefined, country: undefined }));
   };
 
   const handleRegister = async () => {
@@ -118,18 +122,13 @@ const Registration = () => {
     try {
       await register(email, password, {
         name,
-        email,
         country,
         city,
-        dateOfBirth: dateOfBirth.toISOString(),
-        birthHour,
-        createdAt: new Date().toISOString(),
+        dateOfBirth: dateOfBirth.toISOString()
       });
       navigation.navigate('Home');
     } catch (err: any) {
-      // Log the actual error for debugging
       console.error('Registration error:', err);
-      // Show more specific error message
       setError(err.message || 'Registration failed. Please try again.');
     }
   };
@@ -149,42 +148,6 @@ const Registration = () => {
       month: 'long',
       day: 'numeric'
     });
-  };
-
-  const renderDatePicker = () => {
-    if (Platform.OS === 'web') {
-      return (
-        <Input
-          label="Date of Birth"
-          type="date"
-          value={dateOfBirth.toISOString().split('T')[0]}
-          onChange={(e) => setDateOfBirth(new Date(e.target.value))}
-          style={styles.dateInput}
-        />
-      );
-    }
-
-    return (
-      <>
-        <Button
-          variant="outline"
-          onPress={() => setShowDatePicker(true)}
-        >
-          {formatDate(dateOfBirth)}
-        </Button>
-        
-        {showDatePicker && (
-          <DateTimePicker
-            value={dateOfBirth}
-            mode="date"
-            display="default"
-            onChange={handleDateChange}
-            maximumDate={new Date()}
-            minimumDate={new Date(1900, 0, 1)}
-          />
-        )}
-      </>
-    );
   };
 
   return (
@@ -227,55 +190,40 @@ const Registration = () => {
                 {errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
               </View>
 
-              {/* Country Dropdown */}
-              <Dropdown
-                label="Country of Birth *"
-                value={country}
-                options={countries}
-                onChange={setCountry}
-                placeholder="Select country"
-                error={errors.country}
-              />
-
-              {/* City Input */}
-              <View style={styles.inputField}>
-                <Text style={styles.label}>City *</Text>
-                <TextInput
-                  style={[styles.input, errors.city && styles.inputError]}
-                  value={city}
-                  onChangeText={(text) => {
-                    setCity(text);
-                    setErrors(prev => ({ ...prev, city: undefined }));
+              {/* Location Input */}
+              <View style={[styles.inputField, { zIndex: 2 }]}>
+                <Text style={styles.label}>Location of Birth *</Text>
+                <CountrySelector
+                  value={country}
+                  onChange={(value) => {
+                    setCountry(value);
+                    setCity('');
+                    setErrors(prev => ({ ...prev, country: undefined }));
                   }}
-                  placeholder="Enter your city"
+                  label="Country"
+                  error={errors.country}
+                />
+                <View style={styles.spacer} />
+                <AutocompleteCityInput
+                  value={city}
+                  onLocationSelect={handleLocationSelect}
+                  country={country}
+                  placeholder="Enter city name"
                 />
                 {errors.city && <Text style={styles.errorText}>{errors.city}</Text>}
               </View>
 
-              {/* Date of Birth Picker */}
-              <View style={styles.inputField}>
-                <Text style={styles.label}>Date of Birth *</Text>
-                <DatePicker
-                  label="Date of Birth *"
+              {/* Date and Time of Birth - Moved below location */}
+              <View style={[styles.inputField, { zIndex: 1 }]}>
+                <Text style={styles.label}>Date and Time of Birth *</Text>
+                <DateTimePicker
                   value={dateOfBirth}
-                  onChange={setDateOfBirth}
-                  error={errors.birthDate}
-                  minimumDate={new Date(1900, 0, 1)}
-                  maximumDate={new Date()}
+                  onChange={handleDateChange}
+                  showPicker={showDatePicker}
+                  onPress={() => setShowDatePicker(true)}
                 />
+                {errors.birthDate && <Text style={styles.errorText}>{errors.birthDate}</Text>}
               </View>
-
-              {/* Hour of Birth Dropdown */}
-              <Dropdown
-                label="Hour of Birth"
-                value={hours[birthHour].label}
-                options={hours.map(h => h.label)}
-                onChange={(value) => {
-                  const hour = hours.findIndex(h => h.label === value);
-                  setBirthHour(hour);
-                }}
-                placeholder="Select hour"
-              />
             </View>
 
             {/* Right Column - Social Registration */}

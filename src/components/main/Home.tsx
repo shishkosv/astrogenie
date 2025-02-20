@@ -11,6 +11,7 @@ import { Button } from '../shared/Button';
 import SignLists from './horoscope/SignLists';
 import TarotReadings from './tarot/TarotReadings';
 import { useWebNavigation } from '../../hooks/useWebNavigation';
+import BirthChart from './BirthChart';
 
 // Import images
 import androidBadge from '../../assets/images/download_ android.png';

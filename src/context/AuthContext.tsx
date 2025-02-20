@@ -5,7 +5,12 @@ import { useFirebase } from './FirebaseContext';
 interface AuthContextType {
   isAuthenticated: boolean;
   login: (email: string, password: string) => Promise<void>;
-  register: (email: string, password: string, name: string) => Promise<void>;
+  register: (email: string, password: string, userData: {
+    name: string;
+    country: string;
+    city: string;
+    dateOfBirth: string;
+  }) => Promise<void>;
   logout: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
   loading: boolean;
@@ -32,7 +37,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const register = async (email: string, password: string, userData: any) => {
+  const register = async (email: string, password: string, userData: {
+    name: string;
+    country: string;
+    city: string;
+    dateOfBirth: string;
+  }) => {
     try {
       setLoading(true);
       setError(null);
