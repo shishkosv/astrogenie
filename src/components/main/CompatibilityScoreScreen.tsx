@@ -76,7 +76,7 @@ const CompatibilityScoreScreen: React.FC = () => {
       <ScrollView style={styles.scrollContainer}>
         <View style={styles.container}>
           <TouchableOpacity style={styles.backButton} onPress={navigateBack}>
-            <Icon name="arrow-back" size={24} color="#4a0e4e" />
+            <Icon name="arrow-left" size={24} color="#4a0e4e" />
             <Text style={styles.backButtonText}>Back to Compatibility</Text>
           </TouchableOpacity>
 
@@ -109,7 +109,7 @@ const CompatibilityScoreScreen: React.FC = () => {
           {result.venus_mars_aspects && (
             <View style={styles.card}>
               <View style={styles.cardHeader}>
-                <Icon name="favorite" size={24} color="#E91E63" />
+                <Icon name="heart" size={24} color="#E91E63" />
                 <Text style={styles.cardTitle}>Venus & Mars Aspects</Text>
               </View>
               

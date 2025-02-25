@@ -54,7 +54,7 @@ export const CompatibilityPartnerControl: React.FC<CompatibilityPartnerControlPr
   return (
     <View style={styles.formSection}>
       <View style={styles.personHeader}>
-        <Icon name="person" size={24} color="#6B46C1" />
+        <Icon name="user" size={24} color="#6B46C1" />
         <Text style={styles.sectionTitle}>{person.name}</Text>
       </View>
       

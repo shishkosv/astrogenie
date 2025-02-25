@@ -60,6 +60,17 @@ module.exports = override(
       })
     ];
 
+    // Add proper handling for vector icon fonts
+    config.module.rules.push({
+      test: /\.ttf$/,
+      loader: 'file-loader',
+      include: path.resolve(__dirname, 'node_modules/react-native-vector-icons'),
+      options: {
+        name: '[name].[ext]',
+        outputPath: 'fonts/',
+      },
+    });
+
     return config;
   },
   (config) => {
