@@ -4,7 +4,7 @@ export interface Planet {
   degree: number;
   minute: number;
   retrograde?: boolean;
-  house?: number;
+  interpretation?: string;
 }
 
 export interface House {
@@ -13,6 +13,7 @@ export interface House {
   degree: number;
   minute: number;
   cusp?: boolean;
+  interpretation?: string;
 }
 
 export interface Aspect {
@@ -21,6 +22,7 @@ export interface Aspect {
   aspect: string;
   orb: number;
   applying: boolean;
+  interpretation?: string;
 }
 
 export interface BaseRequest {

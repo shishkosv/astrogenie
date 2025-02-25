@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, ActivityIndicator, TextInput, TouchableOpacity, Platform } from 'react-native';
+import { View, Text, ScrollView, ActivityIndicator, TextInput, TouchableOpacity, Platform, Image } from 'react-native';
 import { birthChartStyles as styles } from './styles/BirthChartStyles';
 import { astrologyService, locationService } from '../../../services/serviceConfig';
 import type { WesternChartResponse } from '../../../types/responses/WesternChartResponse';
@@ -11,6 +11,8 @@ import { Planet } from 'types/base/WesternBaseTypes';
 import { AutocompleteCityInput } from '../../shared/AutocompleteCityInput';
 import { DateTimePicker } from '../../shared/DateTimePicker';
 import { CountrySelector } from '../../shared/CountrySelector';
+import { birthChartData } from '../../../services/mockWesternAstrologyData';
+import SvgImage from '../../shared/SvgImage';
 
 interface BirthChartFormProps {
   initialData?: Partial<WesternChartRequest>;
@@ -168,6 +170,82 @@ const BirthChartForm: React.FC<BirthChartFormProps> = ({
     </View>
   );
 
+  const renderChartData = () => {
+    if (!chartData) return null;
+
+    // Use different image paths for web and native
+    const natalChartImage = Platform.OS === 'web' 
+      ? '/static/media/natal_card.d195ff83.svg'  // Web path
+      : require('../../../assets/natal_card.svg'); // Native path using require
+
+    return (
+      <>
+        {/* Birth Chart Wheel Section */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Birth Chart Wheel</Text>
+          <View style={styles.chartContainer}>
+            <SvgImage 
+              source={natalChartImage}
+              width="100%"
+              height={300}
+              style={styles.chartImage}
+            />
+          </View>
+        </View>
+
+        {/* Planets Section */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Planetary Positions</Text>
+          {chartData.planets.map((planet) => (
+            <View key={planet.name} style={styles.planetRow}>
+              <Icon name="star" size={20} color="#CFA2FB" />
+              <Text style={styles.planetName}>{planet.name}</Text>
+              <Text style={styles.planetInfo}>
+                {planet.sign} {planet.degree}° {planet.minute}'
+                {planet.retrograde && ' R'}
+              </Text>
+              <Text style={styles.interpretation}>
+                {(planet as any).interpretation || ''}
+              </Text>
+            </View>
+          ))}
+        </View>
+
+        {/* Houses Section */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>House Cusps</Text>
+          {birthChartData.houses.map((house) => (
+            <View key={house.house_number} style={styles.houseRow}>
+              <Text style={styles.houseNumber}>House {house.house_number}</Text>
+              <Text style={styles.houseInfo}>
+                {house.sign} {house.degree}° {house.minute}'
+              </Text>
+              <Text style={styles.interpretation}>
+                {(house as any).interpretation || ''}
+              </Text>
+            </View>
+          ))}
+        </View>
+
+        {/* Aspects Section */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Major Aspects</Text>
+          {birthChartData.aspects.map((aspect, index) => (
+            <View key={index} style={styles.aspectRow}>
+              <Text style={styles.aspectPlanets}>
+                {aspect.planet1} {aspect.aspect} {aspect.planet2}
+              </Text>
+              <Text style={styles.aspectOrb}>Orb: {aspect.orb}°</Text>
+              <Text style={styles.interpretation}>
+                {(aspect as any).interpretation || ''}
+              </Text>
+            </View>
+          ))}
+        </View>
+      </>
+    );
+  };
+
   return (
     <ScrollView 
       style={[styles.container, { zIndex: 1 }]} 
@@ -190,37 +268,33 @@ const BirthChartForm: React.FC<BirthChartFormProps> = ({
             <Text style={styles.backButtonText}>Back to Form</Text>
           </TouchableOpacity>
 
-          {/* Planets Section */}
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Planetary Positions</Text>
-            {chartData.planets.map((planet: Planet) => (
-              <View key={planet.name} style={styles.planetRow}>
-                <Icon name="star" size={20} color="#CFA2FB" />
-                <Text style={styles.planetName}>{planet.name}</Text>
-                <Text style={styles.planetInfo}>
-                  {planet.sign} {planet.degree}° {planet.minute}'
-                  {planet.retrograde && ' R'}
-                </Text>
-              </View>
-            ))}
-          </View>
-
-          {/* Houses Section */}
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>House Cusps</Text>
-            {chartData.houses.map((house: House) => (
-              <View key={house.house_number} style={styles.houseRow}>
-                <Text style={styles.houseNumber}>House {house.house_number}</Text>
-                <Text style={styles.houseInfo}>
-                  {house.sign} {house.degree}° {house.minute}'
-                </Text>
-              </View>
-            ))}
-          </View>
+          {renderChartData()}
         </>
       )}
     </ScrollView>
   );
+};
+
+const additionalStyles = {
+  chartContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 16,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    marginBottom: 24,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  chartImage: {
+    width: '100%',
+    maxWidth: 500,
+    height: 300,
+    resizeMode: 'contain',
+  },
 };
 
 export default BirthChartForm; 

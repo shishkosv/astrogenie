@@ -14,16 +14,188 @@ import type {
   RomanticForecastResponse
 } from '../types/responses';
 
+export const birthChartData = {
+  houses: [
+    { house_number: 1, sign: 'Aries', degree: 0, minute: 0, cusp: true, interpretation: 'House of self and personality' },
+    { house_number: 2, sign: 'Taurus', degree: 5, minute: 15, cusp: true, interpretation: 'House of values and possessions' },
+    { house_number: 3, sign: 'Gemini', degree: 10, minute: 30, cusp: true, interpretation: 'House of communication and learning' },
+    { house_number: 4, sign: 'Cancer', degree: 15, minute: 45, cusp: true, interpretation: 'House of home and family' },
+    { house_number: 5, sign: 'Leo', degree: 20, minute: 0, cusp: true, interpretation: 'House of creativity and pleasure' },
+    { house_number: 6, sign: 'Virgo', degree: 25, minute: 15, cusp: true, interpretation: 'House of work and health' },
+    { house_number: 7, sign: 'Libra', degree: 0, minute: 0, cusp: true, interpretation: 'House of partnerships' },
+    { house_number: 8, sign: 'Scorpio', degree: 5, minute: 15, cusp: true, interpretation: 'House of transformation' },
+    { house_number: 9, sign: 'Sagittarius', degree: 10, minute: 30, cusp: true, interpretation: 'House of higher learning' },
+    { house_number: 10, sign: 'Capricorn', degree: 15, minute: 45, cusp: true, interpretation: 'House of career and status' },
+    { house_number: 11, sign: 'Aquarius', degree: 20, minute: 0, cusp: true, interpretation: 'House of friendships and groups' },
+    { house_number: 12, sign: 'Pisces', degree: 25, minute: 15, cusp: true, interpretation: 'House of spirituality and endings' }
+  ],
+  aspects: [
+    { 
+      planet1: 'Sun',
+      planet2: 'Moon',
+      aspect: 'Trine',
+      orb: 2.5,
+      interpretation: 'Harmonious flow between conscious and unconscious mind'
+    },
+    { 
+      planet1: 'Sun',
+      planet2: 'Mercury',
+      aspect: 'Conjunction',
+      orb: 1.2,
+      interpretation: 'Strong mental clarity and communication skills'
+    },
+    { 
+      planet1: 'Moon',
+      planet2: 'Venus',
+      aspect: 'Sextile',
+      orb: 3.1,
+      interpretation: 'Easy expression of emotions in relationships'
+    },
+    { 
+      planet1: 'Mars',
+      planet2: 'Jupiter',
+      aspect: 'Square',
+      orb: 4.2,
+      interpretation: 'Dynamic tension between action and expansion'
+    },
+    { 
+      planet1: 'Venus',
+      planet2: 'Mars',
+      aspect: 'Trine',
+      orb: 2.8,
+      interpretation: 'Harmonious balance of feminine and masculine energies'
+    },
+    { 
+      planet1: 'Saturn',
+      planet2: 'Pluto',
+      aspect: 'Conjunction',
+      orb: 1.5,
+      interpretation: 'Profound transformation of structures and authority'
+    },
+    { 
+      planet1: 'Jupiter',
+      planet2: 'Uranus',
+      aspect: 'Sextile',
+      orb: 2.3,
+      interpretation: 'Opportunities for sudden breakthroughs and expansion'
+    },
+    { 
+      planet1: 'Mercury',
+      planet2: 'Neptune',
+      aspect: 'Square',
+      orb: 3.7,
+      interpretation: 'Challenge between logical thinking and intuition'
+    },
+    { 
+      planet1: 'Sun',
+      planet2: 'Saturn',
+      aspect: 'Opposition',
+      orb: 2.9,
+      interpretation: 'Tension between self-expression and responsibility'
+    },
+    { 
+      planet1: 'Moon',
+      planet2: 'Pluto',
+      aspect: 'Trine',
+      orb: 1.8,
+      interpretation: 'Deep emotional transformation flows naturally'
+    }
+  ]
+};
+
 export const mockWesternAstrologyData = {
   birthChart: {
     planets: [
-      { name: 'Sun', sign: 'Aries', degree: 15, minute: 30, retrograde: false, house: 1 },
-      { name: 'Moon', sign: 'Taurus', degree: 22, minute: 45, retrograde: false, house: 2 },
-      { name: 'Mercury', sign: 'Pisces', degree: 8, minute: 15, retrograde: true, house: 12 },
-      { name: 'Venus', sign: 'Gemini', degree: 3, minute: 20, retrograde: false, house: 3 },
-      { name: 'Mars', sign: 'Leo', degree: 17, minute: 55, retrograde: false, house: 5 },
-      { name: 'Jupiter', sign: 'Libra', degree: 28, minute: 10, retrograde: false, house: 7 },
-      { name: 'Saturn', sign: 'Capricorn', degree: 11, minute: 5, retrograde: true, house: 10 }
+      { 
+        name: 'Sun', 
+        sign: 'Aries', 
+        degree: 15, 
+        minute: 30, 
+        retrograde: false, 
+        house: 1,
+        interpretation: 'Strong leadership qualities and self-expression'
+      },
+      { 
+        name: 'Moon', 
+        sign: 'Taurus', 
+        degree: 22, 
+        minute: 45, 
+        retrograde: false, 
+        house: 2,
+        interpretation: 'Emotional security through material comfort'
+      },
+      { 
+        name: 'Mercury', 
+        sign: 'Pisces', 
+        degree: 8, 
+        minute: 15, 
+        retrograde: true, 
+        house: 12,
+        interpretation: 'Intuitive thinking and creative communication'
+      },
+      { 
+        name: 'Venus', 
+        sign: 'Gemini', 
+        degree: 3, 
+        minute: 20, 
+        retrograde: false, 
+        house: 3,
+        interpretation: 'Versatile approach to relationships and values'
+      },
+      { 
+        name: 'Mars', 
+        sign: 'Leo', 
+        degree: 17, 
+        minute: 55, 
+        retrograde: false, 
+        house: 5,
+        interpretation: 'Dynamic self-expression and creative energy'
+      },
+      { 
+        name: 'Jupiter', 
+        sign: 'Libra', 
+        degree: 28, 
+        minute: 10, 
+        retrograde: false, 
+        house: 7,
+        interpretation: 'Growth through partnerships and relationships'
+      },
+      { 
+        name: 'Saturn', 
+        sign: 'Capricorn', 
+        degree: 11, 
+        minute: 5, 
+        retrograde: true, 
+        house: 10,
+        interpretation: 'Career discipline and authority'
+      },
+      { 
+        name: 'Uranus', 
+        sign: 'Taurus', 
+        degree: 14, 
+        minute: 25, 
+        retrograde: false, 
+        house: 2,
+        interpretation: 'Revolutionary approach to finances and values'
+      },
+      { 
+        name: 'Neptune', 
+        sign: 'Pisces', 
+        degree: 24, 
+        minute: 30, 
+        retrograde: false, 
+        house: 12,
+        interpretation: 'Spiritual inspiration and artistic sensitivity'
+      },
+      { 
+        name: 'Pluto', 
+        sign: 'Capricorn', 
+        degree: 26, 
+        minute: 45, 
+        retrograde: false, 
+        house: 10,
+        interpretation: 'Transformative power in career and public image'
+      }
     ],
     houses: [
       { house_number: 1, sign: 'Aries', degree: 0, minute: 0, cusp: true },

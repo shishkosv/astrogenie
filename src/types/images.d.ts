@@ -13,7 +13,4 @@ declare module '*.jpeg' {
   export default value;
 }
 
-declare module '*.svg' {
-  const value: any;
-  export default value;
-} 
+// Note: SVG type definition is now handled in src/svg.d.ts 
