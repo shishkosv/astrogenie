@@ -1,3 +1,5 @@
+import { House, Planet } from '../base/WesternBaseTypes';
+
 export interface WesternChartResponse {
   houses: House[];
   planets: Planet[];

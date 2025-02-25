@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { RootStackParamList } from '../../navigation/AppNavigator';
 import { useLanguage } from '../../context/LanguageContext';
+import { useCart } from '../../context/CartContext';
 import Layout from '../layout/Layout';
 import { Button } from '../shared/Button';
 import { subscriptionStyles as styles } from './styles/SubscriptionStyles';
@@ -76,13 +77,44 @@ const plans: Plan[] = [
 const Subscription = () => {
   const navigation = useNavigation<NavigationProp>();
   const { translations } = useLanguage();
+  const { addItem, isLoading } = useCart();
   const [selectedPlan, setSelectedPlan] = useState<string>('free');
 
-  const handleSubscribe = (planId: string) => {
+  const handleSubscribe = async (planId: string) => {
     if (planId === 'free') {
       navigation.navigate('Registration');
-    } else {
+      return;
+    }
+    
+    // Find the selected plan
+    const plan = plans.find(p => p.id === planId);
+    if (!plan) {
+      Alert.alert('Error', 'Selected plan not found');
+      return;
+    }
+    
+    try {
+      // Add subscription to cart
+      const cartItem = {
+        id: `subscription-${plan.id}`,
+        title: `${plan.name} Subscription`,
+        subtitle: `Monthly subscription plan`,
+        price: plan.price,
+        type: 'other',
+        image: 'https://via.placeholder.com/150'
+      };
+      
+      console.log('Adding subscription to cart:', cartItem);
+      
+      // Navigate to checkout immediately for better UX
       navigation.navigate('Checkout');
+      
+      // Add to cart in the background
+      await addItem(cartItem);
+      
+    } catch (error) {
+      console.error('Error adding subscription to cart:', error);
+      Alert.alert('Error', 'Failed to add subscription to cart. Please try again.');
     }
   };
 
@@ -100,8 +132,8 @@ const Subscription = () => {
   return (
     <Layout>
       <ScrollView style={styles.container}>
-        <Text style={styles.title}>{translations.subscriptionPlans}</Text>
-        <Text style={styles.subtitle}>{translations.choosePlan}</Text>
+        <Text style={styles.title}>{translations.subscriptionPlans || 'Subscription Plans'}</Text>
+        <Text style={styles.subtitle}>{translations.choosePlan || 'Choose the plan that fits your needs'}</Text>
 
         <View style={styles.plansContainer}>
           {plans.map((plan) => (
@@ -126,11 +158,14 @@ const Subscription = () => {
               </View>
 
               <Button
-                variant={plan.id === 'free' ? 'secondary' : 'default'}
+                variant={plan.id === 'free' ? 'secondary' : 'primary'}
                 size="sm"
                 onPress={() => handleSubscribe(plan.id)}
+                loading={isLoading && selectedPlan === plan.id}
               >
-                {plan.id === 'free' ? translations.getStarted : translations.subscribe}
+                {plan.id === 'free' 
+                  ? (translations.getStarted || 'Get Started') 
+                  : (translations.subscribe || 'Subscribe')}
               </Button>
             </TouchableOpacity>
           ))}

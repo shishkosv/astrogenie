@@ -12,7 +12,7 @@ import { mockLocationService } from '../../services/mockLocationService';
 
 interface AutocompleteCityInputProps {
   value: string;
-  onLocationSelect: (city: string, country: string) => void;
+  onLocationSelect: (city: string, country: string, lat: number, lon: number, timezone: number) => void;
   country?: string;
   placeholder?: string;
 }
@@ -51,10 +51,10 @@ export const AutocompleteCityInput: React.FC<AutocompleteCityInputProps> = ({
     return () => clearTimeout(debounce);
   }, [query, country]);
 
-  const handleSelect = (city: string, countryCode: string) => {
+  const handleSelect = (city: string, countryCode: string, lat: number = 0, lon: number = 0, timezone: number = 0) => {
     setQuery(city);
     setShowSuggestions(false);
-    onLocationSelect(city, countryCode);
+    onLocationSelect(city, countryCode, lat, lon, timezone);
   };
 
   return (

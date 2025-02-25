@@ -1,9 +1,11 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { firebaseService } from '../services/firebase';
 import { useFirebase } from './FirebaseContext';
+import type { User } from '../types/user';
 
 interface AuthContextType {
   isAuthenticated: boolean;
+  user: User | null;
   login: (email: string, password: string) => Promise<void>;
   register: (email: string, password: string, userData: {
     name: string;
@@ -108,6 +110,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     <AuthContext.Provider
       value={{
         isAuthenticated: !!user,
+        user,
         login,
         register,
         logout,

@@ -26,4 +26,8 @@ export const headerStyles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
   },
+  cartButton: {
+    marginLeft: 5,
+    marginRight: 5,
+  },
 }); 

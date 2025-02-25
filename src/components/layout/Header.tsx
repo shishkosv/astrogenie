@@ -9,6 +9,7 @@ import { useLanguage } from '../../context/LanguageContext';
 import { useAuth } from '../../context/AuthContext';
 import { AccountMenu } from './AccountMenu';
 import { headerStyles as styles } from './styles/HeaderStyles';
+import Icon from '../icons/Icon';
 
 type NavigationProp = StackNavigationProp<RootStackParamList>;
 
@@ -38,6 +39,9 @@ const Header = () => {
         )}
         <TouchableOpacity onPress={() => handleNavigation('Subscription')}>
           <Text style={styles.navItem}>{translations.subscribe}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => handleNavigation('Cart')} style={styles.cartButton}>
+          <Icon name="shopping-cart" size={24} color="#FFFFFF" />
         </TouchableOpacity>
         <SignSwitcher />
         <LanguageSwitcher />

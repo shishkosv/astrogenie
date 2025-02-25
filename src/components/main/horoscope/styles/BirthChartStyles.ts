@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 export const birthChartStyles = StyleSheet.create({
   container: {
@@ -48,6 +48,16 @@ export const birthChartStyles = StyleSheet.create({
     fontWeight: '600',
     marginBottom: 16,
     color: '#333',
+  },
+  sectionSubtitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#444',
+    marginTop: 24,
+    marginBottom: 16,
+    paddingBottom: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0',
   },
   chartContainer: {
     alignItems: 'center',
@@ -240,5 +250,124 @@ export const birthChartStyles = StyleSheet.create({
     fontSize: 16,
     color: '#333',
     textAlign: 'center',
+  },
+  cardsContainer: {
+    flexDirection: 'column',
+    marginBottom: 24,
+  },
+  card: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+    marginBottom: 16,
+    overflow: 'hidden',
+  },
+  cardHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0',
+    backgroundColor: '#f8f8f8',
+  },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#333',
+    marginLeft: 12,
+  },
+  cardContent: {
+    padding: 16,
+  },
+  cardItem: {
+    marginBottom: 12,
+    paddingBottom: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0',
+  },
+  itemName: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#333',
+    marginBottom: 4,
+  },
+  itemDetail: {
+    fontSize: 14,
+    color: '#666',
+  },
+  seeMoreButton: {
+    alignItems: 'center',
+    paddingVertical: 8,
+    marginTop: 8,
+  },
+  seeMoreText: {
+    fontSize: 14,
+    color: '#CFA2FB',
+    fontWeight: '500',
+  },
+  fullWidthCard: {
+    width: '100%',
+  },
+  halfWidthCard: {
+    width: Platform.OS === 'web' ? '48%' : '100%',
+  },
+  tableHeader: {
+    flexDirection: 'row',
+    backgroundColor: '#f8f8f8',
+    paddingVertical: 12,
+    paddingHorizontal: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e0e0e0',
+    marginBottom: 8,
+  },
+  tableHeaderCell: {
+    fontWeight: '600',
+    color: '#333',
+  },
+  tableCell: {
+    fontSize: 14,
+    paddingVertical: 4,
+    paddingHorizontal: 4,
+  },
+  tableRow: {
+    flexDirection: 'row',
+    paddingVertical: 8,
+    paddingHorizontal: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0',
+  },
+  interpretationBlock: {
+    marginBottom: 16,
+    paddingBottom: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0',
+  },
+  interpretationTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#333',
+    marginBottom: 8,
+  },
+  interpretationButton: {
+    marginTop: 16,
+    backgroundColor: '#CFA2FB',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    width: '80%',
+    maxWidth: 300,
+  },
+  interpretationButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+    marginLeft: 8,
   },
 }); 

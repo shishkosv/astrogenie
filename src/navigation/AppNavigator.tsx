@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationContainer, LinkingOptions } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Platform } from 'react-native';
+import { Platform, Text } from 'react-native';
 import WebLanding from '../components/landing/WebLandingScreen';
 import Home from '../components/main/Home';
 import TarotReadings from '../components/main/tarot/TarotReadings';
@@ -21,6 +21,9 @@ import BirthChart from '../components/main/BirthChart';
 import SignLists from '../components/main/horoscope/SignLists';
 import SignTraits from '../components/main/horoscope/SignTraits';
 import TarotReadingDetail from '../components/main/tarot/TarotReadingDetail';
+import BirthChartInterpretation from '../components/main/horoscope/BirthChartInterpretation';
+import CompatibilityScoreScreen from '../components/main/CompatibilityScoreScreen';
+import type { RomanticCompatibilityResponse } from '../types/responses/RomanticCompatibilityResponse';
 
 export type RootStackParamList = {
   Landing: undefined;
@@ -40,8 +43,14 @@ export type RootStackParamList = {
   Checkout: undefined;
   Subscription: undefined;
   BirthChart: undefined;
+  BirthChartInterpretation: undefined;
   SignLists: undefined;
   SignTraits: undefined;
+  CompatibilityScoreScreen: {
+    result: RomanticCompatibilityResponse;
+    person1Name: string;
+    person2Name: string;
+  };
   TarotReadingDetail: {
     reading: {
       id: string;
@@ -77,8 +86,17 @@ const linking: LinkingOptions<RootStackParamList> = {
       Checkout: 'checkout',
       Subscription: 'subscription',
       BirthChart: 'birth-chart',
+      BirthChartInterpretation: 'birth-chart-interpretation',
       SignLists: 'signs',
       SignTraits: 'traits',
+      CompatibilityScoreScreen: {
+        path: 'compatibility-score',
+        parse: {
+          result: (result: string) => JSON.parse(result),
+          person1Name: (person1Name: string) => person1Name,
+          person2Name: (person2Name: string) => person2Name,
+        },
+      },
       TarotReadingDetail: {
         path: 'tarot/:id',
         parse: {
@@ -118,8 +136,10 @@ const AppNavigator = () => {
         <Stack.Screen name="Checkout" component={Checkout} />
         <Stack.Screen name="Subscription" component={Subscription} />
         <Stack.Screen name="BirthChart" component={BirthChart} />
+        <Stack.Screen name="BirthChartInterpretation" component={BirthChartInterpretation} />
         <Stack.Screen name="SignLists" component={SignLists} />
         <Stack.Screen name="SignTraits" component={SignTraits} />
+        <Stack.Screen name="CompatibilityScoreScreen" component={CompatibilityScoreScreen} />
         <Stack.Screen name="TarotReadingDetail" component={TarotReadingDetail} />
       </Stack.Navigator>
     </NavigationContainer>

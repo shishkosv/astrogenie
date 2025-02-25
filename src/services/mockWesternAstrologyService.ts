@@ -2,7 +2,7 @@ import { mockWesternAstrologyData } from './mockWesternAstrologyData';
 import type { WesternChartRequest } from '../types/requests/WesternChartRequest';
 import type { WesternChartResponse } from '../types/responses/WesternChartResponse';
 import type { TropicalHousesRequest, TropicalPlanetsRequest, TropicalAspectsRequest, RomanticTimingRequest, RomanticSynastryRequest, RomanticCompatibilityRequest, TropicalTransitsRequest, TropicalProgressionsRequest, TropicalSynastryRequest, RomanticForecastRequest } from '../types/requests';
-import type { TropicalHousesResponse, TropicalPlanetsResponse, TropicalAspectsResponse, RomanticForecastResponse } from '../types/responses';
+import type { TropicalHousesResponse, TropicalPlanetsResponse, TropicalAspectsResponse, RomanticForecastResponse, ChartInterpretationResponse } from '../types/responses';
 import { IWesternAstrologyService } from './interfaces/IWesternAstrologyService';
 import type { 
   TransitResponse,
@@ -14,6 +14,7 @@ import type {
   TropicalSynastryResponse
 } from '../types/responses';
 import { BaseRequest } from 'types/base/WesternBaseTypes';
+import { ChartInterpretationRequest } from '../types/requests/ChartInterpretationRequest';
 
 const MOCK_DELAY = 1000; // Simulate network delay
 
@@ -136,5 +137,10 @@ export const mockWesternAstrologyService: IWesternAstrologyService = {
       synastry: mockWesternAstrologyData.romanticSynastry,
       timing: mockWesternAstrologyData.romanticTiming
     };
+  },
+
+  async getChartInterpretationData(params: ChartInterpretationRequest): Promise<ChartInterpretationResponse> {
+    await new Promise(resolve => setTimeout(resolve, MOCK_DELAY));
+    return mockWesternAstrologyData.chartInterpretation;
   }
 }; 

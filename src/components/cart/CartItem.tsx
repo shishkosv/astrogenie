@@ -1,36 +1,53 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { useLanguage } from '../../context/LanguageContext';
+import { useCart } from '../../context/CartContext';
 import { cartItemStyles as styles } from './styles/CartItemStyles';
+import { CartItem as CartItemType } from '../../types/cart';
 
 interface CartItemProps {
-  item: {
-    id: string;
-    title: string;
-    price: number;
-    quantity: number;
-    image: string;
-  };
+  item: CartItemType;
 }
 
 const CartItem = ({ item }: CartItemProps) => {
   const { translations } = useLanguage();
+  const { updateQuantity, removeItem } = useCart();
 
-  const handleQuantityChange = (change: number) => {
-    // Implement quantity change logic
+  const handleQuantityChange = async (change: number) => {
+    const newQuantity = item.quantity + change;
+    if (newQuantity > 0) {
+      await updateQuantity(item.id, newQuantity);
+    } else {
+      await removeItem(item.id);
+    }
   };
 
-  const handleRemove = () => {
-    // Implement remove item logic
+  const handleRemove = async () => {
+    await removeItem(item.id);
   };
+
+  // Format price safely with fallback to 0
+  const formatPrice = (price: number | undefined) => {
+    return typeof price === 'number' ? price.toFixed(2) : '0.00';
+  };
+
+  console.log('Rendering cart item with data:', item);
 
   return (
     <View style={styles.container}>
-      <Image source={{ uri: item.image }} style={styles.image} />
+      {item.image && (
+        <Image 
+          source={{ uri: item.image }} 
+          style={styles.image}
+        />
+      )}
       
       <View style={styles.details}>
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.price}>${item.price}</Text>
+        <Text style={styles.title}>{item.title || 'Unnamed Item'}</Text>
+        {item.subtitle && (
+          <Text style={styles.subtitle}>{item.subtitle}</Text>
+        )}
+        <Text style={styles.price}>${formatPrice(item.price)}</Text>
         
         <View style={styles.quantityContainer}>
           <TouchableOpacity 
@@ -40,7 +57,7 @@ const CartItem = ({ item }: CartItemProps) => {
             <Text style={styles.quantityButtonText}>-</Text>
           </TouchableOpacity>
           
-          <Text style={styles.quantity}>{item.quantity}</Text>
+          <Text style={styles.quantity}>{item.quantity || 1}</Text>
           
           <TouchableOpacity 
             style={styles.quantityButton}

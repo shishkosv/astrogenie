@@ -20,6 +20,22 @@ export const cartStyles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 40,
   },
+  emptyCartContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    fontSize: 16,
+    color: '#666',
+    marginTop: 10,
+  },
   summary: {
     borderTopWidth: 1,
     borderTopColor: '#eaeaea',

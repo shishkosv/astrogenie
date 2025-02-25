@@ -5,6 +5,12 @@ export interface Planet {
   minute: number;
   retrograde?: boolean;
   interpretation?: string;
+  full_degree?: number;
+  norm_degree?: number;
+  speed?: number;
+  is_retro?: string;
+  sign_id?: number;
+  house?: number;
 }
 
 export interface House {
@@ -14,6 +20,10 @@ export interface House {
   minute: number;
   cusp?: boolean;
   interpretation?: string;
+  id?: number;
+  start_degree?: number;
+  end_degree?: number;
+  planets?: string[];
 }
 
 export interface Aspect {
@@ -23,6 +33,12 @@ export interface Aspect {
   orb: number;
   applying: boolean;
   interpretation?: string;
+  aspecting_planet_id?: number;
+  aspected_planet_id?: number;
+  aspecting_planet?: string;
+  aspectied_planet?: string;
+  type?: string;
+  diff?: number;
 }
 
 export interface BaseRequest {

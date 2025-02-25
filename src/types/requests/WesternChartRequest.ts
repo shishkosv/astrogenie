@@ -1,4 +1,6 @@
-export interface WesternChartRequest {
+import { BaseRequest } from '../base/WesternBaseTypes';
+
+export interface WesternChartRequest extends BaseRequest {
   day: number;        // 1-31
   month: number;      // 1-12
   year: number;       // e.g., 1990

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, Alert } from 'react-native';
 import Layout from '../../layout/Layout';
 import { Button } from '../../shared/Button';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -7,6 +7,8 @@ import type { StackNavigationProp } from '@react-navigation/stack';
 import type { RouteProp } from '@react-navigation/native';
 import type { RootStackParamList } from '../../../navigation/AppNavigator';
 import { tarotDetailStyles as styles } from './styles/TarotDetailStyles';
+import { useCart } from '../../../context/CartContext';
+import { CartItem } from '../../../types/cart';
 
 type NavigationProp = StackNavigationProp<RootStackParamList>;
 type TarotDetailRouteProp = RouteProp<RootStackParamList, 'TarotReadingDetail'>;
@@ -15,10 +17,30 @@ const TarotReadingDetail = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<TarotDetailRouteProp>();
   const reading = route.params.reading;
+  const { addItem, isLoading, cart } = useCart();
+
+  console.log('Current cart state:', cart);
 
   const handleAddToCart = () => {
-    // TODO: Implement add to cart functionality
+    console.log('Adding to cart and navigating:', reading);
+    
+    // Navigate to Cart screen immediately
     navigation.navigate('Cart');
+    
+    // Add to cart in the background
+    const cartItem: Omit<CartItem, 'quantity'> = {
+      id: reading.id,
+      title: reading.title,
+      subtitle: reading.subtitle,
+      price: reading.price,
+      type: 'tarot',
+      image: 'https://via.placeholder.com/150'
+    };
+    
+    addItem(cartItem).catch(error => {
+      console.error('Error adding item to cart:', error);
+      Alert.alert('Error', 'Failed to add item to cart. Please try again.');
+    });
   };
 
   return (
@@ -58,8 +80,11 @@ const TarotReadingDetail = () => {
                 </Text>
               )}
             </View>
-            <Button variant="default" size="lg"
+            <Button 
+              variant="secondary" 
+              size="lg"
               onPress={handleAddToCart}
+              loading={isLoading}
             >
               Get Reading Now
             </Button>

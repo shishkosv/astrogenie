@@ -103,7 +103,7 @@ const Features = () => {
 
       <View style={styles.buttonContainer}>
         <Button
-          variant="default"
+          variant="primary"
           size="md"
           onPress={() => handleFeatureClick(feature.route as keyof RootStackParamList)}
         >

@@ -30,6 +30,8 @@ import type {
   TransitResponse,
   ProgressionResponse
 } from '../../types/responses';
+import type { ChartInterpretationRequest } from '../../types/requests/ChartInterpretationRequest';
+import type { ChartInterpretationResponse } from '../../types/responses/ChartInterpretationResponse';
 
 export interface IWesternAstrologyService {
   getBirthChart(params: WesternChartRequest): Promise<WesternChartResponse>;
@@ -69,6 +71,10 @@ export interface IWesternAstrologyService {
   getChartInterpretation(
     params: WesternChartRequest
   ): Promise<{ aspects: string[]; houses: string[]; planets: string[] }>;
+
+  getChartInterpretationData(
+    params: ChartInterpretationRequest
+  ): Promise<ChartInterpretationResponse>;
 
   getTropicalProgressions(
     params: TropicalProgressionsRequest

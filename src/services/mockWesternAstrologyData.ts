@@ -1,3 +1,4 @@
+import { House, Planet, Aspect } from '../types/base/WesternBaseTypes';
 import type { WesternChartResponse } from '../types/responses/WesternChartResponse';
 import type { 
   TropicalHousesResponse, 
@@ -13,8 +14,12 @@ import type {
   TropicalSynastryResponse,
   RomanticForecastResponse
 } from '../types/responses';
+import type { ChartInterpretationResponse } from '../types/responses/ChartInterpretationResponse';
 
-export const birthChartData = {
+export const birthChartData: {
+  houses: House[];
+  aspects: Aspect[];
+} = {
   houses: [
     { house_number: 1, sign: 'Aries', degree: 0, minute: 0, cusp: true, interpretation: 'House of self and personality' },
     { house_number: 2, sign: 'Taurus', degree: 5, minute: 15, cusp: true, interpretation: 'House of values and possessions' },
@@ -35,6 +40,7 @@ export const birthChartData = {
       planet2: 'Moon',
       aspect: 'Trine',
       orb: 2.5,
+      applying: true,
       interpretation: 'Harmonious flow between conscious and unconscious mind'
     },
     { 
@@ -42,6 +48,7 @@ export const birthChartData = {
       planet2: 'Mercury',
       aspect: 'Conjunction',
       orb: 1.2,
+      applying: true,
       interpretation: 'Strong mental clarity and communication skills'
     },
     { 
@@ -49,6 +56,7 @@ export const birthChartData = {
       planet2: 'Venus',
       aspect: 'Sextile',
       orb: 3.1,
+      applying: true,
       interpretation: 'Easy expression of emotions in relationships'
     },
     { 
@@ -56,6 +64,7 @@ export const birthChartData = {
       planet2: 'Jupiter',
       aspect: 'Square',
       orb: 4.2,
+      applying: false,
       interpretation: 'Dynamic tension between action and expansion'
     },
     { 
@@ -63,6 +72,7 @@ export const birthChartData = {
       planet2: 'Mars',
       aspect: 'Trine',
       orb: 2.8,
+      applying: true,
       interpretation: 'Harmonious balance of feminine and masculine energies'
     },
     { 
@@ -70,6 +80,7 @@ export const birthChartData = {
       planet2: 'Pluto',
       aspect: 'Conjunction',
       orb: 1.5,
+      applying: true,
       interpretation: 'Profound transformation of structures and authority'
     },
     { 
@@ -77,6 +88,7 @@ export const birthChartData = {
       planet2: 'Uranus',
       aspect: 'Sextile',
       orb: 2.3,
+      applying: true,
       interpretation: 'Opportunities for sudden breakthroughs and expansion'
     },
     { 
@@ -84,6 +96,7 @@ export const birthChartData = {
       planet2: 'Neptune',
       aspect: 'Square',
       orb: 3.7,
+      applying: false,
       interpretation: 'Challenge between logical thinking and intuition'
     },
     { 
@@ -91,6 +104,7 @@ export const birthChartData = {
       planet2: 'Saturn',
       aspect: 'Opposition',
       orb: 2.9,
+      applying: false,
       interpretation: 'Tension between self-expression and responsibility'
     },
     { 
@@ -98,9 +112,113 @@ export const birthChartData = {
       planet2: 'Pluto',
       aspect: 'Trine',
       orb: 1.8,
+      applying: true,
       interpretation: 'Deep emotional transformation flows naturally'
     }
   ]
+};
+
+export const chartInterpretationData = {
+  planets: [
+    { 
+      name: 'Sun', 
+      sign: 'Aries', 
+      degree: 15, 
+      minute: 30, 
+      retrograde: false, 
+      house: 1,
+      interpretation: 'Strong leadership qualities and self-expression'
+    },
+    { 
+      name: 'Moon', 
+      sign: 'Taurus', 
+      degree: 22, 
+      minute: 45, 
+      retrograde: false, 
+      house: 2,
+      interpretation: 'Emotional security through material comfort'
+    },
+    { 
+      name: 'Mercury', 
+      sign: 'Pisces', 
+      degree: 8, 
+      minute: 15, 
+      retrograde: true, 
+      house: 12,
+      interpretation: 'Intuitive thinking and creative communication'
+    },
+    { 
+      name: 'Venus', 
+      sign: 'Gemini', 
+      degree: 3, 
+      minute: 20, 
+      retrograde: false, 
+      house: 3,
+      interpretation: 'Versatile approach to relationships and values'
+    },
+    { 
+      name: 'Mars', 
+      sign: 'Leo', 
+      degree: 17, 
+      minute: 55, 
+      retrograde: false, 
+      house: 5,
+      interpretation: 'Dynamic self-expression and creative energy'
+    }
+  ],
+  houses: birthChartData.houses,
+  ascendant: 0,
+  midheaven: 270,
+  vertex: 180,
+  lilith: {
+    name: 'Lilith',
+    sign: 'Scorpio',
+    degree: 15,
+    minute: 30,
+    retrograde: false,
+    house: 8
+  },
+  aspects: birthChartData.aspects,
+  moon_phase: {
+    moon_phase_name: 'Waxing Gibbous',
+    moon_phase_id: 5,
+    moon_phase_calc: '75% illuminated',
+    moon_phase_description: 'The Waxing Gibbous phase represents a time of refinement and perfection. This is a period to review and edit your work, making final adjustments before the culmination of your efforts. It\'s a time of anticipation and preparation.'
+  },
+  hemisphere: {
+    east_west: {
+      description: 'Your chart has a slight Eastern emphasis, suggesting you tend to create your own opportunities rather than waiting for them to come to you. You prefer to take initiative and shape your own destiny.',
+      id: 1
+    },
+    north_south: {
+      description: 'Your chart has a balanced North-South distribution, indicating you maintain equilibrium between your public and private life. You can navigate both personal and professional spheres with equal comfort.',
+      id: 3
+    }
+  },
+  elements: {
+    elements: [
+      { name: 'Fire', percentage: 35 },
+      { name: 'Earth', percentage: 25 },
+      { name: 'Air', percentage: 20 },
+      { name: 'Water', percentage: 20 }
+    ],
+    description: 'Your chart shows a relatively balanced elemental distribution with a slight emphasis on Fire. This suggests you have access to all four elemental energies, with a natural inclination toward enthusiasm, inspiration, and action.',
+    dominant_element_id: 1
+  },
+  modes: {
+    modes: [
+      { name: 'Cardinal', percentage: 40 },
+      { name: 'Fixed', percentage: 35 },
+      { name: 'Mutable', percentage: 25 }
+    ],
+    description: 'Your chart has a slight emphasis on Cardinal modality, suggesting you\'re naturally inclined toward initiating action and starting new projects. You have leadership qualities and enjoy being at the forefront of new endeavors.',
+    dominant_mode_id: 1
+  },
+  dominant_sign: {
+    sign_id: 1,
+    sign_name: 'Aries',
+    percentage: 25
+  }
 };
 
 export const mockWesternAstrologyData = {
@@ -393,5 +511,7 @@ export const mockWesternAstrologyData = {
       { start_date: new Date().toISOString(), end_date: new Date().toISOString(), rating: 8 }
     ],
     interpretation: ['Good period for romance']
-  } as RomanticForecastResponse
+  } as RomanticForecastResponse,
+
+  chartInterpretation: chartInterpretationData as ChartInterpretationResponse
 };  
