@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  astrogenie-web:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    container_name: astrogenie-web
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - NODE_ENV=production
+      # Add other environment variables as needed
+    volumes:
+      - ./logs:/var/log/nginx
+      - ./ssl:/etc/nginx/ssl
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - astrogenie-network
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+  # Uncomment if you need a database
+  # db:
+  #   image: postgres:14-alpine
+  #   container_name: astrogenie-db
+  #   restart: unless-stopped
+  #   environment:
+  #     - POSTGRES_USER=astrogenie
+  #     - POSTGRES_PASSWORD=your_secure_password
+  #     - POSTGRES_DB=astrogenie
+  #   volumes:
+  #     - postgres-data:/var/lib/postgresql/data
+  #   networks:
+  #     - astrogenie-network
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U astrogenie"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
+  #     start_period: 10s
+
+networks:
+  astrogenie-network:
+    driver: bridge
+
+# Uncomment if you need a database
+# volumes:
+#   postgres-data: 

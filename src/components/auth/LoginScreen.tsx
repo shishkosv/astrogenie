@@ -7,7 +7,7 @@ import Layout from '../layout/Layout';
 import { useLanguage } from '../../context/LanguageContext';
 import { useAuth } from '../../context/AuthContext';
 import { Button } from '../shared/Button';
-import { Input } from '../shared/Input';
+import { Input } from '../shared/input';
 import { loginStyles as styles } from './styles/LoginStyles';
 import Icon from '../icons/Icon';
 
@@ -64,7 +64,7 @@ const Login = () => {
                 </Button>
                 
                 <Button
-                  variant="text"
+                  variant="secondary"
                   onPress={() => navigation.navigate('ForgotPassword')}
                 >
                   {translations.forgotPassword}
@@ -99,7 +99,7 @@ const Login = () => {
         </View>
         
         <Button
-          variant="text"
+          variant="secondary"
           onPress={() => navigation.navigate('Registration')}
         >
           {translations.signUp}

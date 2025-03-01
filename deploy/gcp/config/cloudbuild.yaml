@@ -1,0 +1,62 @@
+# Cloud Build configuration file for AstroGenie
+# This file defines the build steps for deploying to Google Cloud Platform
+
+steps:
+  # Step 1: Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/astrogenie:$COMMIT_SHA', '-f', 'deploy/Dockerfile', '.']
+    id: 'build-image'
+    timeout: '1200s'
+
+  # Step 2: Push the Docker image to Google Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/astrogenie:$COMMIT_SHA']
+    id: 'push-image'
+    waitFor: ['build-image']
+
+  # Step 3: Deploy to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'astrogenie'
+      - '--image=gcr.io/$PROJECT_ID/astrogenie:$COMMIT_SHA'
+      - '--region=${_REGION}'
+      - '--platform=managed'
+      - '--allow-unauthenticated'
+      - '--memory=1Gi'
+      - '--cpu=1'
+      - '--port=80'
+      - '--set-env-vars=NODE_ENV=production'
+    id: 'deploy-cloud-run'
+    waitFor: ['push-image']
+
+  # Step 4: Create a tag for the latest successful deployment
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['tag', 'gcr.io/$PROJECT_ID/astrogenie:$COMMIT_SHA', 'gcr.io/$PROJECT_ID/astrogenie:latest']
+    id: 'tag-latest'
+    waitFor: ['deploy-cloud-run']
+
+  # Step 5: Push the latest tag
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/astrogenie:latest']
+    id: 'push-latest'
+    waitFor: ['tag-latest']
+
+# Images to be stored in Google Container Registry
+images:
+  - 'gcr.io/$PROJECT_ID/astrogenie:$COMMIT_SHA'
+  - 'gcr.io/$PROJECT_ID/astrogenie:latest'
+
+# Substitution variables
+substitutions:
+  _REGION: 'us-central1'  # Default region
+
+# Timeout for the entire build process
+timeout: '1800s'
+
+# Options
+options:
+  logging: CLOUD_LOGGING_ONLY
+  machineType: 'E2_HIGHCPU_8' 

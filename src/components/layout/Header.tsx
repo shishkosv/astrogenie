@@ -4,7 +4,6 @@ import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { RootStackParamList } from '../../navigation/AppNavigator';
 import LanguageSwitcher from './LanguageSwitcher';
-import SignSwitcher from './SignSwitcher';
 import { useLanguage } from '../../context/LanguageContext';
 import { useAuth } from '../../context/AuthContext';
 import { AccountMenu } from './AccountMenu';
@@ -43,7 +42,6 @@ const Header = () => {
         <TouchableOpacity onPress={() => handleNavigation('Cart')} style={styles.cartButton}>
           <Icon name="shopping-cart" size={24} color="#FFFFFF" />
         </TouchableOpacity>
-        <SignSwitcher />
         <LanguageSwitcher />
         {isAuthenticated && <AccountMenu />}
       </View>
