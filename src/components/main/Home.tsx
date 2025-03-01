@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, ScrollView, ImageSourcePropType } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { RootStackParamList } from '../../navigation/AppNavigator';
@@ -13,12 +13,19 @@ import TarotReadings from './tarot/TarotReadings';
 import { useWebNavigation } from '../../hooks/useWebNavigation';
 import BirthChart from './BirthChart';
 import SignSwitcher from '../layout/SignSwitcher';
-
-// Import images
-import androidBadge from '../../assets/images/download_ android.png';
-import iosBadge from '../../assets/images/download_ios.png';
+import { HoroscopePreview } from './HoroscopePreview';
+import FeaturesCards from './FeaturesCards';
 
 type NavigationProp = StackNavigationProp<RootStackParamList, 'Landing'>;
+
+// Sample horoscope data
+const SAMPLE_HOROSCOPE = {
+  sign: 'Aries',
+  horoscope: "Today is a great day to start new projects. Your creative energy is at its peak, and you'll find that ideas flow easily. Take advantage of this productive period to advance your goals.",
+  luckyNumber: 7,
+  luckyColor: "Blue",
+  mood: "Inspired"
+};
 
 const Home = () => {
   const navigation = useNavigation<NavigationProp>();
@@ -38,14 +45,16 @@ const Home = () => {
     navigation.navigate('DailyHoroscopes');
   };
 
+  // Handle sign press in HoroscopePreview
+  const handleSignPress = () => {
+    navigation.navigate('DailyHoroscopes');
+  };
+
   return (
     <Layout>
       <ScrollView style={styles.container}>
         <View style={styles.mainContent}>
           <View style={styles.hero}>
-            <Text style={styles.heroTitle}>{translations.welcome}</Text>
-            <Text style={styles.heroSubtitle}>{translations.subtitle}</Text>
-            
             <View style={styles.signSelectorContainer}>
               <SignSwitcher />
               <Button 
@@ -56,30 +65,34 @@ const Home = () => {
                 Weekly Forecast
               </Button>
             </View>
+          </View>
+
+          {/* Horoscope Preview Section */}
+          <View style={styles.horoscopePreviewSection}>
+            <Text style={styles.sectionTitle}>Your Daily Horoscope</Text>
             
-            <View style={styles.downloadButtons}>
-              <View style={styles.downloadItem}>
-                <TouchableOpacity>
-                  <Image 
-                    source={androidBadge as ImageSourcePropType}
-                    style={styles.storeButton}
-                    resizeMode="contain"
-                  />
-                </TouchableOpacity>
-                <Text style={styles.downloadText}>{translations.downloadAndroid}</Text>
-              </View>
-              <View style={styles.downloadItem}>
-                <TouchableOpacity>
-                  <Image 
-                    source={iosBadge as ImageSourcePropType}
-                    style={styles.storeButton}
-                    resizeMode="contain"
-                  />
-                </TouchableOpacity>
-                <Text style={styles.downloadText}>{translations.downloadIOS}</Text>
-              </View>
+            <HoroscopePreview
+              sign={SAMPLE_HOROSCOPE.sign}
+              horoscope={SAMPLE_HOROSCOPE.horoscope}
+              luckyNumber={SAMPLE_HOROSCOPE.luckyNumber}
+              luckyColor={SAMPLE_HOROSCOPE.luckyColor}
+              mood={SAMPLE_HOROSCOPE.mood}
+              onSignPress={handleSignPress}
+            />
+            
+            <View style={styles.ctaContainer}>
+              <Button 
+                variant="secondary" 
+                size="md" 
+                onPress={handleWeeklyForecastClick}
+              >
+                Explore All Horoscopes
+              </Button>
             </View>
           </View>
+
+          {/* Features Cards Section */}
+          <FeaturesCards />
 
           <View style={styles.features}>
             <View style={styles.featureList}>

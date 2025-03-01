@@ -32,6 +32,7 @@ const SignSwitcher = () => {
           size={20}
           color="#000"
         />
+
         <Text style={styles.selectedText}>
           {selectedSign?.name || 'Select Sign'}
         </Text>

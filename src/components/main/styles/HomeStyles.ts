@@ -1,4 +1,4 @@
-import { StyleSheet, Platform, ImageStyle } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 export const homeStyles = StyleSheet.create({
   container: {
@@ -9,51 +9,35 @@ export const homeStyles = StyleSheet.create({
     flex: 1,
   },
   hero: {
-    padding: 40,
+    padding: 20,
     backgroundColor: '#4a0e4e',
     alignItems: 'center',
-  },
-  heroTitle: {
-    fontSize: 48,
-    fontWeight: '700',
-    color: '#FFFFFF',
-    marginBottom: 16,
-    textAlign: 'center',
-  },
-  heroSubtitle: {
-    fontSize: 20,
-    color: '#FFFFFF',
-    opacity: 0.9,
-    textAlign: 'center',
-    marginBottom: 32,
   },
   signSelectorContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 32,
+    marginVertical: 16,
     gap: 16,
     width: '100%',
     flexWrap: 'wrap',
   },
-  downloadButtons: {
-    flexDirection: 'row',
-    gap: 24,
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-  },
-  downloadItem: {
+  // Horoscope Preview Section
+  horoscopePreviewSection: {
+    padding: 40,
+    backgroundColor: '#1A1A1A',
     alignItems: 'center',
   },
-  storeButton: {
-    height: 40,
-    width: 135,
-    overflow: 'hidden',
-  } as ImageStyle,
-  downloadText: {
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
     color: '#FFFFFF',
-    marginTop: 8,
-    opacity: 0.8,
+    marginBottom: 24,
+    textAlign: 'center',
+  },
+  ctaContainer: {
+    marginTop: 24,
+    alignItems: 'center',
   },
   zodiacSection: {
     padding: 40,
@@ -61,6 +45,7 @@ export const homeStyles = StyleSheet.create({
   features: {
     padding: 40,
     backgroundColor: '#f8f9fa',
+    marginTop: 0,
   },
   featureList: {
     flexDirection: 'row',
