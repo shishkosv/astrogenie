@@ -10,6 +10,7 @@ import { CartProvider } from './context/CartContext';
 import { ErrorBoundary } from './components/shared/ErrorBoundary';
 import { auth } from './config/firebase';
 import { UserProvider } from './context/UserContext';
+import { ThemeProvider } from './theme/ThemeProvider';
 
 // Error fallback component
 const ErrorFallback = ({ error, resetError }: { error: Error; resetError: () => void }) => (
@@ -59,21 +60,23 @@ const App = () => {
 
   return (
     <ErrorBoundary fallback={ErrorFallback}>
-      <FirebaseProvider>
-        <UserProvider>
-          <ZodiacProvider>
-            <AuthProvider>
-              <CartProvider>
-                <LanguageProvider>
-                  <View style={{ flex: 1 }}>
-                    {Platform.OS === 'web' ? <AppNavigator /> : <MobileLanding />}
-                  </View>
-                </LanguageProvider>
-              </CartProvider>
-            </AuthProvider>
-          </ZodiacProvider>
-        </UserProvider>
-      </FirebaseProvider>
+      <ThemeProvider>
+        <FirebaseProvider>
+          <UserProvider>
+            <ZodiacProvider>
+              <AuthProvider>
+                <CartProvider>
+                  <LanguageProvider>
+                    <View style={{ flex: 1 }}>
+                      {Platform.OS === 'web' ? <AppNavigator /> : <MobileLanding />}
+                    </View>
+                  </LanguageProvider>
+                </CartProvider>
+              </AuthProvider>
+            </ZodiacProvider>
+          </UserProvider>
+        </FirebaseProvider>
+      </ThemeProvider>
     </ErrorBoundary>
   );
 };

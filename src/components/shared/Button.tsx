@@ -1,12 +1,8 @@
 import React from 'react';
 import { TouchableOpacity, Text, ActivityIndicator, StyleSheet, Platform, View, StyleProp, ViewStyle } from 'react-native';
-
-// Define gradient colors to match the CSS variables
-const GRADIENT_COLORS = {
-  from: '#4040C0', // hsl(240, 70%, 50%)
-  via: '#C040C0', // hsl(280, 70%, 50%)
-  to: '#C04080',  // hsl(320, 70%, 50%)
-};
+import { COLORS, createGradient } from '../../theme/colors';
+import { SPACING } from '../../theme/spacing';
+import { TYPOGRAPHY } from '../../theme/typography';
 
 interface ButtonProps {
   children: React.ReactNode;
@@ -27,7 +23,7 @@ export const Button: React.FC<ButtonProps> = ({
 }) => {
   // For web, we can use actual CSS for the gradient text in the white button
   const gradientTextStyle = Platform.OS === 'web' && variant === 'white' ? {
-    background: `linear-gradient(135deg, ${GRADIENT_COLORS.from}, ${GRADIENT_COLORS.via})`,
+    background: createGradient('90deg'),
     WebkitBackgroundClip: 'text',
     WebkitTextFillColor: 'transparent',
     backgroundClip: 'text',
@@ -43,9 +39,9 @@ export const Button: React.FC<ButtonProps> = ({
       {loading ? (
         <ActivityIndicator 
           color={
-            variant === 'ghost' ? '#FFFFFF' : 
-            variant === 'white' ? GRADIENT_COLORS.via : 
-            '#FFFFFF'
+            variant === 'ghost' ? COLORS.text.light : 
+            variant === 'white' ? COLORS.gradient.via : 
+            COLORS.text.light
           } 
         />
       ) : (
@@ -66,46 +62,46 @@ export const Button: React.FC<ButtonProps> = ({
 
 const styles = StyleSheet.create({
   button: {
-    borderRadius: 8,
+    borderRadius: SPACING.radius.md,
     alignItems: 'center',
     justifyContent: 'center',
   },
   primary: {
-    backgroundColor: GRADIENT_COLORS.via,
+    backgroundColor: COLORS.gradient.via,
     ...(Platform.OS === 'web' && {
-      background: `linear-gradient(135deg, ${GRADIENT_COLORS.from}, ${GRADIENT_COLORS.via})`,
+      background: createGradient('90deg'),
     }),
   },
   secondary: {
-    backgroundColor: GRADIENT_COLORS.to,
+    backgroundColor: COLORS.gradient.to,
   },
   ghost: {
     backgroundColor: 'transparent',
   },
   white: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: COLORS.text.light,
   },
   sm: {
-    paddingVertical: 8,
-    paddingHorizontal: 16,
+    paddingVertical: SPACING.xs,
+    paddingHorizontal: SPACING.md,
   },
   md: {
-    paddingVertical: 12,
-    paddingHorizontal: 24,
+    paddingVertical: SPACING.sm,
+    paddingHorizontal: SPACING.lg,
   },
   lg: {
-    paddingVertical: 16,
-    paddingHorizontal: 32,
+    paddingVertical: SPACING.md,
+    paddingHorizontal: SPACING.xl,
   },
   text: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
+    color: COLORS.text.light,
+    fontSize: TYPOGRAPHY.fontSize.md,
+    fontWeight: TYPOGRAPHY.fontWeight.semiBold,
   },
   ghostText: {
-    color: '#FFFFFF',
+    color: COLORS.text.light,
   },
   whiteText: {
-    color: GRADIENT_COLORS.via,
+    color: COLORS.gradient.via,
   },
 }); 

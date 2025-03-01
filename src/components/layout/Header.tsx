@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Platform, Animated, Dimensions, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Platform, Animated, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { RootStackParamList } from '../../navigation/AppNavigator';
@@ -10,6 +10,8 @@ import { AccountMenu } from './AccountMenu';
 import { headerStyles as styles } from './styles/HeaderStyles';
 import Icon from '../icons/Icon';
 import { Button } from '../shared/Button';
+import { useColors, useSpacing } from '../../theme/ThemeProvider';
+import { useIsMobile } from '../../utils/responsive';
 
 type NavigationProp = StackNavigationProp<RootStackParamList>;
 
@@ -30,9 +32,9 @@ const Header = () => {
   const navigation = useNavigation<NavigationProp>();
   const { translations } = useLanguage();
   const { isAuthenticated } = useAuth();
-
-  // Check if we're in mobile view
-  const isMobileView = windowWidth <= 650;
+  const colors = useColors();
+  const spacing = useSpacing();
+  const isMobile = useIsMobile();
 
   // Update window width on resize
   useEffect(() => {
@@ -65,24 +67,6 @@ const Header = () => {
     }).start();
     
     setMenuOpen(!menuOpen);
-  };
-
-  // Blob animation elements for web only
-  const renderBlobs = () => {
-    if (Platform.OS !== 'web') return null;
-    
-    // Use div elements with CSS classes for web
-    return (
-      <>
-        {Platform.OS === 'web' && (
-          <>
-            <div className="header-blob" style={{ backgroundColor: '#4040C0', left: '20%', top: '-50%' }} />
-            <div className="header-blob blob-delay-2s" style={{ backgroundColor: '#C040C0', right: '15%', top: '-30%' }} />
-            <div className="header-blob blob-delay-4s" style={{ backgroundColor: '#C04080', left: '30%', bottom: '-50%' }} />
-          </>
-        )}
-      </>
-    );
   };
 
   // Mobile menu height based on animation value
@@ -211,8 +195,6 @@ const Header = () => {
   return (
     <View style={styles.headerWrapper}>
       <View style={styles.header}>
-        {renderBlobs()}
-        
         <View style={styles.headerInner}>
           <View style={styles.leftSection}>
             <TouchableOpacity onPress={() => navigateTo('Landing')}>
@@ -259,40 +241,39 @@ const Header = () => {
               ) : (
                 <>
                   <TouchableOpacity 
-                    onPress={() => navigateTo('Cart')} 
-                    style={[styles.cartButton, styles.desktopButtonItem]}
+                    style={styles.cartButton}
+                    onPress={() => navigateTo('Cart')}
                   >
-                    <Icon name="shopping-cart" size={24} color="#FFFFFF" />
+                    <Icon name="cart" size={24} color="#fff" />
                   </TouchableOpacity>
                   <AccountMenu />
                 </>
               )}
             </View>
             
-            {/* Hamburger menu button - visible only on mobile */}
+            {/* Hamburger menu button - only visible on mobile */}
             <TouchableOpacity 
-              style={[
-                styles.hamburgerButton,
-                // Use inline style with proper type for display
-                Platform.OS === 'web' && { display: isMobileView ? 'flex' : 'none' as 'flex' | 'none' }
-              ]}
-              {...applyWebProps('header-hamburger')}
+              style={styles.hamburgerButton}
               onPress={toggleMenu}
-              accessibilityRole="button"
-              accessibilityLabel="Menu"
+              {...applyWebProps('header-hamburger')}
             >
               <Icon 
-                name={menuOpen ? "x" : "menu"} 
+                name={menuOpen ? 'close' : 'menu'} 
                 size={24} 
-                color="#FFFFFF" 
+                color="#fff" 
               />
             </TouchableOpacity>
           </View>
         </View>
       </View>
       
-      {/* Mobile menu - slides down when open */}
-      <Animated.View style={[styles.mobileMenu, { height: mobileMenuHeight }]}>
+      {/* Mobile menu - animated height */}
+      <Animated.View 
+        style={[
+          styles.mobileMenu,
+          { height: mobileMenuHeight }
+        ]}
+      >
         {renderMobileMenuItems()}
       </Animated.View>
     </View>
