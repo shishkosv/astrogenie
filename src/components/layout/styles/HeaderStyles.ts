@@ -7,34 +7,8 @@ const GRADIENT_COLORS = {
   to: '#C04080',  // hsl(320, 70%, 50%)
 };
 
-// Define keyframes animation for web
-const blobKeyframes = Platform.OS === 'web' ? `
-  @keyframes blob {
-    0% {
-      transform: translate(0px, 0px) scale(1);
-    }
-    33% {
-      transform: translate(30px, -50px) scale(1.1);
-    }
-    66% {
-      transform: translate(-20px, 20px) scale(0.9);
-    }
-    100% {
-      transform: translate(0px, 0px) scale(1);
-    }
-  }
-` : '';
-
 // Inject styles into the document if on web
 if (Platform.OS === 'web' && typeof document !== 'undefined') {
-  // Check if the style element already exists to avoid duplicates
-  if (!document.getElementById('blob-keyframes-header')) {
-    const styleElement = document.createElement('style');
-    styleElement.id = 'blob-keyframes-header';
-    styleElement.textContent = blobKeyframes;
-    document.head.appendChild(styleElement);
-  }
-  
   // Add responsive styles
   if (!document.getElementById('responsive-header-styles')) {
     const styleElement = document.createElement('style');
@@ -49,13 +23,50 @@ if (Platform.OS === 'web' && typeof document !== 'undefined') {
       }
       
       /* Mobile styles */
-      @media (max-width: 768px) {
+      @media (max-width: 650px) {
         .header-nav-desktop {
           display: none !important;
         }
         .header-hamburger {
           display: flex !important;
         }
+      }
+      
+      /* Blob animation */
+      @keyframes blob {
+        0% {
+          transform: translate(0px, 0px) scale(1);
+        }
+        33% {
+          transform: translate(30px, -50px) scale(1.1);
+        }
+        66% {
+          transform: translate(-20px, 20px) scale(0.9);
+        }
+        100% {
+          transform: translate(0px, 0px) scale(1);
+        }
+      }
+      
+      .header-blob {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        opacity: 0.7;
+        border-radius: 100px;
+        filter: blur(60px);
+        animation: blob 7s infinite;
+      }
+      
+      .blob-delay-2s {
+        animation-delay: 2s;
+      }
+      
+      .blob-delay-4s {
+        animation-delay: 4s;
       }
     `;
     document.head.appendChild(styleElement);
@@ -67,7 +78,7 @@ if (Platform.OS === 'web' && typeof document !== 'undefined') {
     scriptElement.id = 'header-responsive-script';
     scriptElement.textContent = `
       function updateHeaderResponsiveness() {
-        const isMobile = window.innerWidth <= 768;
+        const isMobile = window.innerWidth <= 650;
         const desktopNavs = document.querySelectorAll('.header-nav-desktop');
         const hamburgers = document.querySelectorAll('.header-hamburger');
         
@@ -127,51 +138,54 @@ export const headerStyles = StyleSheet.create({
   leftSection: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 32,
   },
   logo: {
     color: '#FFFFFF',
     fontSize: 24,
     fontWeight: '700',
+    marginRight: 32,
   },
   navLinks: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4,
-    // Only shown on desktop web
     ...(Platform.OS !== 'web' && {
       display: 'none',
     }),
   },
+  navLinkItem: {
+    marginRight: 4,
+  },
   rightSection: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+  },
+  rightSectionItem: {
+    marginRight: 8,
   },
   // Desktop buttons container
   desktopButtons: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
-    // Only shown on desktop web
+    marginLeft: 8,
     ...(Platform.OS !== 'web' && {
       display: 'none',
     }),
   },
+  desktopButtonItem: {
+    marginRight: 8,
+  },
   // Hamburger menu button
   hamburgerButton: {
     padding: 8,
-    display: 'flex', // Always display by default
+    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     width: 40,
     height: 40,
     borderRadius: 4,
+    marginLeft: 8,
     ...(Platform.OS === 'web' && {
       cursor: 'pointer',
-      ':hover': {
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
-      },
     }),
   },
   cartButton: {
@@ -204,25 +218,4 @@ export const headerStyles = StyleSheet.create({
     borderTopColor: 'rgba(255, 255, 255, 0.2)',
     paddingTop: 16,
   },
-  // Blob animation styles for web
-  ...(Platform.OS === 'web' && {
-    blob: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      zIndex: -1,
-      opacity: 0.7,
-      borderRadius: 100,
-      filter: 'blur(60px)',
-      animation: 'blob 7s infinite',
-    },
-    blobDelayed2s: {
-      animationDelay: '2s',
-    },
-    blobDelayed4s: {
-      animationDelay: '4s',
-    },
-  }),
 }); 
