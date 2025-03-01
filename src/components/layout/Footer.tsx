@@ -8,58 +8,128 @@ import { footerStyles as styles } from './styles/FooterStyles';
 
 type NavigationProp = StackNavigationProp<RootStackParamList>;
 
-const Footer = () => {
+// Custom Link component to replace Next.js Link
+const Link = ({ 
+  href, 
+  children, 
+  style 
+}: { 
+  href: keyof RootStackParamList | string; 
+  children: React.ReactNode;
+  style?: any;
+}) => {
   const navigation = useNavigation<NavigationProp>();
-  const { translations } = useLanguage();
-
-  const handleNavigation = (route: keyof RootStackParamList) => {
-    navigation.navigate(route);
+  
+  const handlePress = () => {
+    // Check if the href is a valid route in our navigation
+    if (typeof href === 'string' && href !== '#') {
+      try {
+        // @ts-ignore - We're handling this safely
+        navigation.navigate(href);
+      } catch (error) {
+        console.log('Navigation error:', error);
+      }
+    }
   };
+
+  return (
+    <TouchableOpacity onPress={handlePress}>
+      <Text style={style}>{children}</Text>
+    </TouchableOpacity>
+  );
+};
+
+const Footer = () => {
+  const { translations } = useLanguage();
+  const currentYear = new Date().getFullYear();
 
   return (
     <View style={styles.footer}>
       <View style={styles.content}>
-        <View style={styles.row}>
-          {/* Company Section */}
-          <View style={styles.column}>
-            <Text style={styles.title}>Company</Text>
-            <TouchableOpacity onPress={() => handleNavigation('About')}>
-              <Text style={styles.link}>About Us</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => handleNavigation('Contact')}>
-              <Text style={styles.link}>Contact</Text>
-            </TouchableOpacity>
+        <View style={styles.gridContainer}>
+          <View style={styles.gridColumn}>
+            <Text style={styles.columnTitle}>AstroConnect</Text>
+            <View style={styles.linkList}>
+              <Link href="About" style={styles.link}>
+                About Us
+              </Link>
+              <Link href="#" style={styles.link}>
+                Our Team
+              </Link>
+              <Link href="#" style={styles.link}>
+                Careers
+              </Link>
+              <Link href="Contact" style={styles.link}>
+                Contact
+              </Link>
+            </View>
           </View>
 
-          {/* Features Section */}
-          <View style={styles.column}>
-            <Text style={styles.title}>Features</Text>
-            <TouchableOpacity onPress={() => handleNavigation('DailyHoroscopes')}>
-              <Text style={styles.link}>Daily Horoscopes</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => handleNavigation('Compatibility')}>
-              <Text style={styles.link}>Compatibility</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => handleNavigation('TarotReadings')}>
-              <Text style={styles.link}>Tarot Readings</Text>
-            </TouchableOpacity>
+          <View style={styles.gridColumn}>
+            <Text style={styles.columnTitle}>Features</Text>
+            <View style={styles.linkList}>
+              <Link href="DailyHoroscopes" style={styles.link}>
+                Daily Horoscopes
+              </Link>
+              <Link href="Compatibility" style={styles.link}>
+                Compatibility
+              </Link>
+              <Link href="BirthChart" style={styles.link}>
+                Birth Charts
+              </Link>
+              <Link href="TarotReadings" style={styles.link}>
+                Tarot Readings
+              </Link>
+            </View>
           </View>
 
-          {/* Support Section */}
-          <View style={styles.column}>
-            <Text style={styles.title}>Support</Text>
-            <TouchableOpacity onPress={() => handleNavigation('Login')}>
-              <Text style={styles.link}>Login</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => handleNavigation('Registration')}>
-              <Text style={styles.link}>Sign Up</Text>
-            </TouchableOpacity>
+          <View style={styles.gridColumn}>
+            <Text style={styles.columnTitle}>Resources</Text>
+            <View style={styles.linkList}>
+              <Link href="#" style={styles.link}>
+                Blog
+              </Link>
+              <Link href="#" style={styles.link}>
+                Guides
+              </Link>
+              <Link href="#" style={styles.link}>
+                FAQ
+              </Link>
+              <Link href="#" style={styles.link}>
+                Support
+              </Link>
+            </View>
+          </View>
+
+          <View style={styles.gridColumn}>
+            <Text style={styles.columnTitle}>Legal</Text>
+            <View style={styles.linkList}>
+              <Link href="#" style={styles.link}>
+                Terms of Service
+              </Link>
+              <Link href="#" style={styles.link}>
+                Privacy Policy
+              </Link>
+              <Link href="#" style={styles.link}>
+                Cookie Policy
+              </Link>
+            </View>
           </View>
         </View>
 
-        <Text style={styles.copyright}>
-          © {new Date().getFullYear()} AstroConnect. All rights reserved.
-        </Text>
+        <View style={styles.footerBottom}>
+          <Text style={styles.copyright}>
+            © {currentYear} AstroConnect. All rights reserved.
+          </Text>
+          <View style={styles.socialLinks}>
+            <Link href="#" style={styles.socialLink}>
+              <Text>Twitter</Text>
+            </Link>
+            <Link href="#" style={styles.socialLink}>
+              <Text>Instagram</Text>
+            </Link>
+          </View>
+        </View>
       </View>
     </View>
   );
