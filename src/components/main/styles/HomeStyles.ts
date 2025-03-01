@@ -1,4 +1,4 @@
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet, Platform, ImageStyle } from 'react-native';
 
 export const homeStyles = StyleSheet.create({
   container: {
@@ -27,6 +27,15 @@ export const homeStyles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 32,
   },
+  signSelectorContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 32,
+    gap: 16,
+    width: '100%',
+    flexWrap: 'wrap',
+  },
   downloadButtons: {
     flexDirection: 'row',
     gap: 24,
@@ -39,7 +48,8 @@ export const homeStyles = StyleSheet.create({
   storeButton: {
     height: 40,
     width: 135,
-  },
+    overflow: 'hidden',
+  } as ImageStyle,
   downloadText: {
     color: '#FFFFFF',
     marginTop: 8,

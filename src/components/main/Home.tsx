@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, Image, ScrollView, ImageSourcePropType } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { RootStackParamList } from '../../navigation/AppNavigator';
@@ -12,6 +12,7 @@ import SignLists from './horoscope/SignLists';
 import TarotReadings from './tarot/TarotReadings';
 import { useWebNavigation } from '../../hooks/useWebNavigation';
 import BirthChart from './BirthChart';
+import SignSwitcher from '../layout/SignSwitcher';
 
 // Import images
 import androidBadge from '../../assets/images/download_ android.png';
@@ -20,7 +21,7 @@ import iosBadge from '../../assets/images/download_ios.png';
 type NavigationProp = StackNavigationProp<RootStackParamList, 'Landing'>;
 
 const Home = () => {
-  const navigation = useWebNavigation();
+  const navigation = useNavigation<NavigationProp>();
   const { translations } = useLanguage();
   const { isAuthenticated } = useAuth();
 
@@ -29,7 +30,12 @@ const Home = () => {
       navigation.navigate('Login');
       return;
     }
-    navigation.navigate(route);
+    navigation.navigate(route as any);
+  };
+
+  // Handle Weekly Forecast button click - navigate to DailyHoroscopes
+  const handleWeeklyForecastClick = () => {
+    navigation.navigate('DailyHoroscopes');
   };
 
   return (
@@ -39,11 +45,23 @@ const Home = () => {
           <View style={styles.hero}>
             <Text style={styles.heroTitle}>{translations.welcome}</Text>
             <Text style={styles.heroSubtitle}>{translations.subtitle}</Text>
+            
+            <View style={styles.signSelectorContainer}>
+              <SignSwitcher />
+              <Button 
+                variant="primary"
+                size="sm"
+                onPress={handleWeeklyForecastClick}
+              >
+                Weekly Forecast
+              </Button>
+            </View>
+            
             <View style={styles.downloadButtons}>
               <View style={styles.downloadItem}>
                 <TouchableOpacity>
                   <Image 
-                    source={androidBadge}
+                    source={androidBadge as ImageSourcePropType}
                     style={styles.storeButton}
                     resizeMode="contain"
                   />
@@ -53,7 +71,7 @@ const Home = () => {
               <View style={styles.downloadItem}>
                 <TouchableOpacity>
                   <Image 
-                    source={iosBadge}
+                    source={iosBadge as ImageSourcePropType}
                     style={styles.storeButton}
                     resizeMode="contain"
                   />
@@ -63,28 +81,9 @@ const Home = () => {
             </View>
           </View>
 
-          <View style={styles.zodiacSection}>
-            <SignLists standalone={false} />
-          </View>
-
           <View style={styles.features}>
             <View style={styles.featureList}>
-              <View style={styles.featureItem}>
-                <Text style={styles.featureTitle}>{translations.dailyHoroscopes}</Text>
-                <Text style={styles.featureDescription}>
-                  {translations.horoscopesDesc}
-                </Text>
-                <View style={styles.buttonContainer}>
-                  <Button 
-                    variant="default"
-                    size="sm"
-                    onPress={() => handleFeatureClick('DailyHoroscopes')}
-                  >
-                    {translations.tryItNow}
-                  </Button>
-                </View>
-              </View>
-
+              
               <View style={styles.featureItem}>
                 <Text style={styles.featureTitle}>{translations.compatibility}</Text>
                 <Text style={styles.featureDescription}>
@@ -124,7 +123,7 @@ const Home = () => {
                 </Text>
                 <View style={styles.buttonContainer}>
                   <Button 
-                    variant="default"
+                    variant="secondary"
                     size="sm"
                     onPress={() => handleFeatureClick('TarotReadings')}
                   >
