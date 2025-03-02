@@ -8,7 +8,6 @@ import Icon from '../../icons/Icon';
 import { Picker } from '@react-native-picker/picker';
 import { House } from 'types/base/WesternBaseTypes';
 import { Planet } from 'types/base/WesternBaseTypes';
-import { AutocompleteCityInput } from '../../shared/AutocompleteCityInput';
 import { DateTimePicker } from '../../shared/DateTimePicker';
 import { CountrySelector } from '../../shared/CountrySelector';
 import { birthChartData } from '../../../services/mockWesternAstrologyData';
@@ -17,6 +16,7 @@ import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { RootStackParamList } from '../../../navigation/AppNavigator';
 import { COLORS } from '../../../theme/colors';
+import { CitySelector } from '../../shared/CitySelector';
 
 type BirthChartNavigationProp = StackNavigationProp<RootStackParamList, 'BirthChart'>;
 
@@ -120,69 +120,150 @@ const BirthChartForm: React.FC<BirthChartFormProps> = ({
     navigation.navigate('BirthChartInterpretation');
   };
 
+  // For web, we'll use a div with CSS grid for the form inputs
+  const FormGrid = Platform.OS === 'web'
+    ? (props: any) => (
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gap: '16px',
+          width: '100%',
+          marginBottom: '16px'
+        }}>
+          {props.children}
+        </div>
+      )
+    : (props: any) => (
+        <View style={styles.formGrid}>
+          {props.children}
+        </View>
+      );
+
+  // For web, we'll use a div for each form field
+  const FormField = Platform.OS === 'web'
+    ? (props: any) => (
+        <div style={{ width: '100%', ...(props.style || {}) }}>
+          {props.children}
+        </div>
+      )
+    : (props: any) => (
+        <View style={[styles.formField, props.style]}>
+          {props.children}
+        </View>
+      );
+
   const renderForm = () => (
-    <View style={styles.formContainer}>
-      <Text style={styles.formTitle}>Enter Birth Details</Text>
-      
-      <View style={styles.formSection}>
-        <Text style={styles.sectionLabel}>Date and Time of Birth</Text>
-        <DateTimePicker
-          value={date}
-          onChange={handleDateChange}
-          showPicker={showDatePicker}
-          onPress={() => setShowDatePicker(true)}
-        />
-      </View>
+    <View style={styles.container}>
+      <View style={styles.formContainer}>
+        <Text style={styles.formTitle}>Birth Chart</Text>
+        
+        <FormGrid>
+          <FormField>
+            <Text style={styles.fieldLabel}>Birth Date</Text>
+            <View style={styles.input}>
+              <DateTimePicker
+                value={date}
+                onChange={handleDateChange}
+                showPicker={showDatePicker}
+                onPress={() => setShowDatePicker(true)}
+              />
+            </View>
+          </FormField>
 
-      <View style={styles.formSection}>
-        <Text style={styles.sectionLabel}>Location</Text>
-        <View style={styles.locationInputs}>
-          <CountrySelector
-            value={location.country}
-            onChange={(value) => {
-              setLocation(prev => ({ ...prev, country: value, city: '' }));
-            }}
-            label="Country"
-          />
-          <AutocompleteCityInput
-            value={location.city}
-            onLocationSelect={(city, country) => {
-              setLocation({ city, country });
-              handleLocationChange(city, country);
-            }}
-            country={location.country}
-            placeholder="Enter city name"
-          />
-        </View>
-        <View style={styles.locationDetails}>
-          <Text style={styles.locationText}>
-            Latitude: {formData.lat.toFixed(4)}°
-          </Text>
-          <Text style={styles.locationText}>
-            Longitude: {formData.lon.toFixed(4)}°
-          </Text>
-          <Text style={styles.locationText}>
-            Timezone: GMT{formData.tzone >= 0 ? '+' : ''}{formData.tzone}
-          </Text>
-        </View>
-      </View>
+          <FormField>
+            <Text style={styles.fieldLabel}>Birth Time</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="HH:MM"
+              placeholderTextColor={`${COLORS.text.light}60`}
+              value={`${formData.hour.toString().padStart(2, '0')}:${formData.min.toString().padStart(2, '0')}`}
+              onChangeText={(text) => {
+                const [hours, minutes] = text.split(':').map(Number);
+                if (!isNaN(hours) && !isNaN(minutes)) {
+                  setFormData(prev => ({
+                    ...prev,
+                    hour: hours,
+                    min: minutes
+                  }));
+                }
+              }}
+            />
+          </FormField>
 
-      <TouchableOpacity 
-        onPress={handleSubmit}
-        style={[
-          styles.submitButton,
-          isLoading && styles.submitButtonDisabled
-        ]}
-        disabled={isLoading}
-      >
-        {isLoading ? (
-          <ActivityIndicator color={COLORS.text.light} />
-        ) : (
-          <Text style={styles.submitButtonText}>
-            Calculate Birth Chart
-          </Text>
+          <FormField>
+            <Text style={styles.fieldLabel}>Country</Text>
+            <View style={styles.input}>
+              <CountrySelector
+                value={location.country}
+                onChange={(value) => {
+                  setLocation(prev => ({ ...prev, country: value, city: '' }));
+                }}
+                label="Select country"
+              />
+            </View>
+          </FormField>
+        </FormGrid>
+
+        <FormGrid>
+          <FormField style={{ width: '100%' }}>
+            <Text style={styles.fieldLabel}>City</Text>
+            <View style={styles.input}>
+              <CitySelector
+                value={location.city}
+                onLocationSelect={(city, country, lat, lon, timezone) => {
+                  setLocation({ city, country });
+                  handleLocationChange(city, country);
+                }}
+                country={location.country}
+                placeholder="Enter birth city"
+              />
+            </View>
+          </FormField>
+        </FormGrid>
+
+        {formData.lat !== 0 && formData.lon !== 0 && (
+          <View style={styles.locationDetails}>
+            <Text style={styles.locationText}>
+              Latitude: {formData.lat.toFixed(4)}°
+            </Text>
+            <Text style={styles.locationText}>
+              Longitude: {formData.lon.toFixed(4)}°
+            </Text>
+            <Text style={styles.locationText}>
+              Timezone: GMT{formData.tzone >= 0 ? '+' : ''}{formData.tzone}
+            </Text>
+          </View>
         )}
-      </TouchableOpacity>
+
+        <View style={styles.chartPreview}>
+          <View style={styles.chartCircleOuter}>
+            <View style={styles.chartCircleInner}>
+              <Text style={styles.chartText}>Birth Chart</Text>
+            </View>
+          </View>
+          
+          <Text style={styles.chartDescription}>
+            Enter your birth details to generate your complete astrological profile
+          </Text>
+          
+          <TouchableOpacity 
+            onPress={handleSubmit}
+            style={[
+              styles.generateButton,
+              isLoading && styles.generateButtonDisabled
+            ]}
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <ActivityIndicator color={COLORS.accent.purple} />
+            ) : (
+              <Text style={styles.generateButtonText}>
+                Generate Birth Chart
+              </Text>
+            )}
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   );
 
@@ -194,66 +275,45 @@ const BirthChartForm: React.FC<BirthChartFormProps> = ({
       ? '/static/media/natal_card.d195ff83.svg'  // Web path
       : require('../../../assets/natal_card.svg'); // Native path using require
 
-    // Web-specific card styles
-    const webCardStyle = Platform.OS === 'web' ? { 
-      flex: 1,
-      width: '30%',
-      minWidth: 250,
-    } : {};
-
-    // For web, we'll use a div for the cards container
-    const CardsContainer = Platform.OS === 'web' 
-      ? (props: any) => (
-          <div style={{ 
-            display: 'flex', 
-            flexDirection: 'row', 
-            flexWrap: 'wrap',
-            justifyContent: 'space-between',
-            marginBottom: 24,
-            gap: 16
-          }}>
-            {props.children}
-          </div>
-        )
-      : (props: any) => <View style={styles.cardsContainer}>{props.children}</View>;
-
-    // For web, we'll use a div for each card
-    const Card = Platform.OS === 'web'
-      ? (props: any) => (
-          <div style={{
-            borderRadius: 12,
-            marginBottom: 16,
-            overflow: 'hidden',
-            flex: '0 0 calc(33.333% - 16px)',
-            maxWidth: 'calc(33.333% - 16px)',
-            borderWidth: '1px',
-            borderColor: 'rgba(255, 255, 255, 0.2)',
-            borderStyle: 'solid',
-            padding: 16,
-            ...(props.fullWidth ? { flex: '0 0 100%', maxWidth: '100%' } : {}),
-            ...(props.halfWidth ? { flex: '0 0 calc(50% - 8px)', maxWidth: 'calc(50% - 8px)' } : {}),
-          }}>
-            {props.children}
-          </div>
-        )
-      : (props: any) => <View style={[styles.card, props.fullWidth ? styles.fullWidthCard : props.halfWidth ? styles.halfWidthCard : {}]}>{props.children}</View>;
-
     return (
-      <>
-        {/* Birth Chart Wheel Section */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Birth Chart Wheel</Text>
-          <View style={styles.chartContainer}>
-            <SvgImage 
-              source={natalChartImage}
-              width="100%"
-              height={300}
-              style={styles.chartImage}
-            />
-          </View>
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Your Birth Chart</Text>
+        
+        <View style={styles.chartContainer}>
+          <SvgImage 
+            source={natalChartImage}
+            width="100%"
+            height={300}
+            style={styles.chartImage}
+          />
         </View>
         
-        {/* Get Interpretation Button */}
+        {/* Planets Section */}
+        <View style={styles.dataSection}>
+          <Text style={styles.dataSectionTitle}>Planets</Text>
+          {chartData.planets.map((planet: Planet) => (
+            <View key={planet.name} style={styles.planetRow}>
+              <Text style={styles.planetName}>{planet.name}</Text>
+              <Text style={styles.planetInfo}>
+                {planet.sign} {planet.degree.toFixed(1)}° {planet.retrograde ? 'R' : ''}
+              </Text>
+            </View>
+          ))}
+        </View>
+        
+        {/* Houses Section */}
+        <View style={styles.dataSection}>
+          <Text style={styles.dataSectionTitle}>Houses</Text>
+          {chartData.houses.map((house: House) => (
+            <View key={house.house_number} style={styles.houseRow}>
+              <Text style={styles.houseNumber}>House {house.house_number}</Text>
+              <Text style={styles.houseInfo}>
+                {house.sign} {house.degree.toFixed(1)}°
+              </Text>
+            </View>
+          ))}
+        </View>
+        
         <TouchableOpacity 
           style={styles.interpretButton}
           onPress={navigateToInterpretation}
@@ -262,68 +322,22 @@ const BirthChartForm: React.FC<BirthChartFormProps> = ({
             Get Detailed Interpretation
           </Text>
         </TouchableOpacity>
-        
-        {/* Planets Section */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Planets</Text>
-          <CardsContainer>
-            {chartData.planets.map((planet, index) => (
-              <Card key={index}>
-                <View style={styles.planetRow}>
-                  <Icon name={planet.name.toLowerCase()} size={24} color={COLORS.accent.purple} />
-                  <Text style={styles.planetName}>{planet.name}</Text>
-                  <Text style={styles.planetInfo}>
-                    {planet.sign} {planet.degree.toFixed(1)}° {planet.retrograde ? 'R' : ''}
-                  </Text>
-                </View>
-              </Card>
-            ))}
-          </CardsContainer>
-        </View>
-        
-        {/* Houses Section */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Houses</Text>
-          <CardsContainer>
-            {chartData.houses.map((house, index) => (
-              <Card key={index} halfWidth>
-                <View style={styles.houseRow}>
-                  <Text style={styles.houseNumber}>House {house.house_number}</Text>
-                  <Text style={styles.houseInfo}>
-                    {house.sign} {house.degree.toFixed(1)}°
-                  </Text>
-                </View>
-              </Card>
-            ))}
-          </CardsContainer>
-        </View>
-      </>
+      </View>
     );
   };
 
   return (
     <ScrollView style={styles.scrollContainer}>
-      <View style={styles.container}>
-        {error && (
-          <View style={styles.errorContainer}>
-            <Text style={styles.errorText}>{error}</Text>
-          </View>
-        )}
-        
-        {isLoading ? (
-          <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" color={COLORS.accent.purple} />
-            <Text style={styles.loadingText}>Calculating birth chart...</Text>
-          </View>
-        ) : (
-          <>
-            {renderForm()}
-            {chartData && renderChartData()}
-          </>
-        )}
-      </View>
+      {renderForm()}
+      {chartData && renderChartData()}
+      {error && (
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorText}>{error}</Text>
+        </View>
+      )}
     </ScrollView>
   );
 };
 
-export default BirthChartForm; 
+const BirthChart = BirthChartForm;
+export default BirthChart; 

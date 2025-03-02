@@ -5,19 +5,20 @@ import {
   FlatList,
   Text,
   TouchableOpacity,
-  StyleSheet,
   ActivityIndicator
 } from 'react-native';
 import { mockLocationService } from '../../services/mockLocationService';
+import { COLORS } from '../../theme/colors';
+import { citySelectorStyles as styles } from './styles/CitySelectorStyles';
 
-interface AutocompleteCityInputProps {
+interface CitySelectorProps {
   value: string;
   onLocationSelect: (city: string, country: string, lat: number, lon: number, timezone: number) => void;
   country?: string;
   placeholder?: string;
 }
 
-export const AutocompleteCityInput: React.FC<AutocompleteCityInputProps> = ({
+export const CitySelector: React.FC<CitySelectorProps> = ({
   value,
   onLocationSelect,
   country,
@@ -67,10 +68,11 @@ export const AutocompleteCityInput: React.FC<AutocompleteCityInputProps> = ({
           setShowSuggestions(true);
         }}
         placeholder={placeholder}
+        placeholderTextColor={COLORS.text.mutedDark}
         onFocus={() => setShowSuggestions(true)}
       />
       
-      {loading && <ActivityIndicator style={styles.loader} />}
+      {loading && <ActivityIndicator style={styles.loader} color={COLORS.accent.purple} />}
       
       {showSuggestions && suggestions.length > 0 && (
         <View style={styles.suggestionsContainer}>
@@ -95,55 +97,4 @@ export const AutocompleteCityInput: React.FC<AutocompleteCityInputProps> = ({
       )}
     </View>
   );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    position: 'relative',
-    zIndex: 2,
-  },
-  input: {
-    backgroundColor: '#f8f9fa',
-    borderRadius: 8,
-    padding: 12,
-    fontSize: 16,
-    borderWidth: 1,
-    borderColor: '#e2e8f0',
-  },
-  loader: {
-    position: 'absolute',
-    right: 12,
-    top: 12,
-  },
-  suggestionsContainer: {
-    position: 'absolute',
-    top: '100%',
-    left: 0,
-    right: 0,
-    backgroundColor: 'white',
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#e2e8f0',
-    maxHeight: 200,
-    zIndex: 3,
-    elevation: 5,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-  },
-  suggestionItem: {
-    padding: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
-  },
-  cityName: {
-    fontSize: 16,
-    color: '#333',
-  },
-  countryName: {
-    fontSize: 12,
-    color: '#666',
-    marginTop: 2,
-  },
-}); 
+}; 

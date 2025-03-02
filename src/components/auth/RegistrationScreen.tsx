@@ -12,8 +12,8 @@ import { registrationStyles as styles } from './styles/RegistrationStyles';
 import { DateTimePicker } from '../shared/DateTimePicker';
 import Icon from '../icons/Icon';
 import { Dropdown } from '../shared/Dropdown';
-import { AutocompleteCityInput } from '../shared/AutocompleteCityInput';
 import { CountrySelector } from '../shared/CountrySelector';
+import { CitySelector } from '../shared/CitySelector';
 
 type NavigationProp = StackNavigationProp<RootStackParamList>;
 
@@ -204,7 +204,7 @@ const Registration = () => {
                   error={errors.country}
                 />
                 <View style={styles.spacer} />
-                <AutocompleteCityInput
+                <CitySelector
                   value={city}
                   onLocationSelect={handleLocationSelect}
                   country={country}
@@ -224,6 +224,17 @@ const Registration = () => {
                 />
                 {errors.birthDate && <Text style={styles.errorText}>{errors.birthDate}</Text>}
               </View>
+
+              <Text style={styles.label}>Birth City</Text>
+              <CitySelector
+                value={city}
+                onLocationSelect={(city, country, lat, lon, timezone) => {
+                  setCity(city);
+                  setCountry(country);
+                }}
+                country={country}
+                placeholder="Enter your birth city"
+              />
             </View>
 
             {/* Right Column - Social Registration */}

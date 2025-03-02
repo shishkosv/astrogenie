@@ -81,6 +81,10 @@ export const compatibilityStyles = StyleSheet.create({
     fontSize: TYPOGRAPHY.fontSize.md,
     color: COLORS.text.primary,
   },
+  locationContainer: {
+    width: '100%',
+    marginBottom: 16,
+  },
   errorContainer: {
     backgroundColor: COLORS.status.error + '20',
     borderColor: COLORS.status.error,

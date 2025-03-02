@@ -1,7 +1,9 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { locationService } from '../../services/serviceConfig';
+import { COLORS } from '../../theme/colors';
+import { countrySelectorStyles as styles } from './styles/CountrySelectorStyles';
 
 interface CountrySelectorProps {
   value: string;
@@ -14,7 +16,7 @@ export const CountrySelector: React.FC<CountrySelectorProps> = ({
   value,
   onChange,
   error,
-  label = 'Country'
+  label
 }) => {
   return (
     <View style={styles.container}>
@@ -24,12 +26,14 @@ export const CountrySelector: React.FC<CountrySelectorProps> = ({
           selectedValue={value}
           onValueChange={onChange}
           style={styles.picker}
+          dropdownIconColor={COLORS.text.primary}
         >
           {locationService.countries.map(country => (
             <Picker.Item 
               key={country.code} 
               label={country.name} 
               value={country.code} 
+              color={COLORS.text.primary}
             />
           ))}
         </Picker>
@@ -37,33 +41,4 @@ export const CountrySelector: React.FC<CountrySelectorProps> = ({
       {error && <Text style={styles.errorText}>{error}</Text>}
     </View>
   );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    marginBottom: 16,
-  },
-  label: {
-    fontSize: 16,
-    color: '#333',
-    marginBottom: 8,
-    fontWeight: '500',
-  },
-  pickerContainer: {
-    borderWidth: 1,
-    borderColor: '#e2e8f0',
-    borderRadius: 8,
-    backgroundColor: '#f8f9fa',
-  },
-  picker: {
-    height: 50,
-  },
-  errorBorder: {
-    borderColor: '#FF6B6B',
-  },
-  errorText: {
-    color: '#FF6B6B',
-    fontSize: 14,
-    marginTop: 4,
-  }
-}); 
+}; 

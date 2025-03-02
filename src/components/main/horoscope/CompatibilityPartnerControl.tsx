@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, TextInput, Platform } from 'react-native';
 import { DateTimePicker } from '../../shared/DateTimePicker';
+import { CitySelector } from '../../shared/CitySelector';
 import { CountrySelector } from '../../shared/CountrySelector';
-import { AutocompleteCityInput } from '../../shared/AutocompleteCityInput';
 import Icon from '../../icons/Icon';
 import { compatibilityStyles as styles } from '../styles/CompatibilityStyles';
 import type { BaseRequest } from '../../../types/base/WesternBaseTypes';
@@ -103,21 +103,26 @@ export const CompatibilityPartnerControl: React.FC<CompatibilityPartnerControlPr
         )}
       </View>
 
-      <View style={styles.inputRow}>
+      <View style={styles.locationContainer}>
         <CountrySelector
           value={person.country}
           onChange={(value) => onPersonChange({...person, country: value})}
+          label="Country"
         />
-      </View>
-
-      <View style={styles.inputRow}>
-        <Text style={styles.label}>City</Text>
-        <AutocompleteCityInput
+        <CitySelector
           value={person.city}
-          onLocationSelect={handleLocationSelect}
+          onLocationSelect={(city, country, lat, lon, timezone) => {
+            onPersonChange({
+              ...person,
+              city,
+              country,
+              lat,
+              lon,
+              tzone: timezone
+            });
+          }}
           country={person.country}
           placeholder="Enter birth city"
-          placeholderTextColor={COLORS.text.mutedDark}
         />
       </View>
     </View>

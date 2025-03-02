@@ -6,7 +6,7 @@ import Layout from '../layout/Layout';
 import { checkoutStyles as styles } from './styles/CheckoutStyles';
 import { Button } from '../shared/Button';
 import { CountrySelector } from '../shared/CountrySelector';
-import { AutocompleteCityInput } from '../shared/AutocompleteCityInput';
+import { CitySelector } from '../shared/CitySelector';
 
 interface FormErrors {
   name?: string;
@@ -206,11 +206,17 @@ const Checkout = () => {
               
               <View style={styles.inputContainer}>
                 <Text style={styles.label}>City</Text>
-                <AutocompleteCityInput
+                <CitySelector
                   value={location.city}
-                  onLocationSelect={handleCitySelect}
+                  onLocationSelect={(city, country) => {
+                    setLocation({
+                      ...location,
+                      city,
+                      country
+                    });
+                  }}
                   country={location.country}
-                  placeholder="Select your city"
+                  placeholder="Enter your city"
                 />
                 {errors.city && <Text style={styles.errorText}>{errors.city}</Text>}
               </View>
