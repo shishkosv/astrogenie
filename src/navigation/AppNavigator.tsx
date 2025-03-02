@@ -3,7 +3,7 @@ import { NavigationContainer, LinkingOptions } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Platform, Text } from 'react-native';
 import WebLanding from '../components/landing/WebLandingScreen';
-import Home from '../components/main/Home';
+import HomeScreen from '../components/main/HomeScreen';
 import TarotReadings from '../components/main/tarot/TarotReadings';
 import Features from '../components/main/Features';
 import About from '../components/main/About';
@@ -122,7 +122,7 @@ const AppNavigator = () => {
         }}
       >
         <Stack.Screen name="Landing" component={WebLanding} />
-        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="TarotReadings" component={TarotReadings} />
         <Stack.Screen name="Features" component={Features} />
         <Stack.Screen name="About" component={About} />

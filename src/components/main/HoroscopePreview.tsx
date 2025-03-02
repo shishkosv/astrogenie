@@ -1,50 +1,56 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import Icon from '../icons/Icon';
+import SignSwitcher from '../layout/SignSwitcher';
+import { useZodiac } from '../../context/ZodiacContext';
+import { COLORS } from '../../theme/colors';
+import { SPACING } from '../../theme/spacing';
+import { TYPOGRAPHY } from '../../theme/typography';
 
 interface HoroscopePreviewProps {
-  sign: string;
-  horoscope: string;
-  luckyNumber: number;
-  luckyColor: string;
-  mood: string;
   onSignPress?: () => void;
 }
 
 export function HoroscopePreview({ 
-  sign, 
-  horoscope, 
-  luckyNumber, 
-  luckyColor, 
-  mood,
   onSignPress
 }: HoroscopePreviewProps) {
+  const { current, selectedSign } = useZodiac();
+  
+  // Get the current horoscope data from the zodiac context
+  const horoscopeData = current();
+  
+  // Default values for badges
+  const luckyNumber = '7';
+  const luckyColor = 'Blue';
+  const mood = 'Inspired';
+  
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <View style={styles.header}>
-          <View style={styles.iconContainer}>
-            <Icon name="star" size={24} color="#FFFFFF" />
-          </View>
-          
-          <View>
-            <Text style={styles.title}>Select your sign</Text>
-            <TouchableOpacity 
-              style={styles.signSelector} 
-              onPress={onSignPress}
-            >
-              <Text style={styles.signText}>{sign}</Text>
-              <Icon name="chevron-down" size={16} color="rgba(255, 255, 255, 0.6)" />
-            </TouchableOpacity>
-          </View>
+        <View style={styles.signSelectorContainer}>
+          <Text style={styles.sectionTitle}>Select Your Sign</Text>
+          <SignSwitcher />
         </View>
 
         <View style={styles.horoscopeContainer}>
-          <Text style={styles.horoscopeText}>{horoscope}</Text>
+          <View style={styles.header}>
+            <View style={styles.iconContainer}>
+              <Icon name="star" size={24} color={COLORS.text.light} />
+            </View>
+            
+            <View>
+              <Text style={styles.title}>Daily Horoscope</Text>
+              <Text style={styles.signText}>{selectedSign?.name || 'Select a sign'}</Text>
+            </View>
+          </View>
+
+          <Text style={styles.horoscopeText}>
+            {horoscopeData?.forecast?.SunSign || 'Please select your zodiac sign to view your daily horoscope.'}
+          </Text>
         </View>
 
         <View style={styles.badgesContainer}>
-          <HoroscopeBadge label="Lucky Number" value={luckyNumber.toString()} />
+          <HoroscopeBadge label="Lucky Number" value={luckyNumber} />
           <HoroscopeBadge label="Lucky Color" value={luckyColor} />
           <HoroscopeBadge label="Mood" value={mood} />
         </View>
@@ -69,20 +75,42 @@ function HoroscopeBadge({ label, value }: HoroscopeBadgeProps) {
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 12,
-    padding: 24,
+    borderRadius: 16,
+    padding: SPACING.lg,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
+    borderColor: 'rgba(255, 255, 255, 0.2)',
     overflow: 'hidden',
-    backgroundColor: 'rgba(111, 76, 255, 0.1)',
+    backgroundColor: 'transparent',
   },
   content: {
-    gap: 16,
+    marginBottom: SPACING.md,
+  },
+  signSelectorContainer: {
+    alignItems: 'center',
+    marginBottom: SPACING.md,
+    paddingBottom: SPACING.md,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(255, 255, 255, 0.1)',
+  },
+  sectionTitle: {
+    fontSize: TYPOGRAPHY.fontSize.lg,
+    fontWeight: TYPOGRAPHY.fontWeight.semiBold as any,
+    color: COLORS.text.light,
+    marginBottom: SPACING.md,
+    textAlign: 'center',
+  },
+  horoscopeContainer: {
+    borderRadius: 12,
+    padding: SPACING.lg,
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
+    marginBottom: SPACING.md,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 16,
+    marginBottom: SPACING.md,
   },
   iconContainer: {
     height: 48,
@@ -90,49 +118,48 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#F59E0B',
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.2)',
+    marginRight: SPACING.md,
   },
   title: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: '500',
-  },
-  signSelector: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
+    fontSize: TYPOGRAPHY.fontSize.lg,
+    fontWeight: TYPOGRAPHY.fontWeight.semiBold as any,
+    color: COLORS.text.light,
+    marginBottom: 4,
   },
   signText: {
-    color: 'rgba(255, 255, 255, 0.6)',
-    fontSize: 14,
-  },
-  horoscopeContainer: {
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    borderRadius: 8,
-    padding: 16,
+    fontSize: TYPOGRAPHY.fontSize.sm,
+    color: `${COLORS.text.light}99`,
   },
   horoscopeText: {
-    color: 'rgba(255, 255, 255, 0.8)',
+    fontSize: TYPOGRAPHY.fontSize.md,
+    lineHeight: TYPOGRAPHY.lineHeight.normal,
+    color: `${COLORS.text.light}CC`,
   },
   badgesContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    gap: 8,
+    marginHorizontal: -SPACING.xs,
   },
   badge: {
     flex: 1,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
     borderRadius: 8,
-    padding: 12,
+    padding: SPACING.md,
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
+    marginHorizontal: SPACING.xs,
   },
   badgeLabel: {
-    color: 'rgba(255, 255, 255, 0.6)',
-    fontSize: 12,
+    color: `${COLORS.text.light}99`,
+    fontSize: TYPOGRAPHY.fontSize.sm,
     marginBottom: 4,
   },
   badgeValue: {
-    color: '#FFFFFF',
-    fontWeight: '500',
+    color: COLORS.text.light,
+    fontWeight: TYPOGRAPHY.fontWeight.medium as any,
   },
 }); 

@@ -1,9 +1,9 @@
 import React from 'react';
-import Home from '../main/Home';
+import HomeScreen from '../main/HomeScreen';
 import { landingStyles as styles } from './styles/LandingStyles';
 
 const WebLanding = () => {
-  return <Home />;
+  return <HomeScreen />;
 };
 
 export default WebLanding;
