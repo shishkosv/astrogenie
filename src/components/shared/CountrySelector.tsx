@@ -21,7 +21,7 @@ export const CountrySelector: React.FC<CountrySelectorProps> = ({
   return (
     <View style={styles.container}>
       {label && <Text style={styles.label}>{label}</Text>}
-      <View style={[styles.pickerContainer, error && styles.errorBorder]}>
+      <View style={[styles.pickerContainer, error ? styles.errorBorder : null]}>
         <Picker
           selectedValue={value}
           onValueChange={onChange}
