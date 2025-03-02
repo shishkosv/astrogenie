@@ -6,6 +6,7 @@ import { AutocompleteCityInput } from '../../shared/AutocompleteCityInput';
 import Icon from '../../icons/Icon';
 import { compatibilityStyles as styles } from '../styles/CompatibilityStyles';
 import type { BaseRequest } from '../../../types/base/WesternBaseTypes';
+import { COLORS } from '../../../theme/colors';
 
 interface PersonFormData extends BaseRequest {
   city: string;
@@ -54,7 +55,7 @@ export const CompatibilityPartnerControl: React.FC<CompatibilityPartnerControlPr
   return (
     <View style={styles.formSection}>
       <View style={styles.personHeader}>
-        <Icon name="user" size={24} color="#6B46C1" />
+        <Icon name="user" size={24} color={COLORS.accent.purple} />
         <Text style={styles.sectionTitle}>{person.name}</Text>
       </View>
       
@@ -65,6 +66,7 @@ export const CompatibilityPartnerControl: React.FC<CompatibilityPartnerControlPr
           value={person.name}
           onChangeText={(text) => onPersonChange({...person, name: text})}
           placeholder="Enter name"
+          placeholderTextColor={COLORS.text.mutedDark}
         />
       </View>
 
@@ -102,7 +104,6 @@ export const CompatibilityPartnerControl: React.FC<CompatibilityPartnerControlPr
       </View>
 
       <View style={styles.inputRow}>
-        <Text style={styles.label}>Country</Text>
         <CountrySelector
           value={person.country}
           onChange={(value) => onPersonChange({...person, country: value})}
@@ -116,6 +117,7 @@ export const CompatibilityPartnerControl: React.FC<CompatibilityPartnerControlPr
           onLocationSelect={handleLocationSelect}
           country={person.country}
           placeholder="Enter birth city"
+          placeholderTextColor={COLORS.text.mutedDark}
         />
       </View>
     </View>

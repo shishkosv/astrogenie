@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Platform } from 'react-native';
-import { Button } from './shared/Button';
-import Icon from './icons/Icon';
-import { COLORS } from '../theme/colors';
-import { SPACING } from '../theme/spacing';
-import { TYPOGRAPHY } from '../theme/typography';
+import { Button } from '../../shared/Button';
+import Icon from '../../icons/Icon';
+import { COLORS } from '../../../theme/colors';
+import { SPACING } from '../../../theme/spacing';
+import { TYPOGRAPHY } from '../../../theme/typography';
 
 interface DailyHoroscopeCardProps {
   date: string;

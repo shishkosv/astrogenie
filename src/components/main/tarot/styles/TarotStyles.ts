@@ -1,4 +1,8 @@
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet, Platform, Dimensions } from 'react-native';
+import { COLORS } from '../../../../theme/colors';
+import { TYPOGRAPHY } from '../../../../theme/typography';
+
+const windowWidth = Dimensions.get('window').width;
 
 const webStyles = Platform.select({
   web: {
@@ -15,13 +19,13 @@ const webStyles = Platform.select({
 export const tarotStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: 'transparent',
     padding: 20,
   },
   title: {
-    fontSize: 32,
-    fontWeight: '700',
-    color: '#333',
+    fontSize: TYPOGRAPHY.fontSize.xxl,
+    fontWeight: TYPOGRAPHY.fontWeight.bold,
+    color: COLORS.text.primary,
     marginBottom: 24,
     textAlign: 'center',
   },
@@ -33,32 +37,26 @@ export const tarotStyles = StyleSheet.create({
     ...(Platform.OS === 'web' && webStyles.web?.grid),
   },
   card: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: 'transparent',
     borderRadius: 12,
     padding: 24,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.2)',
     width: '100%',
     maxWidth: 350,
     alignItems: 'center',
     margin: 10,
   },
   cardTitle: {
-    fontSize: 20,
-    fontWeight: '600',
-    color: '#333',
+    fontSize: TYPOGRAPHY.fontSize.lg,
+    fontWeight: TYPOGRAPHY.fontWeight.semiBold,
+    color: COLORS.text.primary,
     marginBottom: 8,
     textAlign: 'center',
   },
   cardSubtitle: {
-    fontSize: 16,
-    color: '#666',
+    fontSize: TYPOGRAPHY.fontSize.md,
+    color: COLORS.text.secondary,
     marginBottom: 16,
     textAlign: 'center',
   },
@@ -68,13 +66,25 @@ export const tarotStyles = StyleSheet.create({
     marginBottom: 20,
   },
   price: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: '#4a0e4e',
+    fontSize: TYPOGRAPHY.fontSize.xl,
+    fontWeight: TYPOGRAPHY.fontWeight.bold,
+    color: COLORS.accent.purple,
     marginRight: 8,
   },
   yearlyPrice: {
-    fontSize: 16,
-    color: '#666',
+    fontSize: TYPOGRAPHY.fontSize.md,
+    color: COLORS.text.secondary,
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  errorText: {
+    fontSize: TYPOGRAPHY.fontSize.md,
+    color: COLORS.status.error,
+    textAlign: 'center',
+    marginBottom: 16,
   },
 }); 

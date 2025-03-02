@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import Layout from '../layout/Layout';
-import BirthChartForm from './horoscope/BirthChart';
-import type { WesternChartResponse } from '../../types/responses/WesternChartResponse';
-import { ErrorBoundary } from '../shared/ErrorBoundary';
+import Layout from '../../layout/Layout';
+import BirthChartForm from '../horoscope/BirthChart';
+import type { WesternChartResponse } from '../../../types/responses/WesternChartResponse';
+import { ErrorBoundary } from '../../shared/ErrorBoundary';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { birthChartStyles as styles } from './styles/BirthChartStyles';
+import { birthChartStyles as styles } from '../styles/BirthChartStyles';
 
-const BirthChart = () => {
+const BirthChartScreen = () => {
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = (data: WesternChartResponse) => {
@@ -53,4 +53,4 @@ const BirthChart = () => {
   );
 };
 
-export default BirthChart; 
+export default BirthChartScreen; 

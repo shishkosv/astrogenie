@@ -11,6 +11,7 @@ import type { RomanticCompatibilityRequest } from '../../../types/requests';
 import { RomanticCompatibilityResponse } from '../../../types/responses/RomanticCompatibilityResponse';
 import CompatibilityPartnerControl from './CompatibilityPartnerControl';
 import Icon from '../../icons/Icon';
+import { COLORS } from '../../../theme/colors';
 
 type NavigationProp = StackNavigationProp<RootStackParamList>;
 
@@ -117,7 +118,7 @@ const CompatibilityControl: React.FC<CompatibilityControlProps> = ({ onNavigateT
 
         {isWideScreen && (
           <View style={styles.divider}>
-            <Icon name="heart" size={24} color="#E91E63" />
+            <Icon name="heart" size={24} color={COLORS.accent.purple} />
           </View>
         )}
 
@@ -146,7 +147,7 @@ const CompatibilityControl: React.FC<CompatibilityControlProps> = ({ onNavigateT
         disabled={loading}
       >
         {loading ? (
-          <ActivityIndicator color="#fff" />
+          <ActivityIndicator color={COLORS.text.light} />
         ) : (
           <Text style={styles.calculateButtonText}>
             Calculate Compatibility

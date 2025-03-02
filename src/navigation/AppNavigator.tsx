@@ -3,13 +3,13 @@ import { NavigationContainer, LinkingOptions } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Platform, Text } from 'react-native';
 import WebLanding from '../components/landing/WebLandingScreen';
-import HomeScreen from '../components/main/HomeScreen';
-import TarotReadings from '../components/main/tarot/TarotReadings';
+import HomeScreen from '../components/main/screens/HomeScreen';
+import TarotScreen from '../components/main/screens/TarotScreen';
 import Features from '../components/main/Features';
 import About from '../components/main/About';
 import Contact from '../components/main/Contact';
 import DailyHoroscopes from '../components/main/DailyHoroscopes';
-import Compatibility from '../components/main/Compatibility';
+import CompatibilityScreen from '../components/main/screens/CompatibilityScreen';
 import Registration from '../components/auth/RegistrationScreen';
 import Login from '../components/auth/LoginScreen';
 import ForgotPassword from '../components/auth/ForgotPasswordScreen';
@@ -17,7 +17,7 @@ import Cart from '../components/cart/CartScreen';
 import Checkout from '../components/cart/CheckoutScreen';
 import Subscription from '../components/cart/SubscriptionScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import BirthChart from '../components/main/BirthChart';
+import BirthChartScreen from '../components/main/screens/BirthChartScreen';
 import SignLists from '../components/main/horoscope/SignLists';
 import SignTraits from '../components/main/horoscope/SignTraits';
 import TarotReadingDetail from '../components/main/tarot/TarotReadingDetail';
@@ -123,19 +123,19 @@ const AppNavigator = () => {
       >
         <Stack.Screen name="Landing" component={WebLanding} />
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="TarotReadings" component={TarotReadings} />
+        <Stack.Screen name="TarotReadings" component={TarotScreen} />
         <Stack.Screen name="Features" component={Features} />
         <Stack.Screen name="About" component={About} />
         <Stack.Screen name="Contact" component={Contact} />
         <Stack.Screen name="DailyHoroscopes" component={DailyHoroscopes} />
-        <Stack.Screen name="Compatibility" component={Compatibility} />
+        <Stack.Screen name="Compatibility" component={CompatibilityScreen} />
         <Stack.Screen name="Registration" component={Registration} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         <Stack.Screen name="Cart" component={Cart} />
         <Stack.Screen name="Checkout" component={Checkout} />
         <Stack.Screen name="Subscription" component={Subscription} />
-        <Stack.Screen name="BirthChart" component={BirthChart} />
+        <Stack.Screen name="BirthChart" component={BirthChartScreen} />
         <Stack.Screen name="BirthChartInterpretation" component={BirthChartInterpretation} />
         <Stack.Screen name="SignLists" component={SignLists} />
         <Stack.Screen name="SignTraits" component={SignTraits} />

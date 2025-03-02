@@ -2,26 +2,25 @@ import React, { useState } from 'react';
 import { View, Text, ScrollView, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
-import type { RootStackParamList } from '../../navigation/AppNavigator';
-import Layout from '../layout/Layout';
-import { homeStyles as styles } from './styles/HomeStyles';
-import { useLanguage } from '../../context/LanguageContext';
-import { useAuth } from '../../context/AuthContext';
-import { Button } from '../shared/Button';
-import SignLists from './horoscope/SignLists';
-import TarotReadings from './tarot/TarotReadings';
-import { useWebNavigation } from '../../hooks/useWebNavigation';
-import BirthChart from './horoscope/BirthChart';
-import SignSwitcher from '../layout/SignSwitcher';
-import { HoroscopePreview } from './HoroscopePreview';
-import FeaturesCards from './FeaturesCards';
-import { DailyHoroscopeCard } from '../DailyHoroscopeCard';
-import HeroContent from './HeroContent';
-import { COLORS } from '../../theme/colors';
-import DailyForecast from './horoscope/DailyForecast';
-import DailyHoroscopesGrid from './horoscope/DailyHoroscopesGrid';
-import { FeatureSelector } from './FeatureSelector';
-import Compatibility from './Compatibility';
+import type { RootStackParamList } from '../../../navigation/AppNavigator';
+import Layout from '../../layout/Layout';
+import { homeStyles as styles } from '../styles/HomeStyles';
+import { useLanguage } from '../../../context/LanguageContext';
+import { useAuth } from '../../../context/AuthContext';
+import { Button } from '../../shared/Button';
+import SignLists from '../horoscope/SignLists';
+import { useWebNavigation } from '../../../hooks/useWebNavigation';
+import BirthChart from '../horoscope/BirthChart';
+import SignSwitcher from '../../layout/SignSwitcher';
+import { HoroscopePreview } from '../HoroscopePreview';
+import FeaturesCards from '../FeaturesCards';
+import { DailyHoroscopeCard } from '../horoscope/DailyHoroscopeCard';
+import HeroContent from '../HeroContent';
+import { COLORS } from '../../../theme/colors';
+import DailyForecast from '../horoscope/DailyForecast';
+import DailyHoroscopesGrid from '../horoscope/DailyHoroscopesGrid';
+import { FeatureSelector } from '../FeatureSelector';
+import CompatibilityControl from '../horoscope/CompatibilityControl';
 
 type NavigationProp = StackNavigationProp<RootStackParamList, 'Landing'>;
 
@@ -193,7 +192,15 @@ const HomeScreen = () => {
       case 'compatibility':
         return (
           <View style={{ width: '100%', padding: 16 }}>
-            <Compatibility />
+            <CompatibilityControl 
+              onNavigateToResults={(result, person1Name, person2Name) => {
+                navigation.navigate('CompatibilityScoreScreen', {
+                  result,
+                  person1Name,
+                  person2Name
+                });
+              }}
+            />
           </View>
         );
       case 'birthchart':
@@ -219,17 +226,6 @@ const HomeScreen = () => {
                 onStartReading={handleStartReading}
                 onLearnMore={handleLearnMore}
               />
-              <View style={styles.signSelectorContainer}>
-                <SignSwitcher />
-                <Button 
-                  variant="ghost" 
-                  size="sm"
-                  onPress={handleWeeklyForecastClick}
-                  style={{ borderWidth: 1, borderColor: 'rgba(255, 255, 255, 0.2)' }}
-                >
-                  <Text style={{ color: COLORS.text.light }}>Weekly Forecast</Text>
-                </Button>
-              </View>
             </View>
 
             {/* Daily Horoscope Card */}

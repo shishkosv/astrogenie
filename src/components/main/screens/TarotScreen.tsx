@@ -5,7 +5,9 @@ import { Button } from '../../shared/Button';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { RootStackParamList } from '../../../navigation/AppNavigator';
-import { tarotStyles as styles } from './styles/TarotStyles';
+import { tarotStyles as styles } from '../tarot/styles/TarotStyles';
+import { COLORS } from '../../../theme/colors';
+import { ErrorBoundary } from '../../shared/ErrorBoundary';
 
 type NavigationProp = StackNavigationProp<RootStackParamList>;
 
@@ -116,7 +118,7 @@ const tarotReadings = [
   },
 ];
 
-const TarotReadings = () => {
+const TarotScreen = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleReadingPress = (reading: typeof tarotReadings[0]) => {
@@ -128,34 +130,51 @@ const TarotReadings = () => {
 
   return (
     <Layout>
-      <ScrollView style={styles.container}>
-        <Text style={styles.title}>Tarot Readings</Text>
-        <View style={styles.grid}>
-          {tarotReadings.map((reading) => (
-            <View key={reading.id} style={styles.card}>
-              <Text style={styles.cardTitle}>{reading.title}</Text>
-              <Text style={styles.cardSubtitle}>{reading.subtitle}</Text>
-              <View style={styles.priceContainer}>
-                <Text style={styles.price}>${reading.price}</Text>
-                {reading.yearlyPrice && (
-                  <Text style={styles.yearlyPrice}>
-                    — or ${reading.yearlyPrice} / year
-                  </Text>
-                )}
+      <ErrorBoundary
+        fallback={({ error, resetError }) => (
+          <View style={styles.errorContainer}>
+            <Text style={styles.errorText}>
+              Something went wrong: {error.message}
+            </Text>
+            <Button 
+              variant="secondary"
+              size="sm"
+              onPress={resetError}
+            >
+              Try Again
+            </Button>
+          </View>
+        )}
+      >
+        <ScrollView style={styles.container}>
+          <Text style={styles.title}>Tarot Readings</Text>
+          <View style={styles.grid}>
+            {tarotReadings.map((reading) => (
+              <View key={reading.id} style={styles.card}>
+                <Text style={styles.cardTitle}>{reading.title}</Text>
+                <Text style={styles.cardSubtitle}>{reading.subtitle}</Text>
+                <View style={styles.priceContainer}>
+                  <Text style={styles.price}>${reading.price}</Text>
+                  {reading.yearlyPrice && (
+                    <Text style={styles.yearlyPrice}>
+                      — or ${reading.yearlyPrice} / year
+                    </Text>
+                  )}
+                </View>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onPress={() => handleReadingPress(reading)}
+                >
+                  View Details
+                </Button>
               </View>
-              <Button
-                variant="secondary"
-                size="sm"
-                onPress={() => handleReadingPress(reading)}
-              >
-                View Details
-              </Button>
-            </View>
-          ))}
-        </View>
-      </ScrollView>
+            ))}
+          </View>
+        </ScrollView>
+      </ErrorBoundary>
     </Layout>
   );
 };
 
-export default TarotReadings; 
+export default TarotScreen; 

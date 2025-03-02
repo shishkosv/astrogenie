@@ -9,7 +9,6 @@ import { useLanguage } from '../../context/LanguageContext';
 import { useAuth } from '../../context/AuthContext';
 import { featureStyles as styles } from './styles/FeatureStyles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import TarotReadings from './tarot/TarotReadings';
 import SignLists from './horoscope/SignLists';
 import SignTraits from './horoscope/SignTraits';
 
@@ -53,17 +52,6 @@ const Features = () => {
         "Multiple aspect analysis",
         "Personalized advice",
         "Synastry reports"
-      ]
-    },
-    {
-      title: translations.tarotReadings,
-      description: "Experience the ancient wisdom of tarot through our digital readings. Each spread is carefully interpreted using traditional tarot meanings combined with modern psychological insights. Whether you seek guidance in love, career, or personal growth, our tarot readings offer clarity and direction.",
-      route: 'TarotReadings',
-      highlights: [
-        "Multiple spread options",
-        "Detailed card interpretations",
-        "Past-Present-Future insights",
-        "Celtic Cross spreads"
       ]
     },
     {

@@ -2,17 +2,17 @@ import React, { useEffect } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
-import type { RootStackParamList } from '../../navigation/AppNavigator';
-import { useLanguage } from '../../context/LanguageContext';
-import { useAuth } from '../../context/AuthContext';
-import Layout from '../layout/Layout';
-import { compatibilityStyles as styles } from './styles/CompatibilityStyles';
-import { RomanticCompatibilityResponse } from '../../types/responses/RomanticCompatibilityResponse';
-import CompatibilityControl from './horoscope/CompatibilityControl';
+import type { RootStackParamList } from '../../../navigation/AppNavigator';
+import { useLanguage } from '../../../context/LanguageContext';
+import { useAuth } from '../../../context/AuthContext';
+import Layout from '../../layout/Layout';
+import { compatibilityStyles as styles } from '../styles/CompatibilityStyles';
+import { RomanticCompatibilityResponse } from '../../../types/responses/RomanticCompatibilityResponse';
+import CompatibilityControl from '../horoscope/CompatibilityControl';
 
 type NavigationProp = StackNavigationProp<RootStackParamList>;
 
-const Compatibility = () => {
+const CompatibilityScreen = () => {
   const navigation = useNavigation<NavigationProp>();
   const { translations } = useLanguage();
   const { isAuthenticated } = useAuth();
@@ -51,4 +51,4 @@ const Compatibility = () => {
   );
 };
 
-export default Compatibility; 
+export default CompatibilityScreen; 
