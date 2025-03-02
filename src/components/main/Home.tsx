@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { RootStackParamList } from '../../navigation/AppNavigator';
@@ -15,6 +15,9 @@ import BirthChart from './BirthChart';
 import SignSwitcher from '../layout/SignSwitcher';
 import { HoroscopePreview } from './HoroscopePreview';
 import FeaturesCards from './FeaturesCards';
+import { DailyHoroscopeCard } from '../DailyHoroscopeCard';
+import HeroContent from './HeroContent';
+import { COLORS } from '../../theme/colors';
 
 type NavigationProp = StackNavigationProp<RootStackParamList, 'Landing'>;
 
@@ -25,6 +28,12 @@ const SAMPLE_HOROSCOPE = {
   luckyNumber: 7,
   luckyColor: "Blue",
   mood: "Inspired"
+};
+
+// Sample daily horoscope data
+const DAILY_HOROSCOPE = {
+  date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
+  horoscope: "The stars are aligned in your favor today. You may find unexpected opportunities coming your way, especially in your career. Take time to reflect on your goals and be open to new possibilities. Your intuition is particularly strong, so trust your instincts when making decisions."
 };
 
 const Home = () => {
@@ -50,25 +59,77 @@ const Home = () => {
     navigation.navigate('DailyHoroscopes');
   };
 
+  // Handle read full horoscope button click
+  const handleReadFullHoroscope = () => {
+    navigation.navigate('DailyHoroscopes');
+  };
+
+  // Handle start reading button click
+  const handleStartReading = () => {
+    navigation.navigate('DailyHoroscopes');
+  };
+
+  // Handle learn more button click
+  const handleLearnMore = () => {
+    navigation.navigate('About');
+  };
+
+  // Use a different container component for web to enable flexbox layout
+  const TopSectionContainer = Platform.OS === 'web' 
+    ? ({ children }: { children: React.ReactNode }) => (
+        <div style={{ 
+          display: 'flex', 
+          flexDirection: 'row', 
+          width: '100%',
+          minHeight: '500px',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+        }}>
+          {children}
+        </div>
+      )
+    : ({ children }: { children: React.ReactNode }) => (
+        <View style={{ borderBottomWidth: 1, borderBottomColor: 'rgba(255, 255, 255, 0.1)' }}>
+          {children}
+        </View>
+      );
+
   return (
     <Layout>
       <ScrollView style={styles.container}>
         <View style={styles.mainContent}>
-          <View style={styles.hero}>
-            <View style={styles.signSelectorContainer}>
-              <SignSwitcher />
-              <Button 
-                variant="primary"
-                size="sm"
-                onPress={handleWeeklyForecastClick}
-              >
-                Weekly Forecast
-              </Button>
+          {/* Top section with Hero and Daily Horoscope side by side on web */}
+          <TopSectionContainer>
+            {/* Hero Section with HeroContent */}
+            <View style={styles.hero}>
+              <HeroContent 
+                onStartReading={handleStartReading}
+                onLearnMore={handleLearnMore}
+              />
+              <View style={styles.signSelectorContainer}>
+                <SignSwitcher />
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  onPress={handleWeeklyForecastClick}
+                  style={{ borderWidth: 1, borderColor: 'rgba(255, 255, 255, 0.2)' }}
+                >
+                  <Text style={{ color: COLORS.text.light }}>Weekly Forecast</Text>
+                </Button>
+              </View>
             </View>
-          </View>
+
+            {/* Daily Horoscope Card */}
+            <View style={styles.dailyHoroscopeSection}>
+              <DailyHoroscopeCard
+                date={DAILY_HOROSCOPE.date}
+                horoscope={DAILY_HOROSCOPE.horoscope}
+                onReadFullHoroscope={handleReadFullHoroscope}
+              />
+            </View>
+          </TopSectionContainer>
 
           {/* Horoscope Preview Section */}
-          <View style={styles.horoscopePreviewSection}>
+          <View style={[styles.horoscopePreviewSection, { borderBottomWidth: 1, borderBottomColor: 'rgba(255, 255, 255, 0.1)' }]}>
             <Text style={styles.sectionTitle}>Your Daily Horoscope</Text>
             
             <HoroscopePreview
@@ -82,11 +143,12 @@ const Home = () => {
             
             <View style={styles.ctaContainer}>
               <Button 
-                variant="secondary" 
+                variant="ghost" 
                 size="md" 
                 onPress={handleWeeklyForecastClick}
+                style={{ borderWidth: 1, borderColor: 'rgba(255, 255, 255, 0.2)' }}
               >
-                Explore All Horoscopes
+                <Text style={{ color: COLORS.text.light }}>Explore All Horoscopes</Text>
               </Button>
             </View>
           </View>
@@ -94,7 +156,7 @@ const Home = () => {
           {/* Features Cards Section */}
           <FeaturesCards />
 
-          <View style={styles.features}>
+          <View style={[styles.features, { borderTopWidth: 1, borderTopColor: 'rgba(255, 255, 255, 0.1)' }]}>
             <View style={styles.featureList}>
               
               <View style={styles.featureItem}>
@@ -104,11 +166,12 @@ const Home = () => {
                 </Text>
                 <View style={styles.buttonContainer}>
                   <Button 
-                    variant="secondary"
+                    variant="ghost"
                     size="sm"
                     onPress={() => handleFeatureClick('Compatibility')}
+                    style={{ borderWidth: 1, borderColor: 'rgba(255, 255, 255, 0.2)' }}
                   >
-                    {translations.tryItNow}
+                    <Text style={{ color: COLORS.text.light }}>{translations.tryItNow}</Text>
                   </Button>
                 </View>
               </View>
@@ -120,11 +183,12 @@ const Home = () => {
                 </Text>
                 <View style={styles.buttonContainer}>
                   <Button 
-                    variant="secondary"
+                    variant="ghost"
                     size="sm"
                     onPress={() => handleFeatureClick('BirthChart')}
+                    style={{ borderWidth: 1, borderColor: 'rgba(255, 255, 255, 0.2)' }}
                   >
-                    {translations.tryItNow}
+                    <Text style={{ color: COLORS.text.light }}>{translations.tryItNow}</Text>
                   </Button>
                 </View>
               </View>
@@ -136,11 +200,12 @@ const Home = () => {
                 </Text>
                 <View style={styles.buttonContainer}>
                   <Button 
-                    variant="secondary"
+                    variant="ghost"
                     size="sm"
                     onPress={() => handleFeatureClick('TarotReadings')}
+                    style={{ borderWidth: 1, borderColor: 'rgba(255, 255, 255, 0.2)' }}
                   >
-                    {translations.tryItNow}
+                    <Text style={{ color: COLORS.text.light }}>{translations.tryItNow}</Text>
                   </Button>
                 </View>
               </View>

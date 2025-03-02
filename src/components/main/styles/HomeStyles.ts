@@ -1,17 +1,34 @@
 import { StyleSheet, Platform } from 'react-native';
+import { COLORS } from '../../../theme/colors';
+import { TYPOGRAPHY } from '../../../theme/typography';
+import { SPACING } from '../../../theme/spacing';
 
 export const homeStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: 'transparent',
   },
   mainContent: {
     flex: 1,
   },
+  // Top section container for hero and daily horoscope
+  topSectionContainer: {
+    ...(Platform.OS === 'web' && {
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'stretch',
+    }),
+  },
   hero: {
     padding: 20,
-    backgroundColor: '#4a0e4e',
+    backgroundColor: 'transparent',
     alignItems: 'center',
+    paddingTop: Platform.OS === 'web' ? 60 : 40,
+    paddingBottom: 40,
+    ...(Platform.OS === 'web' && {
+      flex: 1,
+      minWidth: '50%',
+    }),
   },
   signSelectorContainer: {
     flexDirection: 'row',
@@ -22,16 +39,30 @@ export const homeStyles = StyleSheet.create({
     width: '100%',
     flexWrap: 'wrap',
   },
+  // Daily Horoscope Card Section
+  dailyHoroscopeSection: {
+    padding: 20,
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    justifyContent: 'center',
+    ...(Platform.OS === 'web' && {
+      flex: 1,
+      minWidth: '40%',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }),
+  },
   // Horoscope Preview Section
   horoscopePreviewSection: {
     padding: 40,
-    backgroundColor: '#1A1A1A',
+    backgroundColor: 'transparent',
     alignItems: 'center',
   },
   sectionTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
+    fontSize: TYPOGRAPHY.fontSize.xl,
+    fontWeight: TYPOGRAPHY.fontWeight.bold,
+    color: COLORS.text.light,
     marginBottom: 24,
     textAlign: 'center',
   },
@@ -41,10 +72,11 @@ export const homeStyles = StyleSheet.create({
   },
   zodiacSection: {
     padding: 40,
+    backgroundColor: 'transparent',
   },
   features: {
     padding: 40,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: 'transparent',
     marginTop: 0,
   },
   featureList: {
@@ -57,31 +89,25 @@ export const homeStyles = StyleSheet.create({
     }),
   },
   featureItem: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: 'transparent',
     borderRadius: 12,
     padding: 24,
     flex: 1,
     minWidth: 280,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.2)',
   },
   featureTitle: {
-    fontSize: 20,
-    fontWeight: '600',
-    color: '#333',
+    fontSize: TYPOGRAPHY.fontSize.lg,
+    fontWeight: TYPOGRAPHY.fontWeight.semiBold,
+    color: COLORS.text.light,
     marginBottom: 12,
   },
   featureDescription: {
-    fontSize: 16,
-    color: '#666',
+    fontSize: TYPOGRAPHY.fontSize.md,
+    color: `${COLORS.text.light}CC`,
     marginBottom: 24,
-    lineHeight: 24,
+    lineHeight: TYPOGRAPHY.lineHeight.md,
   },
   buttonContainer: {
     alignItems: 'flex-start',
