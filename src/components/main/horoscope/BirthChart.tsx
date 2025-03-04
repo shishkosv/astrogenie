@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, ScrollView, ActivityIndicator, TextInput, TouchableOpacity, Platform, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, ScrollView, ActivityIndicator, TextInput, TouchableOpacity, Platform, Image, Animated } from 'react-native';
 import { birthChartStyles as styles } from './styles/BirthChartStyles';
 import { astrologyService, locationService } from '../../../services/serviceConfig';
 import type { WesternChartResponse } from '../../../types/responses/WesternChartResponse';
@@ -65,6 +65,27 @@ const BirthChartForm: React.FC<BirthChartFormProps> = ({
   });
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [date, setDate] = useState(new Date());
+  
+  // Animation for the chart circle
+  const pulseAnim = new Animated.Value(1);
+  
+  useEffect(() => {
+    // Create a pulsing animation
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(pulseAnim, {
+          toValue: 1.05,
+          duration: 1500,
+          useNativeDriver: Platform.OS !== 'web',
+        }),
+        Animated.timing(pulseAnim, {
+          toValue: 1,
+          duration: 1500,
+          useNativeDriver: Platform.OS !== 'web',
+        })
+      ])
+    ).start();
+  }, []);
 
   const isLoading = externalLoading || loading;
 
@@ -120,25 +141,6 @@ const BirthChartForm: React.FC<BirthChartFormProps> = ({
     navigation.navigate('BirthChartInterpretation');
   };
 
-  // For web, we'll use a div with CSS grid for the form inputs
-  const FormGrid = Platform.OS === 'web'
-    ? (props: any) => (
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '16px',
-          width: '100%',
-          marginBottom: '16px'
-        }}>
-          {props.children}
-        </div>
-      )
-    : (props: any) => (
-        <View style={styles.formGrid}>
-          {props.children}
-        </View>
-      );
-
   // For web, we'll use a div for each form field
   const FormField = Platform.OS === 'web'
     ? (props: any) => (
@@ -155,114 +157,237 @@ const BirthChartForm: React.FC<BirthChartFormProps> = ({
   const renderForm = () => (
     <View style={styles.container}>
       <View style={styles.formContainer}>
-        <Text style={styles.formTitle}>Birth Chart</Text>
+        <Text style={styles.formTitle}>Enter your birth details to generate your complete astrological profile</Text>
         
-        <FormGrid>
-          <FormField>
-            <Text style={styles.fieldLabel}>Birth Date</Text>
-            <View style={styles.input}>
-              <DateTimePicker
-                value={date}
-                onChange={handleDateChange}
-                showPicker={showDatePicker}
-                onPress={() => setShowDatePicker(true)}
-              />
+        {Platform.OS === 'web' ? (
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(2, 1fr)',
+            gridGap: '24px',
+            width: '100%'
+          }}>
+            <div style={{
+              gridColumn: '1'
+            }}>
+              {/* Row 1 */}
+              <div style={{
+                marginBottom: 16,
+                display: 'flex',
+                flexDirection: 'column'
+              }}>
+                <Text style={styles.fieldLabel}>Birth Date</Text>
+                <View style={styles.input}>
+                  <DateTimePicker
+                    value={date}
+                    onChange={handleDateChange}
+                    showPicker={showDatePicker}
+                    onPress={() => setShowDatePicker(true)}
+                  />
+                </View>
+              </div>
+              
+              {/* Row 3 */}
+              <div style={{
+                marginBottom: 16,
+                display: 'flex',
+                flexDirection: 'column'
+              }}>
+                <Text style={styles.fieldLabel}>Country</Text>
+                <View style={styles.input}>
+                  <CountrySelector
+                    value={location.country}
+                    onChange={(value) => {
+                      setLocation(prev => ({ ...prev, country: value, city: '' }));
+                    }}
+                    label="Select country"
+                  />
+                </View>
+              </div>
+              
+              {/* Row 4 */}
+              <div style={{
+                marginBottom: 16,
+                display: 'flex',
+                flexDirection: 'column'
+              }}>
+                <Text style={styles.fieldLabel}>City</Text>
+                <View style={styles.input}>
+                  <CitySelector
+                    value={location.city}
+                    onLocationSelect={(city, country, lat, lon, timezone) => {
+                      setLocation({ city, country });
+                      handleLocationChange(city, country);
+                    }}
+                    country={location.country}
+                    placeholder="Enter birth city"
+                  />
+                </View>
+              </div>
+              
+              {formData.lat !== 0 && formData.lon !== 0 && (
+                <View style={styles.locationDetails}>
+                  <Text style={styles.locationText}>
+                    Latitude: {formData.lat.toFixed(4)}°
+                  </Text>
+                  <Text style={styles.locationText}>
+                    Longitude: {formData.lon.toFixed(4)}°
+                  </Text>
+                  <Text style={styles.locationText}>
+                    Timezone: GMT{formData.tzone >= 0 ? '+' : ''}{formData.tzone}
+                  </Text>
+                </View>
+              )}
+            </div>
+            
+            <div style={{
+              gridColumn: '2',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}>
+              <div style={{
+                backgroundColor: 'transparent',
+                borderRadius: 12,
+                padding: 16,
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column'
+              }}>
+                <TouchableOpacity 
+                  onPress={handleSubmit}
+                  disabled={isLoading}
+                  style={styles.chartCircleOuter}
+                >
+                  <Animated.View 
+                    style={[
+                      styles.chartCircleInner,
+                      { transform: [{ scale: isLoading ? 1 : pulseAnim }] }
+                    ]}
+                  >
+                    {isLoading ? (
+                      <ActivityIndicator color={COLORS.text.light} size="large" />
+                    ) : (
+                      <>
+                        <Text style={styles.chartText}>Generate Birth Chart</Text>
+                        <View style={styles.chartIcon}>
+                          <Icon name="arrow-right" size={20} color={COLORS.text.light} />
+                        </View>
+                      </>
+                    )}
+                  </Animated.View>
+                </TouchableOpacity>
+              </div>
+            </div>
+          </div>
+        ) : (
+          // Mobile layout
+          <View>
+            <View style={styles.formRow}>
+              <Text style={styles.fieldLabel}>Birth Date</Text>
+              <View style={styles.input}>
+                <DateTimePicker
+                  value={date}
+                  onChange={handleDateChange}
+                  showPicker={showDatePicker}
+                  onPress={() => setShowDatePicker(true)}
+                />
+              </View>
             </View>
-          </FormField>
-
-          <FormField>
-            <Text style={styles.fieldLabel}>Birth Time</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="HH:MM"
-              placeholderTextColor={`${COLORS.text.light}60`}
-              value={`${formData.hour.toString().padStart(2, '0')}:${formData.min.toString().padStart(2, '0')}`}
-              onChangeText={(text) => {
-                const [hours, minutes] = text.split(':').map(Number);
-                if (!isNaN(hours) && !isNaN(minutes)) {
-                  setFormData(prev => ({
-                    ...prev,
-                    hour: hours,
-                    min: minutes
-                  }));
-                }
-              }}
-            />
-          </FormField>
-
-          <FormField>
-            <Text style={styles.fieldLabel}>Country</Text>
-            <View style={styles.input}>
-              <CountrySelector
-                value={location.country}
-                onChange={(value) => {
-                  setLocation(prev => ({ ...prev, country: value, city: '' }));
+            
+            <View style={styles.formRow}>
+              <Text style={styles.fieldLabel}>Birth Time</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="HH:MM"
+                placeholderTextColor={`${COLORS.text.light}60`}
+                value={`${formData.hour.toString().padStart(2, '0')}:${formData.min.toString().padStart(2, '0')}`}
+                onChangeText={(text) => {
+                  const [hours, minutes] = text.split(':').map(Number);
+                  if (!isNaN(hours) && !isNaN(minutes)) {
+                    setFormData(prev => ({
+                      ...prev,
+                      hour: hours,
+                      min: minutes
+                    }));
+                  }
                 }}
-                label="Select country"
               />
             </View>
-          </FormField>
-        </FormGrid>
-
-        <FormGrid>
-          <FormField style={{ width: '100%' }}>
-            <Text style={styles.fieldLabel}>City</Text>
-            <View style={styles.input}>
-              <CitySelector
-                value={location.city}
-                onLocationSelect={(city, country, lat, lon, timezone) => {
-                  setLocation({ city, country });
-                  handleLocationChange(city, country);
-                }}
-                country={location.country}
-                placeholder="Enter birth city"
-              />
+            
+            <View style={styles.formRow}>
+              <Text style={styles.fieldLabel}>Country</Text>
+              <View style={styles.input}>
+                <CountrySelector
+                  value={location.country}
+                  onChange={(value) => {
+                    setLocation(prev => ({ ...prev, country: value, city: '' }));
+                  }}
+                  label="Select country"
+                />
+              </View>
             </View>
-          </FormField>
-        </FormGrid>
-
-        {formData.lat !== 0 && formData.lon !== 0 && (
-          <View style={styles.locationDetails}>
-            <Text style={styles.locationText}>
-              Latitude: {formData.lat.toFixed(4)}°
-            </Text>
-            <Text style={styles.locationText}>
-              Longitude: {formData.lon.toFixed(4)}°
-            </Text>
-            <Text style={styles.locationText}>
-              Timezone: GMT{formData.tzone >= 0 ? '+' : ''}{formData.tzone}
-            </Text>
+            
+            <View style={styles.formRow}>
+              <Text style={styles.fieldLabel}>City</Text>
+              <View style={styles.input}>
+                <CitySelector
+                  value={location.city}
+                  onLocationSelect={(city, country, lat, lon, timezone) => {
+                    setLocation({ city, country });
+                    handleLocationChange(city, country);
+                  }}
+                  country={location.country}
+                  placeholder="Enter birth city"
+                />
+              </View>
+            </View>
+            
+            {formData.lat !== 0 && formData.lon !== 0 && (
+              <View style={styles.locationDetails}>
+                <Text style={styles.locationText}>
+                  Latitude: {formData.lat.toFixed(4)}°
+                </Text>
+                <Text style={styles.locationText}>
+                  Longitude: {formData.lon.toFixed(4)}°
+                </Text>
+                <Text style={styles.locationText}>
+                  Timezone: GMT{formData.tzone >= 0 ? '+' : ''}{formData.tzone}
+                </Text>
+              </View>
+            )}
+            
+            <View style={styles.chartPreview}>
+              <TouchableOpacity 
+                onPress={handleSubmit}
+                disabled={isLoading}
+                style={styles.chartCircleOuter}
+              >
+                <Animated.View 
+                  style={[
+                    styles.chartCircleInner,
+                    { transform: [{ scale: isLoading ? 1 : pulseAnim }] }
+                  ]}
+                >
+                  {isLoading ? (
+                    <ActivityIndicator color={COLORS.text.light} size="large" />
+                  ) : (
+                    <>
+                      <Text style={styles.chartText}>Generate Birth Chart</Text>
+                      <View style={styles.chartIcon}>
+                        <Icon name="arrow-right" size={20} color={COLORS.text.light} />
+                      </View>
+                    </>
+                  )}
+                </Animated.View>
+              </TouchableOpacity>
+              <Text style={styles.chartDescription}>
+                Tap the circle to generate your personalized birth chart based on your birth details
+              </Text>
+            </View>
           </View>
         )}
-
-        <View style={styles.chartPreview}>
-          <View style={styles.chartCircleOuter}>
-            <View style={styles.chartCircleInner}>
-              <Text style={styles.chartText}>Birth Chart</Text>
-            </View>
-          </View>
-          
-          <Text style={styles.chartDescription}>
-            Enter your birth details to generate your complete astrological profile
-          </Text>
-          
-          <TouchableOpacity 
-            onPress={handleSubmit}
-            style={[
-              styles.generateButton,
-              isLoading && styles.generateButtonDisabled
-            ]}
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <ActivityIndicator color={COLORS.accent.purple} />
-            ) : (
-              <Text style={styles.generateButtonText}>
-                Generate Birth Chart
-              </Text>
-            )}
-          </TouchableOpacity>
-        </View>
       </View>
     </View>
   );

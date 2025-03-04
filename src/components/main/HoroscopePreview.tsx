@@ -6,6 +6,12 @@ import { useZodiac } from '../../context/ZodiacContext';
 import { COLORS } from '../../theme/colors';
 import { SPACING } from '../../theme/spacing';
 import { TYPOGRAPHY } from '../../theme/typography';
+import { Button } from '../shared/Button';
+import { useNavigation } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
+import type { RootStackParamList } from '../../navigation/AppNavigator';
+
+type NavigationProp = StackNavigationProp<RootStackParamList, 'Landing'>;
 
 interface HoroscopePreviewProps {
   onSignPress?: () => void;
@@ -14,7 +20,12 @@ interface HoroscopePreviewProps {
 export function HoroscopePreview({ 
   onSignPress
 }: HoroscopePreviewProps) {
+  const navigation = useNavigation<NavigationProp>();
   const { current, selectedSign } = useZodiac();
+  
+  const handleWeeklyForecastClick = () => {
+    navigation.navigate('DailyHoroscopes');
+  };
   
   // Get the current horoscope data from the zodiac context
   const horoscopeData = current();
@@ -28,8 +39,21 @@ export function HoroscopePreview({
     <View style={styles.container}>
       <View style={styles.content}>
         <View style={styles.signSelectorContainer}>
-          <Text style={styles.sectionTitle}>Select Your Sign</Text>
-          <SignSwitcher />
+          <View style={styles.signSelectorRow}>
+            <View style={styles.signSwitcherColumn}>
+              <SignSwitcher />
+            </View>
+            <View style={styles.buttonColumn}>
+              <Button 
+                variant="ghost" 
+                size="md" 
+                onPress={handleWeeklyForecastClick}
+                style={{ borderWidth: 1, borderColor: 'rgba(255, 255, 255, 0.2)' }}
+              >
+                <Text style={{ color: COLORS.text.light }}>Explore All Horoscopes</Text>
+              </Button>
+            </View>
+          </View>
         </View>
 
         <View style={styles.horoscopeContainer}>
@@ -79,11 +103,20 @@ const styles = StyleSheet.create({
     padding: SPACING.lg,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.2)',
-    overflow: 'hidden',
+    overflow: 'visible',
     backgroundColor: 'transparent',
+    minHeight: 400,
   },
   content: {
     marginBottom: SPACING.md,
+    position: 'relative',
+    zIndex: 1000,
+    elevation: 1000,
+  },
+  ctaContainer: {
+    width: '100%',
+    alignItems: 'center',
+    marginTop: 16,
   },
   signSelectorContainer: {
     alignItems: 'center',
@@ -91,6 +124,43 @@ const styles = StyleSheet.create({
     paddingBottom: SPACING.md,
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(255, 255, 255, 0.1)',
+    width: '100%',
+    position: 'relative',
+    zIndex: 1000,
+    elevation: 1000,
+  },
+  signSelectorRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    gap: SPACING.md,
+  },
+  signSwitcherColumn: {
+    flex: 1,
+    minWidth: 0, // Prevents flex item from overflowing
+  },
+  buttonColumn: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  signSelectorHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    marginBottom: SPACING.md,
+  },
+  signSelectorLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: SPACING.sm,
+  },
+  signSelectorText: {
+    fontSize: TYPOGRAPHY.fontSize.md,
+    color: COLORS.text.light,
+    fontWeight: TYPOGRAPHY.fontWeight.medium as any,
   },
   sectionTitle: {
     fontSize: TYPOGRAPHY.fontSize.lg,

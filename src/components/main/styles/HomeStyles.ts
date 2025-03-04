@@ -112,4 +112,8 @@ export const homeStyles = StyleSheet.create({
   buttonContainer: {
     alignItems: 'flex-start',
   },
+  featureContentContainer: {
+    width: '100%',
+    padding: 4,
+  },
 }); 

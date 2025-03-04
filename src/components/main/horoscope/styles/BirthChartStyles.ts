@@ -61,6 +61,36 @@ export const birthChartStyles = StyleSheet.create({
     marginBottom: 24,
     textAlign: 'center',
   },
+  responsiveLayout: {
+    ...(Platform.OS === 'web' ? {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(2, 1fr)',
+      gridGap: '24px',
+      width: '100%',
+    } : {
+      flexDirection: 'column',
+    }),
+  },
+  leftColumn: {
+    ...(Platform.OS === 'web' ? {
+      gridColumn: '1',
+    } : {
+      marginBottom: 24,
+    }),
+  },
+  rightColumn: {
+    ...(Platform.OS === 'web' ? {
+      gridColumn: '2',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    } : {
+      alignItems: 'center',
+    }),
+  },
+  formRow: {
+    marginBottom: 16,
+  },
   formGrid: {
     flexDirection: Platform.OS === 'web' ? 'row' : 'column',
     flexWrap: 'wrap',
@@ -68,7 +98,7 @@ export const birthChartStyles = StyleSheet.create({
     marginBottom: 16,
   },
   formField: {
-    width: Platform.OS === 'web' ? '32%' : '100%',
+    width: Platform.OS === 'web' ? '100%' : '100%',
     marginBottom: 16,
   },
   fieldLabel: {
@@ -91,12 +121,18 @@ export const birthChartStyles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
     alignItems: 'center',
-    marginTop: 16,
+    justifyContent: 'center',
+    marginTop: Platform.OS === 'web' ? 0 : 16,
+    ...(Platform.OS === 'web' ? {
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+    } : {}),
   },
   chartCircleOuter: {
-    width: 128,
-    height: 128,
-    borderRadius: 64,
+    width: 180,
+    height: 180,
+    borderRadius: 90,
     backgroundColor: 'transparent',
     backgroundImage: Platform.OS === 'web' ? 
       `linear-gradient(to bottom right, ${COLORS.accent.purple}, ${COLORS.accent.blue})` : 
@@ -104,11 +140,22 @@ export const birthChartStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 16,
+    ...(Platform.OS === 'web' && {
+      cursor: 'pointer',
+      transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+      ':hover': {
+        transform: 'scale(1.05)',
+        boxShadow: '0 0 15px rgba(111, 76, 255, 0.5)',
+      },
+      ':active': {
+        transform: 'scale(0.98)',
+      }
+    }),
   },
   chartCircleInner: {
-    width: 112,
-    height: 112,
-    borderRadius: 56,
+    width: 160,
+    height: 160,
+    borderRadius: 80,
     borderWidth: 2,
     borderColor: 'rgba(255, 255, 255, 0.4)',
     borderStyle: 'dashed',
@@ -119,13 +166,20 @@ export const birthChartStyles = StyleSheet.create({
     color: COLORS.text.light,
     fontSize: TYPOGRAPHY.fontSize.md,
     fontWeight: TYPOGRAPHY.fontWeight.medium,
+    marginBottom: 4,
+  },
+  chartIcon: {
+    marginTop: 4,
+    opacity: 0.8,
   },
   chartDescription: {
-    color: `${COLORS.text.light}80`,
+    color: `${COLORS.text.light}CC`,
     fontSize: TYPOGRAPHY.fontSize.sm,
     textAlign: 'center',
+    marginTop: 16,
     marginBottom: 16,
     maxWidth: 300,
+    lineHeight: TYPOGRAPHY.lineHeight.normal,
   },
   generateButton: {
     backgroundColor: COLORS.text.light,

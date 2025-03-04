@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, ScrollView, Platform } from 'react-native';
+import { View, Text, ScrollView, Platform, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { RootStackParamList } from '../../../navigation/AppNavigator';
@@ -169,29 +169,26 @@ const HomeScreen = () => {
           <>
             {/* HoroscopePreview */}
             <HoroscopePreviewContainer>
-              <HoroscopePreview onSignPress={handleSignPress} />
+              <View style={styles.featureContentContainer}>
+                <HoroscopePreview onSignPress={handleSignPress} />
+              </View>
             </HoroscopePreviewContainer>
             
             {/* DailyHoroscopesGrid */}
             <HoroscopeGridContainer>
-              <DailyHoroscopesGrid />
+              <View style={styles.featureContentContainer}>
+                <DailyHoroscopeCard 
+                  date={DAILY_HOROSCOPE.date}
+                  horoscope={DAILY_HOROSCOPE.horoscope}
+                  onReadFullHoroscope={handleReadFullHoroscope}
+                />
+              </View>
             </HoroscopeGridContainer>
-            
-            <View style={[styles.ctaContainer, { width: '100%', alignItems: 'center', marginTop: 16 }]}>
-              <Button 
-                variant="ghost" 
-                size="md" 
-                onPress={handleWeeklyForecastClick}
-                style={{ borderWidth: 1, borderColor: 'rgba(255, 255, 255, 0.2)' }}
-              >
-                <Text style={{ color: COLORS.text.light }}>Explore All Horoscopes</Text>
-              </Button>
-            </View>
           </>
         );
       case 'compatibility':
         return (
-          <View style={{ width: '100%', padding: 16 }}>
+          <View style={styles.featureContentContainer}>
             <CompatibilityControl 
               onNavigateToResults={(result, person1Name, person2Name) => {
                 navigation.navigate('CompatibilityScoreScreen', {
@@ -205,7 +202,7 @@ const HomeScreen = () => {
         );
       case 'birthchart':
         return (
-          <View style={{ width: '100%', padding: 16 }}>
+          <View style={styles.featureContentContainer}>
             <BirthChart />
           </View>
         );
