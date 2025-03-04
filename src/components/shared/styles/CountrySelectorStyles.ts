@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import { COLORS } from '../../../theme/colors';
 import { TYPOGRAPHY } from '../../../theme/typography';
 import { SPACING } from '../../../theme/spacing';
@@ -11,21 +11,34 @@ export const countrySelectorStyles = StyleSheet.create({
     marginBottom: SPACING.md,
   },
   label: {
-    fontSize: TYPOGRAPHY.fontSize.md,
-    color: COLORS.text.primary,
+    fontSize: TYPOGRAPHY.fontSize.sm,
+    color: COLORS.text.light,
     marginBottom: SPACING.xs,
     fontWeight: TYPOGRAPHY.fontWeight.medium as "normal" | "bold" | "100" | "200" | "300" | "400" | "500" | "600" | "700" | "800" | "900",
   },
   pickerContainer: {
     borderWidth: 1,
-    borderColor: COLORS.border.dark,
+    borderColor: 'rgba(255, 255, 255, 0.2)',
     borderRadius: SPACING.radius.md,
     backgroundColor: 'transparent',
+    ...Platform.select({
+      ios: {
+        height: 44,
+      },
+      android: {
+        height: 48,
+      },
+      default: {
+        height: 40,
+      }
+    }),
   },
   picker: {
-    height: 50,
-    color: COLORS.text.primary,
+    height: '100%',
+    color: COLORS.text.light,
     padding: SPACING.md,
+    fontSize: TYPOGRAPHY.fontSize.md,
+    fontWeight: TYPOGRAPHY.fontWeight.regular as "normal" | "bold" | "100" | "200" | "300" | "400" | "500" | "600" | "700" | "800" | "900",
   },
   errorBorder: {
     borderColor: COLORS.status.error,
