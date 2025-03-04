@@ -1,4 +1,4 @@
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet, Platform, ViewStyle, TextStyle } from 'react-native';
 import { COLORS } from '../../../../theme/colors';
 import { TYPOGRAPHY } from '../../../../theme/typography';
 
@@ -49,45 +49,52 @@ export const birthChartStyles = StyleSheet.create({
     marginBottom: 24,
     borderRadius: 16,
     padding: 24,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
-    backdropFilter: Platform.OS === 'web' ? 'blur(8px)' : undefined,
+    backgroundColor: 'transparent',
   },
   formTitle: {
     fontSize: TYPOGRAPHY.fontSize.xl,
-    fontWeight: TYPOGRAPHY.fontWeight.bold,
+    fontWeight: '700' as const,
     color: COLORS.text.light,
     marginBottom: 24,
     textAlign: 'center',
   },
-  responsiveLayout: {
-    ...(Platform.OS === 'web' ? {
-      display: 'grid',
-      gridTemplateColumns: 'repeat(2, 1fr)',
-      gridGap: '24px',
+  inputGroup: {
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.2)',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 24,
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+  },
+  responsiveLayout: Platform.select({
+    web: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
       width: '100%',
-    } : {
+    },
+    default: {
       flexDirection: 'column',
-    }),
-  },
-  leftColumn: {
-    ...(Platform.OS === 'web' ? {
-      gridColumn: '1',
-    } : {
+    },
+  }) as ViewStyle,
+  leftColumn: Platform.select({
+    web: {
+      flex: 1,
+      marginRight: 24,
+    },
+    default: {
       marginBottom: 24,
-    }),
-  },
-  rightColumn: {
-    ...(Platform.OS === 'web' ? {
-      gridColumn: '2',
-      display: 'flex',
+    },
+  }) as ViewStyle,
+  rightColumn: Platform.select({
+    web: {
+      flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-    } : {
+    },
+    default: {
       alignItems: 'center',
-    }),
-  },
+    },
+  }) as ViewStyle,
   formRow: {
     marginBottom: 16,
   },
@@ -103,18 +110,19 @@ export const birthChartStyles = StyleSheet.create({
   },
   fieldLabel: {
     fontSize: TYPOGRAPHY.fontSize.sm,
-    fontWeight: TYPOGRAPHY.fontWeight.medium,
+    fontWeight: '500' as const,
     color: `${COLORS.text.light}80`,
     marginBottom: 8,
   },
   input: {
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.2)',
-    borderRadius: 8,
-    padding: 12,
+    backgroundColor: 'transparent',
     color: COLORS.text.light,
     fontSize: TYPOGRAPHY.fontSize.md,
+    padding: 12,
+    ...(Platform.OS === 'web' && {
+      minWidth: 200,
+      maxWidth: 300,
+    }),
   },
   chartPreview: {
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
@@ -133,10 +141,9 @@ export const birthChartStyles = StyleSheet.create({
     width: 180,
     height: 180,
     borderRadius: 90,
-    backgroundColor: 'transparent',
-    backgroundImage: Platform.OS === 'web' ? 
+    backgroundColor: Platform.OS === 'web' ? 
       `linear-gradient(to bottom right, ${COLORS.accent.purple}, ${COLORS.accent.blue})` : 
-      undefined,
+      'transparent',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 16,
@@ -165,7 +172,7 @@ export const birthChartStyles = StyleSheet.create({
   chartText: {
     color: COLORS.text.light,
     fontSize: TYPOGRAPHY.fontSize.md,
-    fontWeight: TYPOGRAPHY.fontWeight.medium,
+    fontWeight: '500' as const,
     marginBottom: 4,
   },
   chartIcon: {
@@ -194,14 +201,14 @@ export const birthChartStyles = StyleSheet.create({
   generateButtonText: {
     color: COLORS.accent.purple,
     fontSize: TYPOGRAPHY.fontSize.md,
-    fontWeight: TYPOGRAPHY.fontWeight.semiBold,
+    fontWeight: '600' as const,
   },
   section: {
     marginBottom: 24,
   },
   sectionTitle: {
     fontSize: TYPOGRAPHY.fontSize.lg,
-    fontWeight: TYPOGRAPHY.fontWeight.semiBold,
+    fontWeight: '600' as const,
     marginBottom: 16,
     color: COLORS.text.light,
   },
@@ -215,7 +222,7 @@ export const birthChartStyles = StyleSheet.create({
   },
   dataSectionTitle: {
     fontSize: TYPOGRAPHY.fontSize.md,
-    fontWeight: TYPOGRAPHY.fontWeight.semiBold,
+    fontWeight: '600' as const,
     color: COLORS.text.light,
     marginBottom: 12,
   },
@@ -249,7 +256,7 @@ export const birthChartStyles = StyleSheet.create({
   submitButtonText: {
     color: COLORS.text.light,
     fontSize: TYPOGRAPHY.fontSize.md,
-    fontWeight: TYPOGRAPHY.fontWeight.semiBold,
+    fontWeight: '600' as const,
   },
   planetRow: {
     flexDirection: 'row',
@@ -261,7 +268,7 @@ export const birthChartStyles = StyleSheet.create({
   planetName: {
     marginLeft: 12,
     fontSize: TYPOGRAPHY.fontSize.md,
-    fontWeight: TYPOGRAPHY.fontWeight.medium,
+    fontWeight: '500' as const,
     color: COLORS.text.light,
     width: 100,
   },
@@ -280,7 +287,7 @@ export const birthChartStyles = StyleSheet.create({
   houseNumber: {
     width: 100,
     fontSize: TYPOGRAPHY.fontSize.md,
-    fontWeight: TYPOGRAPHY.fontWeight.medium,
+    fontWeight: '500' as const,
     color: COLORS.text.light,
   },
   houseInfo: {
@@ -306,7 +313,7 @@ export const birthChartStyles = StyleSheet.create({
   interpretButtonText: {
     color: COLORS.text.light,
     fontSize: TYPOGRAPHY.fontSize.md,
-    fontWeight: TYPOGRAPHY.fontWeight.semiBold,
+    fontWeight: '600' as const,
   },
   cardsContainer: {
     flexDirection: 'row',
@@ -338,6 +345,6 @@ export const birthChartStyles = StyleSheet.create({
   resetButtonText: {
     color: COLORS.text.light,
     fontSize: TYPOGRAPHY.fontSize.md,
-    fontWeight: TYPOGRAPHY.fontWeight.semiBold,
+    fontWeight: '600' as const,
   },
 }); 

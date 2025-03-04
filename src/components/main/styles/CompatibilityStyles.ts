@@ -17,7 +17,7 @@ export const compatibilityStyles = StyleSheet.create({
   title: {
     fontSize: TYPOGRAPHY.fontSize.xl,
     fontWeight: TYPOGRAPHY.fontWeight.bold,
-    color: COLORS.text.primary,
+    color: COLORS.text.light,
     marginBottom: 30,
     textAlign: 'center',
   },
@@ -49,7 +49,7 @@ export const compatibilityStyles = StyleSheet.create({
   sectionTitle: {
     fontSize: TYPOGRAPHY.fontSize.lg,
     fontWeight: TYPOGRAPHY.fontWeight.semiBold,
-    color: COLORS.text.primary,
+    color: COLORS.text.light,
     marginLeft: 8,
   },
   inputRow: {
@@ -57,7 +57,7 @@ export const compatibilityStyles = StyleSheet.create({
   },
   label: {
     fontSize: TYPOGRAPHY.fontSize.md,
-    color: COLORS.text.primary,
+    color: COLORS.text.light,
     marginBottom: 8,
     fontWeight: TYPOGRAPHY.fontWeight.medium,
   },
@@ -68,7 +68,7 @@ export const compatibilityStyles = StyleSheet.create({
     padding: 12,
     fontSize: TYPOGRAPHY.fontSize.md,
     backgroundColor: 'transparent',
-    color: COLORS.text.primary,
+    color: COLORS.text.light,
   },
   dateButton: {
     borderWidth: 1,
@@ -79,7 +79,7 @@ export const compatibilityStyles = StyleSheet.create({
   },
   dateButtonText: {
     fontSize: TYPOGRAPHY.fontSize.md,
-    color: COLORS.text.primary,
+    color: COLORS.text.light,
   },
   locationContainer: {
     width: '100%',
@@ -122,7 +122,7 @@ export const compatibilityStyles = StyleSheet.create({
   orText: {
     fontSize: TYPOGRAPHY.fontSize.md,
     fontWeight: TYPOGRAPHY.fontWeight.semiBold,
-    color: COLORS.text.secondary,
+    color: COLORS.text.light,
     marginVertical: 10,
     textAlign: 'center',
   },
@@ -142,7 +142,7 @@ export const compatibilityStyles = StyleSheet.create({
   },
   premiumDescription: {
     fontSize: TYPOGRAPHY.fontSize.md,
-    color: COLORS.text.primary,
+    color: COLORS.text.light,
     marginBottom: 15,
   },
   upgradeButton: {

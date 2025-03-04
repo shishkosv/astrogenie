@@ -3,7 +3,7 @@ import { View, Text, Platform } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { locationService } from '../../services/serviceConfig';
 import { COLORS } from '../../theme/colors';
-import { countrySelectorStyles as styles } from './styles/CountrySelectorStyles';
+import { inputStyles as styles } from './styles/InputStyles';
 import { twMerge } from 'tailwind-merge';
 
 interface CountrySelectorProps {
@@ -25,10 +25,12 @@ export const CountrySelector: React.FC<CountrySelectorProps> = ({
         {label && <Text style={styles.label}>{label}</Text>}
         <select
           className={twMerge(
-            "w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500",
-            error ? "border-red-500" : "border-white/20",
-            "bg-transparent text-white placeholder-white/60",
-            "hover:border-white/40 transition-colors duration-200"
+            "w-full px-4 py-2 border rounded-md",
+            "bg-transparent text-white",
+            "border-white/20 hover:border-white/40",
+            "focus:outline-none focus:ring-2 focus:ring-purple-500",
+            "transition-colors duration-200",
+            error ? "border-red-500" : null
           )}
           value={value}
           onChange={(e) => onChange(e.target.value)}
@@ -51,11 +53,11 @@ export const CountrySelector: React.FC<CountrySelectorProps> = ({
   return (
     <View style={styles.container}>
       {label && <Text style={styles.label}>{label}</Text>}
-      <View style={[styles.pickerContainer, error ? styles.errorBorder : null]}>
+      <View style={[styles.inputContainer, error ? styles.errorBorder : null]}>
         <Picker
           selectedValue={value}
           onValueChange={onChange}
-          style={styles.picker}
+          style={styles.input}
           dropdownIconColor={COLORS.text.light}
         >
           {locationService.countries.map(country => (

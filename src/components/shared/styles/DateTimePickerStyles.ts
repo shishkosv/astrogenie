@@ -11,11 +11,11 @@ export const dateTimePickerStyles = StyleSheet.create({
     marginTop: SPACING.xs,
     width: '100%',
     borderWidth: 1,
-    borderColor: COLORS.border.dark,
+    borderColor: 'rgba(255, 255, 255, 0.2)',
   },
   dateButtonText: {
     fontSize: TYPOGRAPHY.fontSize.md,
-    color: COLORS.text.primary,
+    color: COLORS.text.light,
     textAlign: 'center',
     fontWeight: TYPOGRAPHY.fontWeight.regular as "normal" | "bold" | "100" | "200" | "300" | "400" | "500" | "600" | "700" | "800" | "900",
   },
@@ -23,9 +23,9 @@ export const dateTimePickerStyles = StyleSheet.create({
     padding: SPACING.md,
     fontSize: TYPOGRAPHY.fontSize.md,
     borderRadius: SPACING.radius.md,
-    border: `1px solid ${COLORS.border.dark}`,
+    border: '1px solid rgba(255, 255, 255, 0.2)',
     backgroundColor: 'transparent',
     width: '100%',
-    color: COLORS.text.primary,
+    color: COLORS.text.light,
   }
 }); 

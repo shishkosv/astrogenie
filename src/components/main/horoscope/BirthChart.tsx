@@ -169,60 +169,62 @@ const BirthChartForm: React.FC<BirthChartFormProps> = ({
             <div style={{
               gridColumn: '1'
             }}>
-              {/* Row 1 */}
-              <div style={{
-                marginBottom: 16,
-                display: 'flex',
-                flexDirection: 'column'
-              }}>
-                <Text style={styles.fieldLabel}>Birth Date</Text>
-                <View style={styles.input}>
-                  <DateTimePicker
-                    value={date}
-                    onChange={handleDateChange}
-                    showPicker={showDatePicker}
-                    onPress={() => setShowDatePicker(true)}
-                  />
-                </View>
-              </div>
-              
-              {/* Row 3 */}
-              <div style={{
-                marginBottom: 16,
-                display: 'flex',
-                flexDirection: 'column'
-              }}>
-                <Text style={styles.fieldLabel}>Country</Text>
-                <View style={styles.input}>
-                  <CountrySelector
-                    value={location.country}
-                    onChange={(value) => {
-                      setLocation(prev => ({ ...prev, country: value, city: '' }));
-                    }}
-                    label="Select country"
-                  />
-                </View>
-              </div>
-              
-              {/* Row 4 */}
-              <div style={{
-                marginBottom: 16,
-                display: 'flex',
-                flexDirection: 'column'
-              }}>
-                <Text style={styles.fieldLabel}>City</Text>
-                <View style={styles.input}>
-                  <CitySelector
-                    value={location.city}
-                    onLocationSelect={(city, country, lat, lon, timezone) => {
-                      setLocation({ city, country });
-                      handleLocationChange(city, country);
-                    }}
-                    country={location.country}
-                    placeholder="Enter birth city"
-                  />
-                </View>
-              </div>
+              <View style={styles.inputGroup}>
+                {/* Row 1 */}
+                <div style={{
+                  marginBottom: 16,
+                  display: 'flex',
+                  flexDirection: 'column'
+                }}>
+                  <Text style={styles.fieldLabel}>Birth Date</Text>
+                  <View style={styles.input}>
+                    <DateTimePicker
+                      value={date}
+                      onChange={handleDateChange}
+                      showPicker={showDatePicker}
+                      onPress={() => setShowDatePicker(true)}
+                    />
+                  </View>
+                </div>
+                
+                {/* Row 3 */}
+                <div style={{
+                  marginBottom: 16,
+                  display: 'flex',
+                  flexDirection: 'column'
+                }}>
+                  <Text style={styles.fieldLabel}>Country</Text>
+                  <View style={styles.input}>
+                    <CountrySelector
+                      value={location.country}
+                      onChange={(value) => {
+                        setLocation(prev => ({ ...prev, country: value, city: '' }));
+                      }}
+                      label="Select country"
+                    />
+                  </View>
+                </div>
+                
+                {/* Row 4 */}
+                <div style={{
+                  marginBottom: 16,
+                  display: 'flex',
+                  flexDirection: 'column'
+                }}>
+                  <Text style={styles.fieldLabel}>City</Text>
+                  <View style={styles.input}>
+                    <CitySelector
+                      value={location.city}
+                      onLocationSelect={(city, country, lat, lon, timezone) => {
+                        setLocation({ city, country });
+                        handleLocationChange(city, country);
+                      }}
+                      country={location.country}
+                      placeholder="Enter birth city"
+                    />
+                  </View>
+                </div>
+              </View>
               
               {formData.lat !== 0 && formData.lon !== 0 && (
                 <View style={styles.locationDetails}>
@@ -284,63 +286,65 @@ const BirthChartForm: React.FC<BirthChartFormProps> = ({
         ) : (
           // Mobile layout
           <View>
-            <View style={styles.formRow}>
-              <Text style={styles.fieldLabel}>Birth Date</Text>
-              <View style={styles.input}>
-                <DateTimePicker
-                  value={date}
-                  onChange={handleDateChange}
-                  showPicker={showDatePicker}
-                  onPress={() => setShowDatePicker(true)}
+            <View style={styles.inputGroup}>
+              <View style={styles.formRow}>
+                <Text style={styles.fieldLabel}>Birth Date</Text>
+                <View style={styles.input}>
+                  <DateTimePicker
+                    value={date}
+                    onChange={handleDateChange}
+                    showPicker={showDatePicker}
+                    onPress={() => setShowDatePicker(true)}
+                  />
+                </View>
+              </View>
+              
+              <View style={styles.formRow}>
+                <Text style={styles.fieldLabel}>Birth Time</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="HH:MM"
+                  placeholderTextColor={`${COLORS.text.light}60`}
+                  value={`${formData.hour.toString().padStart(2, '0')}:${formData.min.toString().padStart(2, '0')}`}
+                  onChangeText={(text) => {
+                    const [hours, minutes] = text.split(':').map(Number);
+                    if (!isNaN(hours) && !isNaN(minutes)) {
+                      setFormData(prev => ({
+                        ...prev,
+                        hour: hours,
+                        min: minutes
+                      }));
+                    }
+                  }}
                 />
               </View>
-            </View>
-            
-            <View style={styles.formRow}>
-              <Text style={styles.fieldLabel}>Birth Time</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="HH:MM"
-                placeholderTextColor={`${COLORS.text.light}60`}
-                value={`${formData.hour.toString().padStart(2, '0')}:${formData.min.toString().padStart(2, '0')}`}
-                onChangeText={(text) => {
-                  const [hours, minutes] = text.split(':').map(Number);
-                  if (!isNaN(hours) && !isNaN(minutes)) {
-                    setFormData(prev => ({
-                      ...prev,
-                      hour: hours,
-                      min: minutes
-                    }));
-                  }
-                }}
-              />
-            </View>
-            
-            <View style={styles.formRow}>
-              <Text style={styles.fieldLabel}>Country</Text>
-              <View style={styles.input}>
-                <CountrySelector
-                  value={location.country}
-                  onChange={(value) => {
-                    setLocation(prev => ({ ...prev, country: value, city: '' }));
-                  }}
-                  label="Select country"
-                />
+              
+              <View style={styles.formRow}>
+                <Text style={styles.fieldLabel}>Country</Text>
+                <View style={styles.input}>
+                  <CountrySelector
+                    value={location.country}
+                    onChange={(value) => {
+                      setLocation(prev => ({ ...prev, country: value, city: '' }));
+                    }}
+                    label="Select country"
+                  />
+                </View>
               </View>
-            </View>
-            
-            <View style={styles.formRow}>
-              <Text style={styles.fieldLabel}>City</Text>
-              <View style={styles.input}>
-                <CitySelector
-                  value={location.city}
-                  onLocationSelect={(city, country, lat, lon, timezone) => {
-                    setLocation({ city, country });
-                    handleLocationChange(city, country);
-                  }}
-                  country={location.country}
-                  placeholder="Enter birth city"
-                />
+              
+              <View style={styles.formRow}>
+                <Text style={styles.fieldLabel}>City</Text>
+                <View style={styles.input}>
+                  <CitySelector
+                    value={location.city}
+                    onLocationSelect={(city, country, lat, lon, timezone) => {
+                      setLocation({ city, country });
+                      handleLocationChange(city, country);
+                    }}
+                    country={location.country}
+                    placeholder="Enter birth city"
+                  />
+                </View>
               </View>
             </View>
             
@@ -358,7 +362,10 @@ const BirthChartForm: React.FC<BirthChartFormProps> = ({
               </View>
             )}
             
-            <View style={styles.chartPreview}>
+            <View style={{
+              alignItems: 'center',
+              marginTop: 24
+            }}>
               <TouchableOpacity 
                 onPress={handleSubmit}
                 disabled={isLoading}
