@@ -125,7 +125,7 @@ export const birthChartStyles = StyleSheet.create({
     }),
   },
   chartPreview: {
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    backgroundColor: COLORS.accent.blue,
     borderRadius: 12,
     padding: 16,
     alignItems: 'center',
@@ -168,6 +168,7 @@ export const birthChartStyles = StyleSheet.create({
     borderStyle: 'dashed',
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: COLORS.accent.blue,
   },
   chartText: {
     color: COLORS.text.light,

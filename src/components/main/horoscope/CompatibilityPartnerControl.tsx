@@ -4,7 +4,7 @@ import { DateTimePicker } from '../../shared/DateTimePicker';
 import { CitySelector } from '../../shared/CitySelector';
 import { CountrySelector } from '../../shared/CountrySelector';
 import Icon from '../../icons/Icon';
-import { compatibilityStyles as styles } from '../styles/CompatibilityStyles';
+import { compatibilityStyles as styles } from './styles/CompatibilityStyles';
 import type { BaseRequest } from '../../../types/base/WesternBaseTypes';
 import { COLORS } from '../../../theme/colors';
 
@@ -56,23 +56,23 @@ export const CompatibilityPartnerControl: React.FC<CompatibilityPartnerControlPr
     <View style={styles.formSection}>
       <View style={styles.personHeader}>
         <Icon name="user" size={24} color={COLORS.accent.purple} />
-        <Text style={styles.sectionTitle}>{person.name}</Text>
+        <Text style={[styles.sectionTitle, { color: COLORS.text.light }]}>{person.name}</Text>
       </View>
       
       <View style={styles.inputGroup}>
         <View style={styles.inputRow}>
-          <Text style={styles.fieldLabel}>Name</Text>
+          <Text style={[styles.fieldLabel, { color: COLORS.text.light }]}>Name</Text>
           <TextInput
-            style={styles.input}
+            style={[styles.input, { color: COLORS.text.light }]}
             value={person.name}
             onChangeText={(text) => onPersonChange({...person, name: text})}
             placeholder="Enter name"
-            placeholderTextColor={COLORS.text.mutedDark}
+            placeholderTextColor={COLORS.text.muted}
           />
         </View>
 
         <View style={styles.inputRow}>
-          <Text style={styles.fieldLabel}>Birth Date & Time</Text>
+          <Text style={[styles.fieldLabel, { color: COLORS.text.light }]}>Birth Date & Time</Text>
           <View style={styles.input}>
             <DateTimePicker
               value={new Date(
@@ -90,7 +90,7 @@ export const CompatibilityPartnerControl: React.FC<CompatibilityPartnerControlPr
         </View>
 
         <View style={styles.inputRow}>
-          <Text style={styles.fieldLabel}>Country</Text>
+          <Text style={[styles.fieldLabel, { color: COLORS.text.light }]}>Country</Text>
           <View style={styles.input}>
             <CountrySelector
               value={person.country}
@@ -101,7 +101,7 @@ export const CompatibilityPartnerControl: React.FC<CompatibilityPartnerControlPr
         </View>
 
         <View style={styles.inputRow}>
-          <Text style={styles.fieldLabel}>City</Text>
+          <Text style={[styles.fieldLabel, { color: COLORS.text.light }]}>City</Text>
           <View style={styles.input}>
             <CitySelector
               value={person.city}
