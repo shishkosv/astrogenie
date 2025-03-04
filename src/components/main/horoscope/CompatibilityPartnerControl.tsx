@@ -59,71 +59,58 @@ export const CompatibilityPartnerControl: React.FC<CompatibilityPartnerControlPr
         <Text style={styles.sectionTitle}>{person.name}</Text>
       </View>
       
-      <View style={styles.inputRow}>
-        <Text style={styles.label}>Name</Text>
-        <TextInput
-          style={styles.textInput}
-          value={person.name}
-          onChangeText={(text) => onPersonChange({...person, name: text})}
-          placeholder="Enter name"
-          placeholderTextColor={COLORS.text.mutedDark}
-        />
-      </View>
-
-      <View style={styles.inputRow}>
-        <Text style={styles.label}>Birth Date & Time</Text>
-        <TouchableOpacity 
-          style={styles.dateButton}
-          onPress={() => setShowDatePicker(true)}
-        >
-          <Text style={styles.dateButtonText}>
-            {new Date(
-              person.year, 
-              person.month - 1, 
-              person.day, 
-              person.hour, 
-              person.min
-            ).toLocaleString()}
-          </Text>
-        </TouchableOpacity>
-        
-        {showDatePicker && (
-          <DateTimePicker
-            value={new Date(
-              person.year, 
-              person.month - 1, 
-              person.day, 
-              person.hour, 
-              person.min
-            )}
-            onChange={handleDateChange}
-            showPicker={showDatePicker}
-            onPress={() => setShowDatePicker(false)}
+      <View style={styles.inputGroup}>
+        <View style={styles.inputRow}>
+          <Text style={styles.fieldLabel}>Name</Text>
+          <TextInput
+            style={styles.input}
+            value={person.name}
+            onChangeText={(text) => onPersonChange({...person, name: text})}
+            placeholder="Enter name"
+            placeholderTextColor={COLORS.text.mutedDark}
           />
-        )}
-      </View>
+        </View>
 
-      <View style={styles.locationContainer}>
-        <CountrySelector
-          value={person.country}
-          onChange={(value) => onPersonChange({...person, country: value})}
-          label="Country"
-        />
-        <CitySelector
-          value={person.city}
-          onLocationSelect={(city, country, lat, lon, timezone) => {
-            onPersonChange({
-              ...person,
-              city,
-              country,
-              lat,
-              lon,
-              tzone: timezone
-            });
-          }}
-          country={person.country}
-          placeholder="Enter birth city"
-        />
+        <View style={styles.inputRow}>
+          <Text style={styles.fieldLabel}>Birth Date & Time</Text>
+          <View style={styles.input}>
+            <DateTimePicker
+              value={new Date(
+                person.year, 
+                person.month - 1, 
+                person.day, 
+                person.hour, 
+                person.min
+              )}
+              onChange={handleDateChange}
+              showPicker={showDatePicker}
+              onPress={() => setShowDatePicker(true)}
+            />
+          </View>
+        </View>
+
+        <View style={styles.inputRow}>
+          <Text style={styles.fieldLabel}>Country</Text>
+          <View style={styles.input}>
+            <CountrySelector
+              value={person.country}
+              onChange={(value) => onPersonChange({...person, country: value})}
+              label="Select country"
+            />
+          </View>
+        </View>
+
+        <View style={styles.inputRow}>
+          <Text style={styles.fieldLabel}>City</Text>
+          <View style={styles.input}>
+            <CitySelector
+              value={person.city}
+              onLocationSelect={handleLocationSelect}
+              country={person.country}
+              placeholder="Enter birth city"
+            />
+          </View>
+        </View>
       </View>
     </View>
   );

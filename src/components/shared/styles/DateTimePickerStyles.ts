@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import { COLORS } from '../../../theme/colors';
 import { TYPOGRAPHY } from '../../../theme/typography';
 import { SPACING } from '../../../theme/spacing';
@@ -27,5 +27,8 @@ export const dateTimePickerStyles = StyleSheet.create({
     backgroundColor: 'transparent',
     width: '100%',
     color: COLORS.text.light,
+    ...(Platform.OS === 'web' && {
+      minWidth: 250,
+    }),
   }
 }); 

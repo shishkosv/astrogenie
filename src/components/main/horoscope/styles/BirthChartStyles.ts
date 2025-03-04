@@ -62,8 +62,8 @@ export const birthChartStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.2)',
     borderRadius: 12,
-    padding: 16,
-    marginBottom: 24,
+    padding: 8,
+    marginBottom: 12,
     backgroundColor: 'rgba(255, 255, 255, 0.05)',
   },
   responsiveLayout: Platform.select({
@@ -106,7 +106,7 @@ export const birthChartStyles = StyleSheet.create({
   },
   formField: {
     width: Platform.OS === 'web' ? '100%' : '100%',
-    marginBottom: 16,
+    marginBottom: 8,
   },
   fieldLabel: {
     fontSize: TYPOGRAPHY.fontSize.sm,
@@ -118,9 +118,9 @@ export const birthChartStyles = StyleSheet.create({
     backgroundColor: 'transparent',
     color: COLORS.text.light,
     fontSize: TYPOGRAPHY.fontSize.md,
-    padding: 12,
+    padding: 6,
     ...(Platform.OS === 'web' && {
-      minWidth: 200,
+      minWidth: 250,
       maxWidth: 300,
     }),
   },
