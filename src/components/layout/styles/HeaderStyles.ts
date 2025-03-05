@@ -105,9 +105,6 @@ export const headerStyles = StyleSheet.create({
   navLinks: {
     flexDirection: 'row',
     alignItems: 'center',
-    ...(Platform.OS !== 'web' && {
-      display: 'none',
-    }),
   },
   navLinkItem: {
     marginRight: SPACING.xs,
@@ -124,9 +121,6 @@ export const headerStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginLeft: SPACING.sm,
-    ...(Platform.OS !== 'web' && {
-      display: 'none',
-    }),
   },
   desktopButtonItem: {
     marginRight: SPACING.sm,
@@ -152,27 +146,66 @@ export const headerStyles = StyleSheet.create({
   },
   // Mobile menu styles
   mobileMenu: {
-    width: '100%',
-    backgroundColor: COLORS.gradient.via,
-    overflow: 'hidden',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    width: 300,
+    backgroundColor: '#1A1A1A',
+    zIndex: SPACING.zIndex.header + 1,
     ...(Platform.OS === 'web' && {
-      background: createGradient('90deg'),
+      boxShadow: '4px 0 6px -1px rgba(0, 0, 0, 0.1), 2px 0 4px -1px rgba(0, 0, 0, 0.06)',
+    }),
+  },
+  mobileMenuBackdrop: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    zIndex: SPACING.zIndex.header,
+    ...(Platform.OS === 'web' && {
+      backdropFilter: 'blur(4px)',
     }),
   },
   mobileMenuContent: {
-    padding: SPACING.md,
+    flex: 1,
     flexDirection: 'column',
-    alignItems: 'stretch',
+    backgroundColor: '#1A1A1A',
+  },
+  mobileMenuHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: SPACING.md,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(255, 255, 255, 0.1)',
+    backgroundColor: '#1A1A1A',
+  },
+  mobileMenuTitle: {
+    color: COLORS.text.light,
+    fontSize: 20,
+    fontWeight: '600',
+  },
+  closeButton: {
+    padding: SPACING.sm,
+  },
+  mobileMenuItems: {
+    flex: 1,
+    backgroundColor: '#1A1A1A',
   },
   mobileNavButton: {
     width: '100%',
-    marginVertical: SPACING.xs,
     alignItems: 'flex-start',
+    paddingVertical: SPACING.sm,
+    paddingHorizontal: SPACING.md,
+    backgroundColor: '#1A1A1A',
   },
   mobileAuthButtons: {
-    marginTop: SPACING.md,
     borderTopWidth: 1,
-    borderTopColor: COLORS.border.light,
+    borderTopColor: 'rgba(255, 255, 255, 0.1)',
     paddingTop: SPACING.md,
+    backgroundColor: '#1A1A1A',
   },
 }); 
