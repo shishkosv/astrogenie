@@ -12,6 +12,30 @@ export const dailyHoroscopesStyles = StyleSheet.create({
   dropdownContainer: {
     marginBottom: SPACING.lg,
     width: '100%',
+    position: 'relative',
+    zIndex: 1000,
+  },
+  dropdownRow: {
+    flexDirection: Platform.OS === 'web' ? 'row' : 'column',
+    alignItems: Platform.OS === 'web' ? 'center' : 'stretch',
+    gap: SPACING.lg,
+    width: '100%',
+    position: 'relative',
+  },
+  titleColumn: {
+    flex: Platform.OS === 'web' ? 1 : undefined,
+    minWidth: Platform.OS === 'web' ? 0 : undefined,
+    position: 'relative',
+    zIndex: 1,
+  },
+  switcherColumn: {
+    flex: Platform.OS === 'web' ? 1 : undefined,
+    minWidth: Platform.OS === 'web' ? 0 : undefined,
+    position: 'relative',
+    zIndex: 1000,
+    ...(Platform.OS === 'web' && {
+      maxWidth: '300px',
+    }),
   },
   dropdownButton: {
     flexDirection: 'row',
@@ -83,7 +107,7 @@ export const dailyHoroscopesStyles = StyleSheet.create({
   subtitle: {
     fontSize: TYPOGRAPHY.fontSize.md,
     color: COLORS.text.muted,
-    marginBottom: SPACING.lg,
+    marginBottom: Platform.OS === 'web' ? 0 : SPACING.lg,
   },
   emptyText: {
     fontSize: TYPOGRAPHY.fontSize.md,

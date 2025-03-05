@@ -26,12 +26,6 @@ const DailyForecast = () => {
 
   return (
     <View style={styles.container}>
-      {/* Sign Selector */}
-      <View style={styles.signSelectorContainer}>
-        <Text style={styles.sectionTitle}>Select Your Sign</Text>
-        <SignSwitcher />
-      </View>
-
       {/* Tabs */}
       <ScrollView 
         horizontal 
