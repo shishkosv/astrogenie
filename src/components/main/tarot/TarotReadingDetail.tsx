@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, Alert } from 'react-native';
+import { View, Text, ScrollView, Alert, Image } from 'react-native';
 import Layout from '../../layout/Layout';
 import { Button } from '../../shared/Button';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -46,32 +46,10 @@ const TarotReadingDetail = () => {
   return (
     <Layout>
       <ScrollView style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.title}>{reading.title}</Text>
-          <Text style={styles.subtitle}>{reading.subtitle}</Text>
-        </View>
-
-        <View style={styles.content}>
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Description</Text>
-            <Text style={styles.description}>
-              Discover deep insights about your situation through our personalized tarot reading.
-              Our experienced readers will guide you through the cards' meanings and their significance
-              in your life.
-            </Text>
-          </View>
-
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>What You'll Get</Text>
-            <View style={styles.benefitsList}>
-              <Text style={styles.benefit}>• Detailed card interpretation</Text>
-              <Text style={styles.benefit}>• Personal guidance and insights</Text>
-              <Text style={styles.benefit}>• Future predictions and advice</Text>
-              <Text style={styles.benefit}>• PDF report of your reading</Text>
-            </View>
-          </View>
-
-          <View style={styles.priceSection}>
+        <View style={styles.heroSection}>
+          <View style={styles.heroContent}>
+            <Text style={styles.title}>{reading.title}</Text>
+            <Text style={styles.subtitle}>{reading.subtitle}</Text>
             <View style={styles.priceContainer}>
               <Text style={styles.price}>${reading.price}</Text>
               {reading.yearlyPrice && (
@@ -85,9 +63,57 @@ const TarotReadingDetail = () => {
               size="lg"
               onPress={handleAddToCart}
               loading={isLoading}
+              style={styles.ctaButton}
             >
               Get Reading Now
             </Button>
+          </View>
+        </View>
+
+        <View style={styles.mainContent}>
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>About This Reading</Text>
+            <Text style={styles.description}>
+              Discover deep insights about your situation through our personalized tarot reading.
+              Our experienced readers will guide you through the cards' meanings and their significance
+              in your life. Each reading is carefully crafted to provide you with meaningful guidance and clarity.
+              We use traditional tarot decks and intuitive techniques to ensure accurate and helpful readings
+              that resonate with your unique journey.
+            </Text>
+          </View>
+
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>What You'll Get</Text>
+            <View style={styles.benefitsGrid}>
+              <View style={styles.benefitCard}>
+                <View style={styles.benefitIcon}>🎴</View>
+                <View style={styles.benefitContent}>
+                  <Text style={styles.benefitTitle}>Detailed Interpretation</Text>
+                  <Text style={styles.benefitDescription}>Comprehensive analysis of your cards and their meanings</Text>
+                </View>
+              </View>
+              <View style={styles.benefitCard}>
+                <View style={styles.benefitIcon}>✨</View>
+                <View style={styles.benefitContent}>
+                  <Text style={styles.benefitTitle}>Personal Guidance</Text>
+                  <Text style={styles.benefitDescription}>Tailored insights specific to your situation</Text>
+                </View>
+              </View>
+              <View style={styles.benefitCard}>
+                <View style={styles.benefitIcon}>🔮</View>
+                <View style={styles.benefitContent}>
+                  <Text style={styles.benefitTitle}>Future Insights</Text>
+                  <Text style={styles.benefitDescription}>Clear predictions and actionable advice</Text>
+                </View>
+              </View>
+              <View style={styles.benefitCard}>
+                <View style={styles.benefitIcon}>📄</View>
+                <View style={styles.benefitContent}>
+                  <Text style={styles.benefitTitle}>PDF Report</Text>
+                  <Text style={styles.benefitDescription}>Detailed reading report for future reference</Text>
+                </View>
+              </View>
+            </View>
           </View>
         </View>
       </ScrollView>
