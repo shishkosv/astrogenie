@@ -8,6 +8,7 @@ export const countrySelectorStyles = StyleSheet.create({
     position: 'relative',
     zIndex: 2,
     width: '100%',
+    minWidth: Platform.OS === 'web' ? '200px' : '100%',
     marginBottom: SPACING.md,
   },
   label: {

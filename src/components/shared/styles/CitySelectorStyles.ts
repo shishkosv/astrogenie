@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import { COLORS } from '../../../theme/colors';
 import { TYPOGRAPHY } from '../../../theme/typography';
 import { SPACING } from '../../../theme/spacing';
@@ -8,6 +8,7 @@ export const citySelectorStyles = StyleSheet.create({
     position: 'relative',
     zIndex: 2,
     width: '100%',
+    minWidth: Platform.OS === 'web' ? '200px' : '100%',
     marginBottom: SPACING.md,
   },
   input: {
@@ -17,6 +18,15 @@ export const citySelectorStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS.border.dark,
     color: COLORS.text.primary,
+    minWidth: Platform.OS === 'web' ? '200px' : '100%',
+    ...Platform.select({
+      web: {
+        width: '100%',
+      },
+      default: {
+        width: '100%',
+      }
+    })
   },
   loader: {
     position: 'absolute',
@@ -39,6 +49,7 @@ export const citySelectorStyles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
+    minWidth: Platform.OS === 'web' ? '200px' : '100%',
   },
   suggestionItem: {
     padding: SPACING.md,

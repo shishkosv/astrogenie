@@ -83,15 +83,31 @@ const styles = StyleSheet.create({
     flexDirection: Platform.OS === 'web' ? 'row' : 'column',
     gap: SPACING.md,
     marginTop: SPACING.md,
+    width: '100%',
+    flexWrap: 'wrap',
+    ...(Platform.OS === 'web' && {
+      display: 'flex',
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      gap: '16px',
+    }),
   },
   primaryButton: {
     marginBottom: Platform.OS === 'web' ? 0 : SPACING.md,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.2)',
+    ...(Platform.OS === 'web' && {
+      flex: '1 1 200px',
+      minWidth: '200px',
+    }),
   },
   secondaryButton: {
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.2)',
+    ...(Platform.OS === 'web' && {
+      flex: '1 1 200px',
+      minWidth: '200px',
+    }),
   },
   buttonContent: {
     flexDirection: 'row',

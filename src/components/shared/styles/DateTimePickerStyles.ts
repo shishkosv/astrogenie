@@ -5,30 +5,35 @@ import { SPACING } from '../../../theme/spacing';
 
 export const dateTimePickerStyles = StyleSheet.create({
   dateButton: {
+    borderWidth: 1,
+    borderColor: COLORS.border.dark,
+    borderRadius: SPACING.radius.md,
     padding: SPACING.md,
     backgroundColor: 'transparent',
-    borderRadius: SPACING.radius.md,
-    marginTop: SPACING.xs,
-    width: '100%',
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.2)',
+    minWidth: Platform.OS === 'web' ? '200px' : '100%',
+    ...Platform.select({
+      web: {
+        width: '100%',
+      },
+      default: {
+        width: '100%',
+      }
+    })
   },
   dateButtonText: {
+    color: COLORS.text.primary,
     fontSize: TYPOGRAPHY.fontSize.md,
-    color: COLORS.text.light,
-    textAlign: 'center',
     fontWeight: TYPOGRAPHY.fontWeight.regular as "normal" | "bold" | "100" | "200" | "300" | "400" | "500" | "600" | "700" | "800" | "900",
   },
   webInput: {
+    width: '100%',
+    minWidth: '200px',
     padding: SPACING.md,
     fontSize: TYPOGRAPHY.fontSize.md,
     borderRadius: SPACING.radius.md,
-    border: '1px solid rgba(255, 255, 255, 0.2)',
+    borderWidth: 1,
+    borderColor: COLORS.border.dark,
     backgroundColor: 'transparent',
-    width: '100%',
-    color: COLORS.text.light,
-    ...(Platform.OS === 'web' && {
-      minWidth: 250,
-    }),
+    color: COLORS.text.primary,
   }
 }); 
