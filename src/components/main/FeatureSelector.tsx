@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native
 import { COLORS } from '../../theme/colors';
 import { SPACING } from '../../theme/spacing';
 import { TYPOGRAPHY } from '../../theme/typography';
+import { useLanguage } from '../../context/LanguageContext';
 
 interface FeatureSelectorProps {
   activeFeature: string;
@@ -10,10 +11,12 @@ interface FeatureSelectorProps {
 }
 
 export function FeatureSelector({ activeFeature, onFeatureChange }: FeatureSelectorProps) {
+  const { translations } = useLanguage();
+  
   const features = [
-    { value: 'daily', label: 'Daily Horoscopes' },
-    { value: 'compatibility', label: 'Compatibility Check' },
-    { value: 'birthchart', label: 'Birth Chart' },
+    { value: 'daily', label: translations.featureDailyHoroscopes },
+    { value: 'compatibility', label: translations.featureCompatibilityCheck },
+    { value: 'birthchart', label: translations.featureBirthChart },
   ];
 
   // For web, we'll use a div with CSS for the responsive grid

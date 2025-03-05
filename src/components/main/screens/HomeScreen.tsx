@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, ScrollView, Platform, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, ScrollView, Platform, StyleSheet, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import type { RootStackParamList } from '../../../navigation/AppNavigator';
@@ -21,22 +21,25 @@ import DailyForecast from '../horoscope/DailyForecast';
 import DailyHoroscopesGrid from '../horoscope/DailyHoroscopesGrid';
 import { FeatureSelector } from '../FeatureSelector';
 import CompatibilityControl from '../horoscope/CompatibilityControl';
+import cssStyles from '../styles/HomeScreen.module.css';
 
 type NavigationProp = StackNavigationProp<RootStackParamList, 'Landing'>;
 
-// Sample horoscope data
-const SAMPLE_HOROSCOPE = {
-  sign: 'Aries',
-  horoscope: "Today is a great day to start new projects. Your creative energy is at its peak, and you'll find that ideas flow easily. Take advantage of this productive period to advance your goals.",
-  luckyNumber: 7,
-  luckyColor: "Blue",
-  mood: "Inspired"
-};
+const useResponsiveLayout = () => {
+  const [isLargeScreen, setIsLargeScreen] = useState(true);
 
-// Sample daily horoscope data
-const DAILY_HOROSCOPE = {
-  date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
-  horoscope: "The stars are aligned in your favor today. You may find unexpected opportunities coming your way, especially in your career. Take time to reflect on your goals and be open to new possibilities. Your intuition is particularly strong, so trust your instincts when making decisions."
+  useEffect(() => {
+    const checkScreenSize = () => {
+      const { width } = Dimensions.get('window');
+      setIsLargeScreen(width >= 1024);
+    };
+
+    checkScreenSize();
+    const subscription = Dimensions.addEventListener('change', checkScreenSize);
+    return () => subscription.remove();
+  }, []);
+
+  return isLargeScreen;
 };
 
 const HomeScreen = () => {
@@ -44,6 +47,22 @@ const HomeScreen = () => {
   const { translations } = useLanguage();
   const { isAuthenticated } = useAuth();
   const [activeFeature, setActiveFeature] = useState('daily');
+  const isLargeScreen = useResponsiveLayout();
+
+  // Sample horoscope data
+  const SAMPLE_HOROSCOPE = {
+    sign: 'Aries',
+    horoscope: translations.sampleHoroscope,
+    luckyNumber: 7,
+    luckyColor: "Blue",
+    mood: "Inspired"
+  };
+
+  // Sample daily horoscope data
+  const DAILY_HOROSCOPE = {
+    date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
+    horoscope: translations.sampleDailyHoroscope
+  };
 
   const handleFeatureClick = (route: keyof RootStackParamList) => {
     if (!isAuthenticated) {
@@ -83,21 +102,126 @@ const HomeScreen = () => {
     setActiveFeature(feature);
   };
 
+  const webStyles = StyleSheet.create({
+    topSection: {
+      display: 'flex',
+      flexDirection: isLargeScreen ? 'row' : 'column',
+      width: '100%',
+      minHeight: 500,
+      borderBottomWidth: 1,
+      borderBottomColor: 'rgba(255, 255, 255, 0.1)',
+    },
+    heroSection: {
+      flex: isLargeScreen ? 1 : 0,
+      minWidth: isLargeScreen ? 300 : '100%',
+      width: isLargeScreen ? 'auto' : '100%',
+      paddingHorizontal: 8,
+    },
+    dailyHoroscopeSection: {
+      flex: isLargeScreen ? 1 : 0,
+      minWidth: isLargeScreen ? 300 : '100%',
+      width: isLargeScreen ? 'auto' : '100%',
+      paddingHorizontal: 8,
+      marginTop: isLargeScreen ? 0 : 16,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    horoscopeSection: {
+      display: 'flex',
+      flexDirection: isLargeScreen ? 'row' : 'column',
+      flexWrap: isLargeScreen ? 'wrap' : 'nowrap',
+      width: '100%',
+      borderBottomWidth: 1,
+      borderBottomColor: 'rgba(255, 255, 255, 0.1)',
+      padding: 16,
+    },
+    horoscopePreview: {
+      flex: isLargeScreen ? 1 : 0,
+      minWidth: isLargeScreen ? 300 : '100%',
+      width: isLargeScreen ? 'auto' : '100%',
+      padding: 8,
+      marginBottom: 16,
+    },
+    horoscopeGrid: {
+      flex: isLargeScreen ? 1 : 0,
+      minWidth: isLargeScreen ? 300 : '100%',
+      width: isLargeScreen ? 'auto' : '100%',
+      padding: 8,
+      marginBottom: 16,
+    }
+  });
+
+  const mobileStyles = StyleSheet.create({
+    topSection: {
+      flexDirection: 'column',
+      width: '100%',
+      minHeight: 500,
+      borderBottomWidth: 1,
+      borderBottomColor: 'rgba(255, 255, 255, 0.1)',
+    },
+    heroSection: {
+      width: '100%',
+      paddingHorizontal: 8,
+    },
+    dailyHoroscopeSection: {
+      width: '100%',
+      paddingHorizontal: 8,
+      marginTop: 16,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    horoscopeSection: {
+      flexDirection: 'column',
+      width: '100%',
+      borderBottomWidth: 1,
+      borderBottomColor: 'rgba(255, 255, 255, 0.1)',
+      paddingVertical: 16,
+    },
+    horoscopePreview: {
+      width: '100%',
+      marginBottom: 16,
+    },
+    horoscopeGrid: {
+      width: '100%',
+    }
+  });
+
   // Use a different container component for web to enable flexbox layout
   const TopSectionContainer = Platform.OS === 'web' 
     ? ({ children }: { children: React.ReactNode }) => (
-        <div style={{ 
-          display: 'flex', 
-          flexDirection: 'row', 
-          width: '100%',
-          minHeight: '500px',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
-        }}>
+        <div style={webStyles.topSection}>
           {children}
         </div>
       )
     : ({ children }: { children: React.ReactNode }) => (
-        <View style={{ borderBottomWidth: 1, borderBottomColor: 'rgba(255, 255, 255, 0.1)' }}>
+        <View style={mobileStyles.topSection}>
+          {children}
+        </View>
+      );
+
+  // Use a different container for the hero section on web
+  const HeroContainer = Platform.OS === 'web'
+    ? ({ children }: { children: React.ReactNode }) => (
+        <div style={webStyles.heroSection}>
+          {children}
+        </div>
+      )
+    : ({ children }: { children: React.ReactNode }) => (
+        <View style={mobileStyles.heroSection}>
+          {children}
+        </View>
+      );
+
+  // Use a different container for the daily horoscope section on web
+  const DailyHoroscopeContainer = Platform.OS === 'web'
+    ? ({ children }: { children: React.ReactNode }) => (
+        <div style={webStyles.dailyHoroscopeSection}>
+          {children}
+        </div>
+      )
+    : ({ children }: { children: React.ReactNode }) => (
+        <View style={mobileStyles.dailyHoroscopeSection}>
           {children}
         </View>
       );
@@ -105,23 +229,12 @@ const HomeScreen = () => {
   // Use a different container for the horoscope section on web
   const HoroscopeSectionContainer = Platform.OS === 'web'
     ? ({ children }: { children: React.ReactNode }) => (
-        <div style={{
-          display: 'flex',
-          flexDirection: 'row',
-          flexWrap: 'wrap',
-          width: '100%',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-          padding: '16px 0'
-        }}>
+        <div style={webStyles.horoscopeSection}>
           {children}
         </div>
       )
     : ({ children }: { children: React.ReactNode }) => (
-        <View style={{ 
-          borderBottomWidth: 1, 
-          borderBottomColor: 'rgba(255, 255, 255, 0.1)',
-          paddingVertical: 16
-        }}>
+        <View style={mobileStyles.horoscopeSection}>
           {children}
         </View>
       );
@@ -129,34 +242,24 @@ const HomeScreen = () => {
   // Use different containers for the horoscope preview and grid on web
   const HoroscopePreviewContainer = Platform.OS === 'web'
     ? ({ children }: { children: React.ReactNode }) => (
-        <div style={{
-          flex: '1 1 400px',
-          minWidth: '300px',
-          padding: '0 8px',
-          marginBottom: '16px'
-        }}>
+        <div style={webStyles.horoscopePreview}>
           {children}
         </div>
       )
     : ({ children }: { children: React.ReactNode }) => (
-        <View style={{ marginBottom: 16 }}>
+        <View style={mobileStyles.horoscopePreview}>
           {children}
         </View>
       );
 
   const HoroscopeGridContainer = Platform.OS === 'web'
     ? ({ children }: { children: React.ReactNode }) => (
-        <div style={{
-          flex: '1 1 600px',
-          minWidth: '300px',
-          padding: '0 8px',
-          marginBottom: '16px'
-        }}>
+        <div style={webStyles.horoscopeGrid}>
           {children}
         </div>
       )
     : ({ children }: { children: React.ReactNode }) => (
-        <View>
+        <View style={mobileStyles.horoscopeGrid}>
           {children}
         </View>
       );
@@ -218,21 +321,25 @@ const HomeScreen = () => {
           {/* Top section with Hero and Daily Horoscope side by side on web */}
           <TopSectionContainer>
             {/* Hero Section with HeroContent */}
-            <View style={styles.hero}>
-              <HeroContent 
-                onStartReading={handleStartReading}
-                onLearnMore={handleLearnMore}
-              />
-            </View>
+            <HeroContainer>
+              <View style={styles.hero}>
+                <HeroContent 
+                  onStartReading={handleStartReading}
+                  onLearnMore={handleLearnMore}
+                />
+              </View>
+            </HeroContainer>
 
             {/* Daily Horoscope Card */}
-            <View style={styles.dailyHoroscopeSection}>
-              <DailyHoroscopeCard
-                date={DAILY_HOROSCOPE.date}
-                horoscope={DAILY_HOROSCOPE.horoscope}
-                onReadFullHoroscope={handleReadFullHoroscope}
-              />
-            </View>
+            <DailyHoroscopeContainer>
+              <View style={styles.dailyHoroscopeSection}>
+                <DailyHoroscopeCard
+                  date={DAILY_HOROSCOPE.date}
+                  horoscope={DAILY_HOROSCOPE.horoscope}
+                  onReadFullHoroscope={handleReadFullHoroscope}
+                />
+              </View>
+            </DailyHoroscopeContainer>
           </TopSectionContainer>
 
           {/* Horoscope Section with Feature Selector */}

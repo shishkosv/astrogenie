@@ -51,67 +51,67 @@ const Footer = () => {
             <Text style={styles.columnTitle}>AstroConnect</Text>
             <View style={styles.linkList}>
               <Link href="About" style={styles.link}>
-                About Us
+                {translations.footerAboutUs}
               </Link>
               <Link href="#" style={styles.link}>
-                Our Team
+                {translations.footerOurTeam}
               </Link>
               <Link href="#" style={styles.link}>
-                Careers
+                {translations.footerCareers}
               </Link>
               <Link href="Contact" style={styles.link}>
-                Contact
+                {translations.footerContact}
               </Link>
             </View>
           </View>
 
           <View style={styles.gridColumn}>
-            <Text style={styles.columnTitle}>Features</Text>
+            <Text style={styles.columnTitle}>{translations.footerFeatures}</Text>
             <View style={styles.linkList}>
               <Link href="DailyHoroscopes" style={styles.link}>
-                Daily Horoscopes
+                {translations.footerDailyHoroscopes}
               </Link>
               <Link href="Compatibility" style={styles.link}>
-                Compatibility
+                {translations.footerCompatibility}
               </Link>
               <Link href="BirthChart" style={styles.link}>
-                Birth Charts
+                {translations.footerBirthCharts}
               </Link>
               <Link href="TarotReadings" style={styles.link}>
-                Tarot Readings
+                {translations.footerTarotReadings}
               </Link>
             </View>
           </View>
 
           <View style={styles.gridColumn}>
-            <Text style={styles.columnTitle}>Resources</Text>
+            <Text style={styles.columnTitle}>{translations.footerResources}</Text>
             <View style={styles.linkList}>
               <Link href="#" style={styles.link}>
-                Blog
+                {translations.footerBlog}
               </Link>
               <Link href="#" style={styles.link}>
-                Guides
+                {translations.footerGuides}
               </Link>
               <Link href="#" style={styles.link}>
-                FAQ
+                {translations.footerFAQ}
               </Link>
               <Link href="#" style={styles.link}>
-                Support
+                {translations.footerSupport}
               </Link>
             </View>
           </View>
 
           <View style={styles.gridColumn}>
-            <Text style={styles.columnTitle}>Legal</Text>
+            <Text style={styles.columnTitle}>{translations.footerLegal}</Text>
             <View style={styles.linkList}>
               <Link href="#" style={styles.link}>
-                Terms of Service
+                {translations.footerTermsOfService}
               </Link>
               <Link href="#" style={styles.link}>
-                Privacy Policy
+                {translations.footerPrivacyPolicy}
               </Link>
               <Link href="#" style={styles.link}>
-                Cookie Policy
+                {translations.footerCookiePolicy}
               </Link>
             </View>
           </View>
@@ -119,14 +119,14 @@ const Footer = () => {
 
         <View style={styles.footerBottom}>
           <Text style={styles.copyright}>
-            © {currentYear} AstroConnect. All rights reserved.
+            {translations.footerCopyright.replace('{year}', currentYear.toString())}
           </Text>
           <View style={styles.socialLinks}>
             <Link href="#" style={styles.socialLink}>
-              <Text>Twitter</Text>
+              <Text>{translations.footerTwitter}</Text>
             </Link>
             <Link href="#" style={styles.socialLink}>
-              <Text>Instagram</Text>
+              <Text>{translations.footerInstagram}</Text>
             </Link>
           </View>
         </View>
