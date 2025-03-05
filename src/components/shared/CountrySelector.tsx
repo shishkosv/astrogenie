@@ -1,10 +1,9 @@
 import React from 'react';
-import { View, Text, Platform } from 'react-native';
+import { View, Text } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { locationService } from '../../services/serviceConfig';
 import { COLORS } from '../../theme/colors';
 import { inputStyles as styles } from './styles/InputStyles';
-import { twMerge } from 'tailwind-merge';
 
 interface CountrySelectorProps {
   value: string;
@@ -19,37 +18,6 @@ export const CountrySelector: React.FC<CountrySelectorProps> = ({
   error,
   label
 }) => {
-  if (Platform.OS === 'web') {
-    return (
-      <View style={styles.container}>
-        {label && <Text style={styles.label}>{label}</Text>}
-        <select
-          className={twMerge(
-            "w-full px-4 py-2 border rounded-md",
-            "bg-transparent text-white",
-            "border-white/20 hover:border-white/40",
-            "focus:outline-none focus:ring-2 focus:ring-purple-500",
-            "transition-colors duration-200",
-            error ? "border-red-500" : null
-          )}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-        >
-          {locationService.countries.map(country => (
-            <option 
-              key={country.code} 
-              value={country.code}
-              className="bg-gray-900 text-white"
-            >
-              {country.name}
-            </option>
-          ))}
-        </select>
-        {error && <Text style={styles.errorText}>{error}</Text>}
-      </View>
-    );
-  }
-
   return (
     <View style={styles.container}>
       {label && <Text style={styles.label}>{label}</Text>}

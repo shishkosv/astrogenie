@@ -24,7 +24,7 @@ export const tarotStyles = StyleSheet.create({
   },
   title: {
     fontSize: TYPOGRAPHY.fontSize.xxl,
-    fontWeight: TYPOGRAPHY.fontWeight.bold,
+    fontWeight: '700',
     color: COLORS.text.primary,
     marginBottom: 24,
     textAlign: 'center',
@@ -49,7 +49,7 @@ export const tarotStyles = StyleSheet.create({
   },
   cardTitle: {
     fontSize: TYPOGRAPHY.fontSize.lg,
-    fontWeight: TYPOGRAPHY.fontWeight.semiBold,
+    fontWeight: '600',
     color: COLORS.text.primary,
     marginBottom: 8,
     textAlign: 'center',
@@ -67,7 +67,7 @@ export const tarotStyles = StyleSheet.create({
   },
   price: {
     fontSize: TYPOGRAPHY.fontSize.xl,
-    fontWeight: TYPOGRAPHY.fontWeight.bold,
+    fontWeight: '700',
     color: COLORS.accent.purple,
     marginRight: 8,
   },
