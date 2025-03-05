@@ -10,7 +10,6 @@ const SignSwitcher = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { selectedSign, setSelectedSign } = useZodiac();
 
-
   const handleSignChange = (signName: string) => {
     setSelectedSign({
       name: signName,
@@ -20,24 +19,30 @@ const SignSwitcher = () => {
     setIsOpen(false);
   };
 
-
   return (
     <View style={styles.container}>
       <TouchableOpacity 
-        style={styles.button} 
+        style={[styles.button, { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }]} 
         onPress={() => setIsOpen(!isOpen)}
       >
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Icon 
+            name="star" 
+            size={20}
+            color="#FFFFFF"
+          />
+
+          <Text style={styles.selectedText}>
+            {selectedSign?.name || 'Select Sign'}
+          </Text>
+        </View>
+
         <Icon 
-          name="star" 
-          size={20}
-          color="#000"
+          name={isOpen ? 'chevron-up' : 'chevron-down'} 
+          size={20} 
+          color="#FFFFFF"
         />
-
-        <Text style={styles.selectedText}>
-          {selectedSign?.name || 'Select Sign'}
-        </Text>
       </TouchableOpacity>
-
 
       {isOpen && (
         <View style={styles.dropdown}>
@@ -50,7 +55,6 @@ const SignSwitcher = () => {
               ]}
               onPress={() => handleSignChange(sign.name)}
             >
-
               <Icon 
                 name="star" 
                 size={20}
@@ -62,7 +66,6 @@ const SignSwitcher = () => {
                 selectedSign?.name === sign.name && styles.activeText
               ]}>
                 {sign.name}
-
               </Text>
             </TouchableOpacity>
           ))}

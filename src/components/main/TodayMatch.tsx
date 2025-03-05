@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { matchStyles as styles } from '../main/styles/MatchStyles';
+import { matchStyles as styles } from './styles/MatchStyles';
 import Icon from '../icons/Icon';
+import { COLORS } from '../../theme/colors';
 
 type MatchType = 'love' | 'friendship' | 'career';
 
@@ -17,7 +18,7 @@ const MatchButton = ({ type, label, icon, onPress }: MatchButtonProps) => (
     style={styles.matchButton}
     onPress={() => onPress(type)}
   >
-    <Icon name={icon} size={24} color="#CFA2FB" />
+    <Icon name={icon} size={24} color={COLORS.text.light} />
     <Text style={styles.matchButtonText}>{label}</Text>
   </TouchableOpacity>
 );

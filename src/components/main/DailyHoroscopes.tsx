@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, ScrollView, Text, TouchableOpacity } from 'react-native';
 import Layout from '../layout/Layout';
-import { horoscopeStyles as styles } from './styles/HoroscopeStyles';
+import { dailyHoroscopesStyles as styles } from './styles/DailyHoroscopesStyles';
 import TodayMatch from './TodayMatch';
 import SignTraits from './horoscope/SignTraits';
 import DailyForecast from './horoscope/DailyForecast';
@@ -31,14 +31,14 @@ const DailyHoroscopes = () => {
             style={styles.dropdownButton}
             onPress={() => setIsOpen(!isOpen)}
           >
-            <Icon name="star" size={20} color="#000" />
+            <Icon name="star" size={20} color="#FFFFFF" />
             <Text style={styles.selectedText}>
               {selectedSign?.name || 'Select Sign'}
             </Text>
             <Icon 
               name={isOpen ? 'chevron-up' : 'chevron-down'} 
               size={20} 
-              color="#666"
+              color="#FFFFFF"
             />
           </TouchableOpacity>
 
@@ -56,7 +56,7 @@ const DailyHoroscopes = () => {
                   <Icon 
                     name="star" 
                     size={20}
-                    color={selectedSign?.name === sign.name ? '#000' : '#666'}
+                    color={selectedSign?.name === sign.name ? '#6F4CFF' : '#FFFFFF'}
                   />
                   <Text style={[
                     styles.itemText,
@@ -70,22 +70,20 @@ const DailyHoroscopes = () => {
           )}
         </View>
 
-        <div className="space-y-2">
-          {selectedSign ? (
-            <>
-              <h2 className="text-2xl font-bold tracking-tight">
-                Daily Horoscope for {selectedSign.name}
-              </h2>
-              <p className="text-muted-foreground">
-                Your daily astrological guidance and insights
-              </p>
-            </>
-          ) : (
-            <div className="text-center text-muted-foreground">
-              Please select your zodiac sign
-            </div>
-          )}
-        </div>
+        {selectedSign ? (
+          <>
+            <Text style={styles.title}>
+              Daily Horoscope for {selectedSign.name}
+            </Text>
+            <Text style={styles.subtitle}>
+              Your daily astrological guidance and insights
+            </Text>
+          </>
+        ) : (
+          <Text style={styles.emptyText}>
+            Please select your zodiac sign
+          </Text>
+        )}
 
         {/* Today's Match Section */}
         <TodayMatch />
