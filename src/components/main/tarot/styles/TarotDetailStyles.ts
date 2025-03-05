@@ -29,6 +29,21 @@ export const tarotDetailStyles = StyleSheet.create({
     marginHorizontal: 'auto',
     alignItems: 'center',
     textAlign: 'center',
+    gap: Platform.select({
+      web: isSmallScreen ? SPACING.lg : SPACING.xl,
+      default: SPACING.xl,
+    }),
+  },
+  titleContainer: {
+    width: '100%',
+    maxWidth: Platform.select({
+      web: isSmallScreen ? '100%' : isMediumScreen ? 600 : 800,
+      default: 800,
+    }),
+    marginBottom: Platform.select({
+      web: isSmallScreen ? SPACING.md : SPACING.lg,
+      default: SPACING.lg,
+    }),
   },
   title: {
     fontSize: Platform.select({
@@ -37,7 +52,6 @@ export const tarotDetailStyles = StyleSheet.create({
     }),
     fontWeight: TYPOGRAPHY.fontWeight.bold,
     color: COLORS.text.light,
-    marginBottom: SPACING.xs,
     lineHeight: TYPOGRAPHY.lineHeight.tight,
     textAlign: 'center',
   },
@@ -58,7 +72,24 @@ export const tarotDetailStyles = StyleSheet.create({
       web: isSmallScreen ? SPACING.xs : SPACING.sm,
       default: SPACING.sm,
     }),
+  },
+  actionRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: Platform.select({
+      web: isSmallScreen ? SPACING.lg : SPACING.xl,
+      default: SPACING.xl,
+    }),
     marginBottom: SPACING.xl,
+    width: '100%',
+    ...Platform.select({
+      web: {
+        flexWrap: 'wrap',
+        maxWidth: isSmallScreen ? '100%' : isMediumScreen ? 600 : 800,
+      },
+      default: {},
+    }),
   },
   price: {
     fontSize: Platform.select({
@@ -114,24 +145,37 @@ export const tarotDetailStyles = StyleSheet.create({
     lineHeight: TYPOGRAPHY.lineHeight.tight,
   },
   description: {
+    ...Platform.select({
+      web: {
+        display: 'block',
+        width: '100%',
+        maxWidth: '800px',
+        margin: '0 auto',
+        padding: `${SPACING.md}px`,
+        textAlign: 'justify',
+        whiteSpace: 'normal',
+        wordBreak: 'break-word',
+        overflowWrap: 'break-word',
+        hyphens: 'auto',
+      },
+      default: {
+        width: '100%',
+        padding: SPACING.md,
+      },
+    }),
     fontSize: Platform.select({
       web: isSmallScreen ? TYPOGRAPHY.fontSize.md : TYPOGRAPHY.fontSize.lg,
       default: TYPOGRAPHY.fontSize.lg,
     }),
     lineHeight: Platform.select({
-      web: isSmallScreen ? 1.6 : 1.8,
+      web: isSmallScreen ? 1.7 : 1.8,
       default: 1.8,
     }),
     color: COLORS.text.light,
     opacity: 0.9,
-    ...Platform.select({
-      web: {
-        textAlign: 'justify',
-        letterSpacing: '0.01em',
-      },
-      default: {
-        textAlign: 'left',
-      },
+    marginBottom: Platform.select({
+      web: isSmallScreen ? SPACING.lg : SPACING.xl,
+      default: SPACING.xl,
     }),
   },
   benefitsGrid: {

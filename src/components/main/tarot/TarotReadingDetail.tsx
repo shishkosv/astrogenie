@@ -48,32 +48,34 @@ const TarotReadingDetail = () => {
       <ScrollView style={styles.container}>
         <View style={styles.heroSection}>
           <View style={styles.heroContent}>
-            <Text style={styles.title}>{reading.title}</Text>
-            <Text style={styles.subtitle}>{reading.subtitle}</Text>
-            <View style={styles.priceContainer}>
-              <Text style={styles.price}>${reading.price}</Text>
-              {reading.yearlyPrice && (
-                <Text style={styles.yearlyPrice}>
-                  — or ${reading.yearlyPrice} / year
-                </Text>
-              )}
+            <View style={styles.titleContainer}>
+              <Text style={styles.title}>{reading.title}</Text>
             </View>
-            <Button 
-              variant="secondary" 
-              size="lg"
-              onPress={handleAddToCart}
-              loading={isLoading}
-              style={styles.ctaButton}
-            >
-              Get Reading Now
-            </Button>
+            <View style={styles.actionRow}>
+              <View style={styles.priceContainer}>
+                <Text style={styles.price}>${reading.price}</Text>
+                {reading.yearlyPrice && (
+                  <Text style={styles.yearlyPrice}>
+                    — or ${reading.yearlyPrice} / year
+                  </Text>
+                )}
+              </View>
+              <Button 
+                variant="secondary" 
+                size="lg"
+                onPress={handleAddToCart}
+                loading={isLoading}
+                style={styles.ctaButton}
+              >
+                Get Reading Now
+              </Button>
+            </View>
           </View>
         </View>
 
         <View style={styles.mainContent}>
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>About This Reading</Text>
-            <Text style={styles.description}>
+            <Text>
               Discover deep insights about your situation through our personalized tarot reading.
               Our experienced readers will guide you through the cards' meanings and their significance
               in your life. Each reading is carefully crafted to provide you with meaningful guidance and clarity.
