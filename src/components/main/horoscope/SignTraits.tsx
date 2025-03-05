@@ -4,6 +4,7 @@ import Layout from '../../layout/Layout';
 import { traitsStyles as styles } from './styles/SignTraitsStyles';
 import Icon from '../../icons/Icon';
 import { useZodiac } from '../../../context/ZodiacContext';
+import { COLORS } from '../../../theme/colors';
 
 type TraitTabType = 'personality' | 'friendship' | 'love' | 'lifestyle' | 'health' | 'spirituality';
 
@@ -18,58 +19,66 @@ const traitTabs: { id: TraitTabType; label: string; icon: string }[] = [
 
 const SignTraits = () => {
   const [activeTab, setActiveTab] = useState<TraitTabType>('personality');
-  const { current } = useZodiac();
+  const { current, selectedSign } = useZodiac();
 
   return (
-      <ScrollView style={styles.container}>
-        <View style={styles.card}>
-          <View style={styles.cardHeader}>
+    <ScrollView style={styles.container}>
+      <View style={styles.card}>
+        <View style={styles.cardHeader}>
+          <View style={styles.iconContainer}>
             <Icon 
               name={traitTabs.find(tab => tab.id === activeTab)?.icon || 'user'} 
               size={24} 
-              color="#CFA2FB" 
+              color={COLORS.text.light} 
             />
+          </View>
+          <View>
             <Text style={styles.cardTitle}>
               {traitTabs.find(tab => tab.id === activeTab)?.label}
             </Text>
+            <Text style={styles.signName}>
+              {selectedSign?.name || 'Select a sign'}
+            </Text>
           </View>
-          <Text style={styles.cardContent}>
-            {current()?.traits[activeTab] || 'Select a zodiac sign to see traits'}
-          </Text>
         </View>
+        <Text style={styles.cardContent}>
+          {current()?.traits[activeTab] || 'Please select your zodiac sign to view your traits.'}
+        </Text>
+      </View>
 
-        {/* Tabs */}
-        <ScrollView 
-          horizontal 
-          showsHorizontalScrollIndicator={false}
-          style={styles.tabsContainer}
-        >
-          <View style={styles.tabsWrapper}>
-            {traitTabs.map((tab) => (
-              <TouchableOpacity
-                key={tab.id}
-                style={[
-                  styles.tab,
-                  activeTab === tab.id && styles.activeTab
-                ]}
-                onPress={() => setActiveTab(tab.id)}
-              >
-                <Icon 
-                  name={tab.icon} 
-                  size={20} 
-                  color={activeTab === tab.id ? '#CFA2FB' : '#666'} 
-                />
-                <Text style={[
-                  styles.tabLabel,
-                  activeTab === tab.id && styles.activeTabLabel
-                ]}>
-                  {tab.label}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </ScrollView>
+      {/* Tabs */}
+      <ScrollView 
+        horizontal 
+        showsHorizontalScrollIndicator={false}
+        style={styles.tabsContainer}
+        contentContainerStyle={styles.tabsContentContainer}
+      >
+        <View style={styles.tabsWrapper}>
+          {traitTabs.map((tab) => (
+            <TouchableOpacity
+              key={tab.id}
+              style={[
+                styles.tab,
+                activeTab === tab.id && styles.activeTab
+              ]}
+              onPress={() => setActiveTab(tab.id)}
+            >
+              <Icon 
+                name={tab.icon} 
+                size={20} 
+                color={activeTab === tab.id ? COLORS.text.light : COLORS.text.muted} 
+              />
+              <Text style={[
+                styles.tabLabel,
+                activeTab === tab.id && styles.activeTabLabel
+              ]}>
+                {tab.label}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
       </ScrollView>
+    </ScrollView>
   );
 };
 
