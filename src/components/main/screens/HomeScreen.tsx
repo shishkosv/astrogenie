@@ -249,62 +249,6 @@ const HomeScreen = () => {
 
           {/* Features Cards Section */}
           <FeaturesCards />
-
-          <View style={[styles.features, { borderTopWidth: 1, borderTopColor: 'rgba(255, 255, 255, 0.1)' }]}>
-            <View style={styles.featureList}>
-              
-              <View style={styles.featureItem}>
-                <Text style={styles.featureTitle}>{translations.compatibility}</Text>
-                <Text style={styles.featureDescription}>
-                  {translations.compatibilityDesc}
-                </Text>
-                <View style={styles.buttonContainer}>
-                  <Button 
-                    variant="ghost"
-                    size="sm"
-                    onPress={() => handleFeatureClick('Compatibility')}
-                    style={{ borderWidth: 1, borderColor: 'rgba(255, 255, 255, 0.2)' }}
-                  >
-                    <Text style={{ color: COLORS.text.light }}>{translations.tryItNow}</Text>
-                  </Button>
-                </View>
-              </View>
-
-              <View style={styles.featureItem}>
-                <Text style={styles.featureTitle}>{translations.birthChart}</Text>
-                <Text style={styles.featureDescription}>
-                  {translations.compatibilityDesc}
-                </Text>
-                <View style={styles.buttonContainer}>
-                  <Button 
-                    variant="ghost"
-                    size="sm"
-                    onPress={() => handleFeatureClick('BirthChart')}
-                    style={{ borderWidth: 1, borderColor: 'rgba(255, 255, 255, 0.2)' }}
-                  >
-                    <Text style={{ color: COLORS.text.light }}>{translations.tryItNow}</Text>
-                  </Button>
-                </View>
-              </View>
-
-              <View style={styles.featureItem}>
-                <Text style={styles.featureTitle}>{translations.tarotReadings}</Text>
-                <Text style={styles.featureDescription}>
-                  {translations.tarotDesc}
-                </Text>
-                <View style={styles.buttonContainer}>
-                  <Button 
-                    variant="ghost"
-                    size="sm"
-                    onPress={() => handleFeatureClick('TarotReadings')}
-                    style={{ borderWidth: 1, borderColor: 'rgba(255, 255, 255, 0.2)' }}
-                  >
-                    <Text style={{ color: COLORS.text.light }}>{translations.tryItNow}</Text>
-                  </Button>
-                </View>
-              </View>
-            </View>
-          </View>
         </View>
       </ScrollView>
     </Layout>
