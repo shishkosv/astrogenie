@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { useLanguage } from '../../context/LanguageContext';
-import { FLAGS } from '../../constants/images';
 import { languageSwitcherStyles as styles } from './styles/LanguageSwitcherStyles';
+
+const FLAG_EMOJIS = {
+  en: '🇺🇸',
+  es: '🇪🇸',
+  ru: '🇷🇺'
+} as const;
 
 const LanguageSwitcher = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { language, setLanguage } = useLanguage();
 
-  const handleLanguageChange = (newLang: 'en' | 'es') => {
+  const handleLanguageChange = (newLang: 'en' | 'es' | 'ru') => {
     setLanguage(newLang);
     setIsOpen(false);
   };
@@ -19,12 +24,8 @@ const LanguageSwitcher = () => {
         style={styles.button} 
         onPress={() => setIsOpen(!isOpen)}
       >
-        <Image 
-          source={FLAGS[language]} 
-          style={styles.flagIcon}
-        />
-        <Text style={styles.selectedText}>
-          {language.toUpperCase()}
+        <Text style={styles.flagEmoji}>
+          {FLAG_EMOJIS[language]}
         </Text>
       </TouchableOpacity>
 
@@ -37,10 +38,9 @@ const LanguageSwitcher = () => {
             ]}
             onPress={() => handleLanguageChange('en')}
           >
-            <Image 
-              source={FLAGS.en} 
-              style={styles.flagIcon}
-            />
+            <Text style={styles.flagEmoji}>
+              {FLAG_EMOJIS.en}
+            </Text>
             <Text style={[
               styles.optionText,
               language === 'en' && styles.activeText
@@ -56,15 +56,32 @@ const LanguageSwitcher = () => {
             ]}
             onPress={() => handleLanguageChange('es')}
           >
-            <Image 
-              source={FLAGS.es} 
-              style={styles.flagIcon}
-            />
+            <Text style={styles.flagEmoji}>
+              {FLAG_EMOJIS.es}
+            </Text>
             <Text style={[
               styles.optionText,
               language === 'es' && styles.activeText
             ]}>
               Español
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={[
+              styles.languageOption,
+              language === 'ru' && styles.activeOption
+            ]}
+            onPress={() => handleLanguageChange('ru')}
+          >
+            <Text style={styles.flagEmoji}>
+              {FLAG_EMOJIS.ru}
+            </Text>
+            <Text style={[
+              styles.optionText,
+              language === 'ru' && styles.activeText
+            ]}>
+              Русский
             </Text>
           </TouchableOpacity>
         </View>

@@ -13,10 +13,8 @@ export const languageSwitcherStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ddd',
   },
-  flagIcon: {
-    width: 24,
-    height: 16,
-    borderRadius: 2,
+  flagEmoji: {
+    fontSize: 20,
   },
   selectedText: {
     color: '#333',

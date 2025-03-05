@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext } from 'react';
 
-type Language = 'en' | 'es';
+type Language = 'en' | 'es' | 'ru';
 
 interface LanguageContextType {
   language: Language;
@@ -17,7 +17,6 @@ const translations = {
     welcome: 'Welcome to AstroConnect',
     subtitle: 'Your personal astrological companion',
     downloadAndroid: 'Download for Android',
-
     downloadIOS: 'Download for iOS',
     features: 'Features',
     dailyHoroscopes: 'Daily Horoscopes',
@@ -65,6 +64,17 @@ const translations = {
     upgradeToPremium: 'Upgrade to Premium',
     subscription: "Subscription",
     termsAndPolicies: "Terms & Policies",
+    heroTitle: 'Discover Your Cosmic Journey',
+    heroSubtitle: 'Unlock the secrets of your astrological destiny',
+    exploreFeatures: 'Explore Features',
+    learnMore: 'Learn More',
+    testimonials: 'What Our Users Say',
+    downloadApp: 'Download Our App',
+    appStore: 'App Store',
+    googlePlay: 'Google Play',
+    startJourney: 'Start Your Astrological Journey Today',
+    freeTrial: 'Start Free Trial',
+    noCreditCard: 'No credit card required',
   },
   es: {
     birthChart: 'Birth Chart',
@@ -121,16 +131,105 @@ const translations = {
     upgradeToPremium: 'Actualizar a Premium',
     subscription: "Suscripción",
     termsAndPolicies: "Términos y Políticas",
+    heroTitle: 'Descubre Tu Viaje Cósmico',
+    heroSubtitle: 'Desbloquea los secretos de tu destino astrológico',
+    exploreFeatures: 'Explorar Características',
+    learnMore: 'Saber Más',
+    testimonials: 'Lo Que Dicen Nuestros Usuarios',
+    downloadApp: 'Descarga Nuestra App',
+    appStore: 'App Store',
+    googlePlay: 'Google Play',
+    startJourney: 'Comienza Tu Viaje Astrológico Hoy',
+    freeTrial: 'Comenzar Prueba Gratuita',
+    noCreditCard: 'No se requiere tarjeta de crédito',
+  },
+  ru: {
+    birthChart: 'Натальная карта',
+    getStarted: 'Начать',
+    signIn: 'Войти',
+    signUp: 'Регистрация',
+    welcome: 'Добро пожаловать в AstroConnect',
+    subtitle: 'Ваш личный астрологический помощник',
+    downloadAndroid: 'Скачать для Android',
+    downloadIOS: 'Скачать для iOS',
+    features: 'Возможности',
+    dailyHoroscopes: 'Ежедневные гороскопы',
+    horoscopesDesc: 'Получайте персонализированные ежедневные гороскопы на основе вашего знака зодиака.',
+    compatibility: 'Проверка совместимости',
+    compatibilityDesc: 'Проверьте вашу совместимость с друзьями и потенциальными партнерами.',
+    tarotReadings: 'Гадания на Таро',
+    tarotDesc: 'Получайте проницательные гадания на картах Таро.',
+    tryItNow: 'Попробовать сейчас',
+    home: 'Главная',
+    about: 'О нас',
+    contact: 'Контакты',
+    registration: 'Регистрация',
+    createAccount: 'Создайте аккаунт для доступа ко всем функциям',
+    login: 'Вход',
+    password: 'Пароль',
+    name: 'Имя',
+    forgotPassword: 'Забыли пароль?',
+    resetPassword: 'Сброс пароля',
+    resetPasswordDesc: 'Введите email для получения инструкций',
+    resetPasswordSent: 'Email для сброса пароля отправлен',
+    resetPasswordError: 'Ошибка отправки email',
+    noAccount: 'Нет аккаунта? Зарегистрируйтесь',
+    haveAccount: 'Уже есть аккаунт? Войдите',
+    backToLogin: 'Вернуться к входу',
+    account: 'Аккаунт',
+    profile: 'Профиль',
+    settings: 'Настройки',
+    favorites: 'Избранное',
+    logout: 'Выйти',
+    save: 'Сохранить',
+    edit: 'Редактировать',
+    language: 'Язык',
+    notifications: 'Уведомления',
+    enableNotifications: 'Включить уведомления',
+    dangerZone: 'Опасная зона',
+    deleteAccount: 'Удалить аккаунт',
+    deleteAccountConfirm: 'Вы уверены, что хотите удалить свой аккаунт? Это действие нельзя отменить.',
+    noFavorites: 'Пока нет избранного',
+    subscriptionPlans: 'Планы подписки',
+    choosePlan: 'Выберите план, который подходит вам',
+    subscribe: 'Подписаться сейчас',
+    premiumFeature: 'Премиум функция',
+    upgradeForFullAccess: 'Обновите до премиум для доступа к детальному анализу совместимости и персонализированным инсайтам.',
+    upgradeToPremium: 'Обновить до премиум',
+    subscription: "Подписка",
+    termsAndPolicies: "Условия и политика",
+    heroTitle: 'Откройте Свое Космическое Путешествие',
+    heroSubtitle: 'Раскройте тайны вашего астрологического предназначения',
+    exploreFeatures: 'Исследуйте Возможности',
+    learnMore: 'Узнать Больше',
+    testimonials: 'Что Говорят Наши Пользователи',
+    downloadApp: 'Скачайте Наше Приложение',
+    appStore: 'App Store',
+    googlePlay: 'Google Play',
+    startJourney: 'Начните Свое Астрологическое Путешествие Сегодня',
+    freeTrial: 'Начать Бесплатную Пробную Версию',
+    noCreditCard: 'Без необходимости вводить данные карты',
   },
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [language, setLanguage] = useState<Language>('en');
+  const [language, setLanguage] = useState<Language>('ru');
+
+  const handleLanguageChange = (newLang: Language) => {
+    console.log('Changing language to:', newLang); // Debug log
+    setLanguage(newLang);
+  };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, translations: translations[language] }}>
+    <LanguageContext.Provider 
+      value={{ 
+        language, 
+        setLanguage: handleLanguageChange, 
+        translations: translations[language] 
+      }}
+    >
       {children}
     </LanguageContext.Provider>
   );
